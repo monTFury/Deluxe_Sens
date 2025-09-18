@@ -6,8 +6,8 @@
   <title>קטלוג בשמי בוטיק</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts: Assistant לעברית; Inter לשמות האנגליים -->
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="קטלוג בשמי בוטיק" />
@@ -94,12 +94,12 @@
     .cbtn svg{width:18px;height:18px}
     .imagebox.single .cnav{display:none}
 
-    /* שם המוצר */
+    /* שם המוצר (אנגלית) */
     .card h3{
       margin:var(--s-3) 0 var(--s-2);
-      font-size:18px; letter-spacing:.1px; line-height:1.25;
-      font-family: Inter, Assistant, Arial, sans-serif; /* אנגלית נקי */
-      font-weight:600; /* לא מודגש מדי */
+      font-size:18px; letter-spacing:.05em; line-height:1.25;
+      font-family: Inter, Assistant, Arial, sans-serif;
+      font-weight:700; /* חיזקנו את ה-BOLD */
       text-align:center;
     }
 
@@ -123,7 +123,7 @@
 
     /* מחיר */
     .price{display:none;margin:0 0 var(--s-3)}
-    .price.show{display:block}
+    .price.show{display:flex;justify-content:flex-start}
     .price-chip{
       display:inline-flex; align-items:center; gap:10px;
       padding:10px 16px; border-radius:999px; background:#fff3e0;
@@ -131,17 +131,24 @@
     }
     .size-badge{
       font-weight:700; padding:4px 10px; border-radius:999px; border:1px dashed var(--accent); background:#fff; font-size:14px;
+      text-align:center;
     }
-    .size-badge:empty{ display:none; } /* ← לא יופיע “עיגול” כשאין טקסט */
+    .size-badge:empty{ display:none; }
 
     /* כפתור */
     .wa-btn{
-      margin-top:auto; /* שומר מרחק בריא כלפי מעלה */
+      margin-top:auto;
       display:inline-block; padding:12px 16px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:700;
-      transition:.2s background,.2s transform,.2s box-shadow
+      transition:.2s background,.2s transform,.2s box-shadow; text-align:center;
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
     .wa-btn.disabled{opacity:.55; pointer-events:auto} /* ניתן ללחוץ לטובת הטוסט */
+
+    /* מיקוד טוב יותר במובייל: מרכז מחיר + כפתור */
+    @media (max-width: 600px){
+      .price.show{justify-content:center}
+      .wa-btn{display:block; width:100%; text-align:center}
+    }
 
     /* טוסט */
     .toast{
