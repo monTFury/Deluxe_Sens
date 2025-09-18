@@ -6,7 +6,7 @@
   <title>קטלוג בשמי בוטיק</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
 
-  <!-- Fonts: Assistant לעברית; Inter לשמות האנגליים -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
@@ -27,16 +27,18 @@
       --border:#eadfce;
       --shadow: 0 6px 18px rgba(50,24,0,.06);
 
-      --space-1: 6px;
-      --space-2: 10px;
-      --space-3: 14px;
-      --space-4: 18px;
+      /* ריווחים עקביים */
+      --s-1: 6px;
+      --s-2: 10px;
+      --s-3: 14px;
+      --s-4: 18px;
+      --s-5: 22px;
     }
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      /* רקע עדין */
+      /* רקע עדין וחי */
       background:
         radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
         radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
@@ -50,25 +52,24 @@
 
     .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
     header{text-align:center;padding:32px 16px 8px}
-    .logo{display:block;margin:0 auto var(--space-2);height:var(--logo-h);max-width:90%;object-fit:contain}
+    .logo{display:block;margin:0 auto var(--s-2);height:var(--logo-h);max-width:90%;object-fit:contain}
     header h1{
-      font-family: Assistant, sans-serif;
-      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 var(--space-1); letter-spacing:.2px;
+      font-weight:800;font-size:clamp(26px,3.5vw,40px);margin:0 0 var(--s-1);letter-spacing:.2px
     }
-    header p{margin:var(--space-1) 0;color:var(--muted); font-weight:400}
+    header p{margin:var(--s-1) 0;color:var(--muted);font-weight:400}
     .cta{
-      display:inline-block;margin-top:var(--space-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;
+      display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;
       background:linear-gradient(#fff,#fff9f0);transition:.2s transform,.2s box-shadow,.2s background;box-shadow:var(--shadow)
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-    /* FAQ לפני המוצרים */
+    /* FAQ למעלה */
     .faq{margin:20px 0 28px}
-    .faq h2{font-weight:700; font-size:20px;margin:0 0 var(--space-1)}
+    .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
     .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
     /* גריד מוצרים */
-    .grid{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
     @media (max-width: 900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
     @media (max-width: 600px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
 
@@ -84,7 +85,7 @@
     .imagebox img.active{opacity:1}
     .cnav{
       position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;
-      pointer-events:none; direction:ltr; /* ← מוודא שהכפתור הראשון בצד שמאל והשני בימין */
+      pointer-events:none; direction:ltr; /* ← זה מסדר כיוונים/מיקומים ב-RTL */
     }
     .cbtn{
       pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
@@ -93,21 +94,23 @@
     .cbtn svg{width:18px;height:18px}
     .imagebox.single .cnav{display:none}
 
-    /* טקסטים/ריווחים */
+    /* שם המוצר */
     .card h3{
-      margin:var(--space-3) 0 var(--space-2);
-      font-size:18px; letter-spacing:.1px;
-      font-family: Inter, Assistant, Arial, sans-serif; /* לאנגלית נקי */
+      margin:var(--s-3) 0 var(--s-2);
+      font-size:18px; letter-spacing:.1px; line-height:1.25;
+      font-family: Inter, Assistant, Arial, sans-serif; /* אנגלית נקי */
       font-weight:600; /* לא מודגש מדי */
+      text-align:center;
     }
 
-    .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--space-2)}
+    /* בחירת נפח */
+    .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
     .size-label{font-weight:700}
     .size-select{
       flex:1; padding:10px 12px;
       border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:600; direction: rtl; text-align:right;
       appearance:none;
-      /* חץ בשמאל */
+      /* חץ בצד שמאל */
       background-image:
         linear-gradient(45deg, transparent 50%, var(--accent) 50%),
         linear-gradient(135deg, var(--accent) 50%, transparent 50%),
@@ -119,23 +122,26 @@
     }
 
     /* מחיר */
-    .price{display:none;margin:0 0 var(--space-2)}
+    .price{display:none;margin:0 0 var(--s-3)}
     .price.show{display:block}
     .price-chip{
       display:inline-flex; align-items:center; gap:10px;
-      padding:8px 14px; border-radius:999px; background:#fff3e0;
-      border:1px solid var(--accent); font-weight:800; letter-spacing:.2px;
+      padding:10px 16px; border-radius:999px; background:#fff3e0;
+      border:1px solid var(--accent); font-weight:800; letter-spacing:.2px; font-size:16px;
     }
     .size-badge{
-      font-weight:700; padding:4px 10px; border-radius:999px; border:1px dashed var(--accent); background:#fff;
+      font-weight:700; padding:4px 10px; border-radius:999px; border:1px dashed var(--accent); background:#fff; font-size:14px;
     }
+    .size-badge:empty{ display:none; } /* ← לא יופיע “עיגול” כשאין טקסט */
 
+    /* כפתור */
     .wa-btn{
-      margin-top:auto; display:inline-block; padding:12px 16px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:700;
+      margin-top:auto; /* שומר מרחק בריא כלפי מעלה */
+      display:inline-block; padding:12px 16px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:700;
       transition:.2s background,.2s transform,.2s box-shadow
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
-    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* נותן ללחוץ לטובת הטוסט */
+    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* ניתן ללחוץ לטובת הטוסט */
 
     /* טוסט */
     .toast{
@@ -153,8 +159,8 @@
     <a class="cta" id="waTop" target="_blank" rel="noopener">דברו איתי ב-WhatsApp</a>
   </header>
 
-  <!-- FAQ לפני המוצרים -->
   <main class="wrap">
+    <!-- FAQ קודם -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp בכרטיס וההודעה תתמלא אוטומטית.</div></details>
@@ -212,9 +218,8 @@
       t.className = 'toast';
       t.textContent = msg;
       document.body.appendChild(t);
-      // מרכז מעל הכפתור, עם תיקון גלילה
       const r = nearEl.getBoundingClientRect();
-      const top = window.scrollY + r.top - 46; // קצת מעל
+      const top = window.scrollY + r.top - 46;  // קצת מעל הכפתור
       const left = window.scrollX + r.left + (r.width/2) - (t.offsetWidth/2);
       t.style.top = Math.max(10, top) + 'px';
       t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
@@ -226,18 +231,17 @@
     function renderImages(card, files){
       const box = card.querySelector('.imagebox');
       box.innerHTML = '';
-      let count = 0;
-
       files.forEach((file, idx) => {
         const img = document.createElement('img');
         img.src = `images/${file}`;
         img.alt = card.dataset.name || '';
         img.className = idx===0 ? 'active' : '';
         img.onerror = () => { img.remove(); updateNav(); };
-        img.onload  = () => { count++; updateNav(); };
+        img.onload  = () => { updateNav(); };
         box.appendChild(img);
       });
 
+      // ניווט (כיוונים תקינים ב-RTL בזכות direction:ltr על .cnav)
       const nav = document.createElement('div');
       nav.className = 'cnav';
       nav.innerHTML = `
@@ -304,7 +308,7 @@
       document.querySelectorAll('.card').forEach((card, idx)=>{
         const p = products[idx];
 
-        // תצוגת 100 מ״ל כברירת מחדל
+        // ברירת מחדל – מציגים 100 מ״ל
         renderImages(card, p.baseImages);
 
         const select    = card.querySelector('.size-select');
