@@ -89,8 +89,8 @@
 
     <section class="faq">
       <h2>שאלות נפוצות</h2>
-      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100ml / 10ml Refillable / 5ml Sample), לוחצים על כפתור ה-WhatsApp בכרטיס, ההודעה תתמלא אוטומטית ושולחים.</div></details>
-      <details><summary>דוגמיות 5ml ו-10ml</summary><div>5ml — טעימה נוחה; 10ml — מיכל מילוי-מחדש (Refillable) לשימוש יומיומי.</div></details>
+      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100ml / 10ml Refillable / 5ml Sample), לוחצים על כפתור ה-WhatsApp בכרטיס; ההודעה תתמלא אוטומטית.</div></details>
+      <details><summary>דוגמיות 5ml ו-10ml</summary><div>5ml — טעימה קצרה; 10ml — מיכל מילוי-מחדש (Refillable) לנשיאה יומית.</div></details>
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
   </main>
@@ -103,33 +103,29 @@
     // מספר ה-WhatsApp שלך (בפורמט בינלאומי, ללא +):
     const WA_PHONE = "972508939729";
 
-    // 🖼 אם תרצה הוספת תמונות לקרוסלה:
-    // פשוט העלה גם images/1-2.jpg , images/1-3.jpg (וכן הלאה לכל מוצר).
-    // הקוד ינסה להציג אותן; אם לא קיימות—הקרוסלה תישאר עם התמונה הראשונה בלבד.
-
-    // רשימת מוצרים (41), תמונה ראשית: images/N.jpg, שמות לדוגמה, מחירים לדוגמה
-    // 100ml = מחיר מלא; 10ml ו-5ml = דוגמיות/מילוי-מחדש
-    const products = Array.from({length: 41}, (_, i) => {
-      const n = i + 1;
-      const names = [
-        "Amber No.1","Citrus Breeze","Woody Trail","Musk Velvet","Ocean Mist","Spice Route","Rose Garden","Vanilla Beam","Night Oud","Fresh Linen",
-        "Golden Sandal","Bergamot Leaf","Cedar Grove","Patchouli Noir","Leather Smoke","Lavender Hill","Fig Blossom","Neroli Sun","White Tea","Ambergris Tide",
-        "Tonka Drift","Forest Rain","Saffron Ember","Blackcurrant Muse","Ginger Spark","Tuberose Cloud","Sacred Myrrh","Pine Needle","Pear Shade","Orchid Veil",
-        "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
-      ];
+    // products: 41 מוצרים, תמונה ראשית images/N.jpg
+    // אפשר להוסיף בעתיד גם images/N-2.jpg , images/N-3.jpg לקרוסלה לכל מוצר
+    const names = [
+      "Amber No.1","Citrus Breeze","Woody Trail","Musk Velvet","Ocean Mist","Spice Route","Rose Garden","Vanilla Beam","Night Oud","Fresh Linen",
+      "Golden Sandal","Bergamot Leaf","Cedar Grove","Patchouli Noir","Leather Smoke","Lavender Hill","Fig Blossom","Neroli Sun","White Tea","Ambergris Tide",
+      "Tonka Drift","Forest Rain","Saffron Ember","Blackcurrant Muse","Ginger Spark","Tuberose Cloud","Sacred Myrrh","Pine Needle","Pear Shade","Orchid Veil",
+      "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
+    ];
+    const products = Array.from({length:41}, (_,i) => {
+      const n = i+1;
       return {
-        id: n,
-        name: names[i] || `Perfume ${n}`,
-        sku: `P${String(n).padStart(2,'0')}`,
-        price100: 180,   // מחיר מלא לדוגמה
-        price10: 45,     // Y לדוגמה (Refillable 10ml)
-        price5: 25,      // X לדוגמה (Sample 5ml)
-        images: [`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`], // קיימת בוודאות רק הראשונה
-        note: "EDP"
+        id:n,
+        name:names[i] || `Perfume ${n}`,
+        sku:`P${String(n).padStart(2,'0')}`,
+        price100:180,  // מחיר מלא לדוגמה
+        price10:45,    // 10ml Refillable (Y לדוגמה)
+        price5:25,     // 5ml Sample (X לדוגמה)
+        images:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`], // הראשונה קיימת; השאר אופציונליות
+        note:"EDP"
       };
     });
 
-    function buildWaHref(p, sizeLabel, price) {
+    function buildWaHref(p, sizeLabel, price){
       const lines = [
         "היי! מעוניין/ת בבושם:",
         `${p.name} (קוד: ${p.sku})`,
@@ -140,23 +136,114 @@
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
-    function renderProducts() {
-      const container = document.getElementById('products');
+    function renderProducts(){
+      const el = document.getElementById('products');
+      el.innerHTML = products.map(p => {
+        const defaultSize = "100ml";
+        const defaultPrice = p.price100;
 
-      container.innerHTML = products.map(p => {
-        // ברירת מחדל: 100ml
-        const sizeLabel = "100ml";
-        const price = p.price100;
-
-        const slides = p.images.map((file, idx) => `
-          <div class="slide ${idx===0 ? 'active' : ''}">
+        const slidesHtml = p.images.map((file,idx)=>`
+          <div class="slide ${idx===0?'active':''}">
             <img src="images/${file}" alt="${p.name}" onerror="this.parentElement.remove()">
           </div>
-        ").join("");`
+        `).join('');
 
-We need to correct this code block: The backtick string has quotes. Let's continue generating corrected code.
+        const waHref = buildWaHref(p, defaultSize, defaultPrice);
 
-We must ensure code is valid JS.
+        return `
+          <article class="card" data-id="${p.id}" data-sku="${p.sku}">
+            <div class="carousel" data-idx="0">
+              <div class="slides">
+                ${slidesHtml}
+              </div>
+              <div class="nav">
+                <button class="prev" aria-label="הקודם">‹</button>
+                <button class="next" aria-label="הבא">›</button>
+              </div>
+              <div class="dots"></div>
+            </div>
 
-We will rebuild renderProducts string building carefully. Let's write full script content.
+            <h3>${p.name}</h3>
+            <p class="meta">${p.note}</p>
 
+            <div class="sizes">
+              <button class="size-btn active" data-size="100ml" data-price="${p.price100}">100ml ₪${p.price100}</button>
+              <button class="size-btn" data-size="10ml Refillable" data-price="${p.price10}">10ml Refill ₪${p.price10}</button>
+              <button class="size-btn" data-size="5ml Sample" data-price="${p.price5}">5ml ₪${p.price5}</button>
+            </div>
+
+            <p class="price">₪<span class="price-val">${defaultPrice}</span></p>
+
+            <a class="wa-btn" href="${waHref}" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
+          </article>
+        `;
+      }).join('');
+
+      // אינטראקציות לכל כרטיס
+      document.querySelectorAll('.card').forEach((card, idx)=>{
+        const product = products[idx];
+
+        // --- קרוסלה ---
+        const carousel = card.querySelector('.carousel');
+        const slides = Array.from(carousel.querySelectorAll('.slide'));
+        const dotsWrap = carousel.querySelector('.dots');
+
+        // בונים נקודות לפי כמות שקיימת בפועל אחרי onerror/remove
+        function rebuildDots(){
+          const currentSlides = Array.from(carousel.querySelectorAll('.slide'));
+          dotsWrap.innerHTML = currentSlides.map((_,i)=>`<span class="dot ${i===0?'active':''}" data-i="${i}"></span>`).join('');
+        }
+        rebuildDots();
+
+        function gotoSlide(i){
+          const currentSlides = Array.from(carousel.querySelectorAll('.slide'));
+          if (!currentSlides.length) return;
+          const m = currentSlides.length;
+          i = ((i % m) + m) % m;
+          currentSlides.forEach((s,k)=>s.classList.toggle('active', k===i));
+          carousel.dataset.idx = i;
+          dotsWrap.querySelectorAll('.dot').forEach((d,k)=>d.classList.toggle('active', k===i));
+        }
+        const prev = carousel.querySelector('.prev');
+        const next = carousel.querySelector('.next');
+        prev.addEventListener('click', ()=> gotoSlide(Number(carousel.dataset.idx||0)-1));
+        next.addEventListener('click', ()=> gotoSlide(Number(carousel.dataset.idx||0)+1));
+        dotsWrap.addEventListener('click', e=>{
+          const dot = e.target.closest('.dot');
+          if (!dot) return;
+          gotoSlide(Number(dot.dataset.i));
+        });
+
+        // אם תמונות אופציונליות הוסרו, בונה נקודות מחדש לאחר טעינה
+        setTimeout(()=>{ rebuildDots(); gotoSlide(0); }, 400);
+
+        // --- בחירת נפח + מחיר + וואטסאפ ---
+        const sizeBtns = card.querySelectorAll('.size-btn');
+        const priceEl = card.querySelector('.price-val');
+        const waBtn = card.querySelector('.wa-btn');
+
+        function selectSize(btn){
+          sizeBtns.forEach(b=>b.classList.toggle('active', b===btn));
+          const price = Number(btn.dataset.price || 0);
+          const sizeLabel = btn.dataset.size;
+          priceEl.textContent = price;
+          waBtn.href = buildWaHref(product, sizeLabel, price);
+        }
+        sizeBtns.forEach(btn=>{
+          btn.addEventListener('click', ()=> selectSize(btn));
+        });
+      });
+    }
+
+    function initTopWA(){
+      const waTop = document.getElementById('waTop');
+      if (waTop) waTop.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderProducts();
+      initTopWA();
+    });
+  </script>
+</body>
+</html>
