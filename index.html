@@ -7,7 +7,7 @@
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@600;800&family=Inter:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Open Graph -->
   <meta property="og:title" content="קטלוג בשמי בוטיק" />
@@ -18,7 +18,7 @@
 
   <style>
     :root{
-      --logo-h: 160px; /* ↔ שנה כאן את גובה הלוגו */
+      --logo-h: 160px; /* ↔ שינוי גובה לוגו */
       --bg: #fbf8f3;
       --card: #ffffff;
       --fg: #1a1a1a;
@@ -30,7 +30,7 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      /* רקע עדין, לא “יבש” */
+      /* רקע עדין וחי */
       background:
         radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
         radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
@@ -47,7 +47,7 @@
     .logo{display:block;margin:0 auto 12px;height:var(--logo-h);max-width:90%;object-fit:contain}
     header h1{
       font-family: Rubik, "Noto Serif Hebrew", serif;
-      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 8px; letter-spacing:.3px;
+      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 8px; letter-spacing:.2px;
     }
     header p{margin:6px 0;color:var(--muted)}
     .cta{
@@ -56,41 +56,77 @@
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    /* FAQ לפני המוצרים */
+    .faq{margin:20px 0 28px}
+    .faq h2{font-family: Rubik, "Noto Serif Hebrew", serif; font-size:20px;margin:0 0 8px}
+    .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
+
+    /* גריד מוצרים: במובייל 2 בעמודה, בינוני 3, גדול אוטומטי */
+    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    @media (max-width: 900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+    @media (max-width: 600px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.2s transform,.2s box-shadow}
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
-    /* תצוגת תמונה/קרוסלה מינימלית */
+    /* קרוסלה */
     .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
     .imagebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .2s}
     .imagebox img.active{opacity:1}
+    .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
+    .cbtn{
+      pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
+      background:#fff9f0; display:flex;align-items:center;justify-content:center; box-shadow:var(--shadow)
+    }
+    .cbtn svg{width:18px;height:18px}
+    .cbtn:disabled{opacity:.3}
+    .imagebox.single .cnav{display:none}
 
-    .card h3{margin:10px 0 4px;font-size:18px;font-weight:800;letter-spacing:.2px;font-family: Rubik, "Noto Serif Hebrew", serif}
-    .meta{color:var(--muted);font-size:14px}
+    .card h3{
+      margin:10px 0 4px;font-size:18px;font-weight:700;letter-spacing:.1px;
+      /* Inter ללועזית, Rubik לעברית */
+      font-family: Inter, Rubik, Arial, sans-serif;
+    }
 
     .size-row{display:flex;gap:8px;align-items:center;margin-top:8px}
     .size-label{font-weight:700}
     .size-select{
-      flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:700;
-      appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--accent) 50%), linear-gradient(135deg, var(--accent) 50%, transparent 50%), linear-gradient(to right, #fff, #fff);
-      background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px), 100% 0;
-      background-size: 6px 6px, 6px 6px, 2.5em 2.5em; background-repeat:no-repeat;
+      flex:1; padding:10px 12px;
+      border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:700; direction: rtl; text-align:right;
+      /* חץ בשמאל */
+      appearance:none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+        linear-gradient(135deg, var(--accent) 50%, transparent 50%),
+        linear-gradient(to left, #fff, #fff);
+      background-position:
+        16px 50%, 24px 50%, 0 0;
+      background-size:8px 8px, 8px 8px, 2.5em 100%;
+      background-repeat:no-repeat;
+      padding-left:48px; /* מקום לחץ */
     }
 
-    .price{font-weight:800;margin:10px 0 0;display:none}
+    /* מחיר כתוית ברורה */
+    .price{display:none;margin:10px 0 0}
     .price.show{display:block}
+    .price-chip{
+      display:inline-block; padding:8px 14px; border-radius:999px; background:#fff3e0;
+      border:1px solid var(--accent); font-weight:800; letter-spacing:.2px;
+    }
 
     .wa-btn{
       margin-top:auto; display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:800;
-      transition:.2s background,.2s transform,.2s box-shadow; pointer-events:auto
+      transition:.2s background,.2s transform,.2s box-shadow
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
-    .wa-btn.disabled{opacity:.5; pointer-events:none}
+    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* כן נלחיץ כדי להראות התראה */
 
-    footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding:24px 16px 40px;text-align:center}
-    .faq{margin-top:34px}
-    .faq h2{font-family: Rubik, "Noto Serif Hebrew", serif; font-size:20px;margin:0 0 8px}
-    .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
+    /* טוסט */
+    .toast{
+      position:fixed; z-index:9999; padding:10px 14px; border-radius:12px; background:#111; color:#fff;
+      font-size:14px; box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.2s
+    }
+    .toast.show{opacity:1; transform:translateY(0)}
   </style>
 </head>
 <body>
@@ -101,15 +137,16 @@
     <a class="cta" id="waTop" target="_blank" rel="noopener">דברו איתי ב-WhatsApp</a>
   </header>
 
+  <!-- FAQ לפני המוצרים -->
   <main class="wrap">
-    <section class="grid" id="products"></section>
-
     <section class="faq">
       <h2>שאלות נפוצות</h2>
-      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר מוצג, לוחצים על כפתור ה-WhatsApp בכרטיס וההודעה תתמלא אוטומטית.</div></details>
-      <details><summary>דוגמיות</summary><div>5 מ״ל — טעימה קצרה; 10 מ״ל — מיכל למילוי־מחדש (Refillable) לנשיאה יומיומית.</div></details>
+      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp בכרטיס וההודעה תתמלא אוטומטית.</div></details>
+      <details><summary>דוגמיות</summary><div>5 מ״ל — טעימה קצרה • 10 מ״ל — מיכל למילוי-מחדש (Refillable) לנשיאה יומיומית.</div></details>
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
+
+    <section class="grid" id="products"></section>
   </main>
 
   <footer class="wrap">
@@ -120,7 +157,7 @@
     // מספר ה-WhatsApp שלך (בפורמט בינלאומי, ללא +):
     const WA_PHONE = "972508939729";
 
-    // שמות באנגלית (אחידות), 41 פריטים
+    // שמות באנגלית (41 פריטים)
     const NAMES = [
       "Amber No.1","Citrus Breeze","Woody Trail","Musk Velvet","Ocean Mist","Spice Route","Rose Garden","Vanilla Beam","Night Oud","Fresh Linen",
       "Golden Sandal","Bergamot Leaf","Cedar Grove","Patchouli Noir","Leather Smoke","Lavender Hill","Fig Blossom","Neroli Sun","White Tea","Ambergris Tide",
@@ -128,17 +165,17 @@
       "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
     ];
 
-    // בניית רשימת מוצרים (תמונה ראשית images/N.jpg; וריאנטים לדוגמיות: N-10.jpg / N-5.jpg אם יועלו)
+    // מוצרים: 100 מ״ל = N.jpg (+N-2.jpg/N-3.jpg אופציונלי), דוגמיות: N-10.jpg / N-5.jpg
     const products = Array.from({length:41}, (_,i) => {
       const n = i+1;
       return {
         id:n,
         name:NAMES[i] || `Perfume ${n}`,
         sku:`P${String(n).padStart(2,'0')}`,
-        price:{ "100":180, "10":45, "5":25 },  // מחירי דוגמה — נשנה בקלות בהמשך
-        baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`], // קיימת בוודאות הראשונה
-        sample10:[`${n}-10.jpg`], // אופציונלי
-        sample5:[`${n}-5.jpg`],   // אופציונלי
+        price:{ "100":180, "10":45, "5":25 },  // מחירי דוגמה
+        baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`],
+        sample10:[`${n}-10.jpg`],
+        sample5:[`${n}-5.jpg`],
       };
     });
 
@@ -153,20 +190,68 @@
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
-    // יוצר/מחליף את אזור התמונות לפי בחירת נפח
-    function renderImages(container, files){
-      const box = container.querySelector('.imagebox');
-      const oldImgs = box.querySelectorAll('img');
-      oldImgs.forEach(el => el.remove());
+    // טוסט עדין
+    function showToast(msg, nearEl){
+      const t = document.createElement('div');
+      t.className = 'toast';
+      t.textContent = msg;
+      document.body.appendChild(t);
+      const r = nearEl.getBoundingClientRect();
+      const y = r.top - 12; // מעל הכפתור
+      const x = r.right - r.width/2; // אמצע הכפתור
+      t.style.top = Math.max(10, y - t.offsetHeight) + 'px';
+      t.style.left = Math.min(window.innerWidth-10, Math.max(10, x)) + 'px';
+      t.classList.add('show');
+      setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
+    }
 
+    // מצייר/מחליף תמונות בקרוסלה
+    function renderImages(card, files){
+      const box = card.querySelector('.imagebox');
+      box.innerHTML = ''; // ריקון
+      let count = 0;
       files.forEach((file, idx) => {
         const img = document.createElement('img');
         img.src = `images/${file}`;
-        img.alt = container.dataset.name || '';
-        img.className = idx === 0 ? 'active' : '';
-        img.onerror = () => { img.remove(); }; // אם לא קיים – להסיר בשקט
+        img.alt = card.dataset.name || '';
+        img.className = idx===0 ? 'active' : '';
+        img.onerror = () => { img.remove(); updateNav(); };
+        img.onload = () => { count++; updateNav(); };
         box.appendChild(img);
       });
+
+      // חצים
+      const nav = document.createElement('div');
+      nav.className = 'cnav';
+      nav.innerHTML = `
+        <button class="cbtn prev" aria-label="הקודם">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="cbtn next" aria-label="הבא">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </button>`;
+      box.appendChild(nav);
+
+      function updateNav(){
+        const imgs = box.querySelectorAll('img');
+        const single = imgs.length <= 1;
+        box.classList.toggle('single', single);
+      }
+      updateNav();
+
+      let idx = 0;
+      function goto(n){
+        const imgs = [...box.querySelectorAll('img')];
+        if (!imgs.length) return;
+        idx = (n + imgs.length) % imgs.length;
+        imgs.forEach((im,i)=>im.classList.toggle('active', i===idx));
+      }
+      box.querySelector('.prev').addEventListener('click', ()=> goto(idx-1));
+      box.querySelector('.next').addEventListener('click', ()=> goto(idx+1));
     }
 
     function renderProducts(){
@@ -177,10 +262,9 @@
           <div class="imagebox"></div>
 
           <h3>${p.name}</h3>
-          <p class="meta">EDP</p>
 
           <div class="size-row">
-            <span class="size-label">בחר נפח:</span>
+            <span class="size-label">נפח</span>
             <select class="size-select" aria-label="בחר נפח">
               <option value="" selected disabled>בחר נפח…</option>
               <option value="100">100 מ״ל</option>
@@ -189,48 +273,45 @@
             </select>
           </div>
 
-          <p class="price">₪<span class="price-val"></span></p>
+          <p class="price"><span class="price-chip">₪ <span class="price-val"></span></span></p>
 
           <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
       `).join('');
 
-      // מילוי תמונות ברירת מחדל (100 מ״ל) לכל כרטיס
+      // אינטראקציה לכל כרטיס
       document.querySelectorAll('.card').forEach((card, idx)=>{
         const p = products[idx];
+
+        // תמונת ברירת מחדל: 100 מ״ל
         renderImages(card, p.baseImages);
 
         const select = card.querySelector('.size-select');
-        const priceEl = card.querySelector('.price');
+        const priceWrap = card.querySelector('.price');
         const priceVal = card.querySelector('.price-val');
         const waBtn = card.querySelector('.wa-btn');
 
+        // אם לוחצים על כפתור כשהוא מושבת – נציג טוסט
+        waBtn.addEventListener('click', (e)=>{
+          if (waBtn.classList.contains('disabled')) {
+            e.preventDefault();
+            showToast('בחר/י נפח קודם 🙂', waBtn);
+          }
+        });
+
         function onSizeChange(){
           const v = select.value; // "100" | "10" | "5"
-          if(!v){ // שמירה תאורטית, לא אמור לקרות
-            priceEl.classList.remove('show');
-            waBtn.classList.add('disabled');
-            waBtn.href = '#';
+          if (v === "100"){
             renderImages(card, p.baseImages);
-            return;
+          } else if (v === "10"){
+            renderImages(card, p.sample10.concat(p.baseImages));
+          } else if (v === "5"){
+            renderImages(card, p.sample5.concat(p.baseImages));
           }
 
-          // תמונות לפי בחירה
-          if(v === "100"){
-            renderImages(card, p.baseImages);
-          } else if(v === "10"){
-            // אם אין N-10.jpg — יישאר רק N.jpg (כי onerror מסיר)
-            const candidates = p.sample10.concat(p.baseImages);
-            renderImages(card, candidates);
-          } else if(v === "5"){
-            const candidates = p.sample5.concat(p.baseImages);
-            renderImages(card, candidates);
-          }
-
-          // מחיר + לינק וואטסאפ
           const price = p.price[v];
           priceVal.textContent = price;
-          priceEl.classList.add('show');
+          priceWrap.classList.add('show');
 
           const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
