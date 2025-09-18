@@ -54,10 +54,6 @@
       background-image: url('data:image/svg+xml;utf8,<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
       background-size: 300px 300px;
     }
-    body.has-hero::after{
-      content:""; position: fixed; inset:0; pointer-events:none; opacity:.045;
-      background: center/cover no-repeat url("images/bg.jpg");
-    }
 
     a{color:inherit;text-decoration:none}
 
@@ -116,24 +112,25 @@
     .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
     .imagebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .2s}
     .imagebox img.active{opacity:1}
-    .cnav{
-      position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;
-      pointer-events:none; direction:ltr;
-    }
-    .cbtn{
-      pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
-      background:#fff9f0; display:flex;align-items:center;justify-content:center; box-shadow:var(--shadow)
-    }
+    .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none; direction:ltr;}
+    .cbtn{pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border); background:#fff9f0; display:flex;align-items:center;justify-content:center; box-shadow:var(--shadow)}
     .cbtn svg{width:18px;height:18px}
     .imagebox.single .cnav{display:none}
 
+    /* תג מותג */
+    .brand-tag{
+      align-self:center;
+      display:inline-flex; gap:8px; align-items:center;
+      padding:4px 10px; border:1px dashed var(--border); border-radius:999px;
+      font-size:12px; color:var(--muted); background:#fff; margin-top:var(--s-3);
+    }
+
     /* שם המוצר (אנגלית) */
     .card h3{
-      margin:var(--s-3) 0 var(--s-2);
+      margin:var(--s-2) 0 var(--s-2);
       font-size:18px; letter-spacing:.05em; line-height:1.25;
       font-family: Inter, Assistant, Arial, sans-serif;
-      font-weight:700;
-      text-align:center;
+      font-weight:700; text-align:center;
     }
 
     /* בחירת נפח */
@@ -154,19 +151,14 @@
     }
 
     /* מחיר – קלאסי, טיפוגרפי */
-    .price{display:none;margin:0 0 var(--s-2); align-items:baseline; gap:10px; color:var(--fg)}
-    .price.show{display:flex}
+    .price{margin:0 0 var(--s-2); align-items:baseline; gap:10px; color:var(--fg); display:flex}
     .price-amount{font-weight:800; font-size:20px; letter-spacing:.02em}
     .price-sep{color:#b9a98f}
     .price-size{font-weight:600; font-size:14px; color:var(--muted)}
-    @media (max-width: 600px){ .price.show{justify-content:center} }
+    @media (max-width: 600px){ .price{justify-content:center} }
 
     /* הערת 10 מ"ל – קצרה ונקייה */
-    .size-note{
-      display:none; margin:0 0 var(--s-3);
-      font-size:13px; color:var(--muted); font-weight:600; text-align:center;
-      line-height:1.35;
-    }
+    .size-note{display:none; margin:0 0 var(--s-3); font-size:13px; color:var(--muted); font-weight:600; text-align:center; line-height:1.35;}
     .size-note.show{display:block}
 
     /* כפתור */
@@ -180,17 +172,11 @@
     @media (max-width: 600px){ .wa-btn{display:block;width:100%} }
 
     /* טוסט */
-    .toast{
-      position:fixed; z-index:9999; padding:10px 14px; border-radius:12px; background:#111; color:#fff;
-      font-size:14px; box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.2s
-    }
+    .toast{position:fixed; z-index:9999; padding:10px 14px; border-radius:12px; background:#111; color:#fff; font-size:14px; box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.2s}
     .toast.show{opacity:1; transform:translateY(0)}
 
     /* מצב ריק */
-    .empty{
-      text-align:center; color:var(--muted); padding:20px 0;
-      font-weight:700;
-    }
+    .empty{text-align:center; color:var(--muted); padding:20px 0; font-weight:700;}
   </style>
 </head>
 <body>
@@ -253,15 +239,28 @@
       "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
     ];
 
-    // נתוני מוצרים (אפשר לעדכן brand כשיהיו לך מותגים אמיתיים)
+    // מחירי 100 מ״ל מגוונים לכל מוצר (סידור יעבוד גם בלי בחירה)
+    const PRICE_100 = [
+      180,195,170,210,185,220,200,175,230,190,
+      205,215,225,199,240,185,235,210,200,195,
+      205,175,245,190,220,180,225,215,205,235,
+      200,210,185,195,240,205,215,225,190,230,200
+    ]; // 41 ערכים
+
+    function roundTo5(x){ return Math.round(x/5)*5; }
+    function derive10ml(base){ return Math.max(35, roundTo5(base * 0.32)); }
+    function derive5ml(base){ return Math.max(20, roundTo5(base * 0.18)); }
+
+    // נתוני מוצרים (brand יוכנס בעתיד; כרגע נציג "שם מותג")
     const products = Array.from({length:41}, (_,i) => {
       const n = i+1;
+      const base = PRICE_100[i] || 180;
       return {
         id:n,
         name:NAMES[i] || `Perfume ${n}`,
-        brand:"Deluxe Sense",              // ← לעדכון בעתיד לפי טבלת המותגים שלך
+        brand:"", // ← כשיהיו מותגים אמיתיים נמלא כאן
         sku:`P${String(n).padStart(2,'0')}`,
-        price:{ "100":180, "10":45, "5":25 },  // מחירי דוגמה
+        price:{ "100":base, "10":derive10ml(base), "5":derive5ml(base) },
         baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`],
         sample10:[`${n}-10.jpg`],
         sample5:[`${n}-5.jpg`],
@@ -354,10 +353,13 @@
       }
       empty.style.display = 'none';
 
-      el.innerHTML = list.map(p => `
-        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}" data-brand="${p.brand || ''}">
+      el.innerHTML = list.map(p => {
+        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
+        return `
+        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}" data-brand="${displayBrand}">
           <div class="imagebox"></div>
 
+          <div class="brand-tag">${displayBrand}</div>
           <h3>${p.name}</h3>
 
           <div class="size-row">
@@ -370,24 +372,24 @@
             </select>
           </div>
 
+          <!-- מחיר מוצג כברירת מחדל עבור 100 מ"ל -->
           <div class="price" aria-live="polite">
-            <span class="price-amount">₪<span class="price-val"></span></span>
+            <span class="price-amount">₪<span class="price-val">${p.price["100"]}</span></span>
             <span class="price-sep">·</span>
-            <span class="price-size"></span>
+            <span class="price-size">100 מ״ל</span>
           </div>
 
           <p class="size-note" aria-live="polite"></p>
 
           <a class="wa-btn ${selectedById[p.id] ? '' : 'disabled'}" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
-      `).join('');
+      `}).join('');
 
       // אינטראקציה לכל כרטיס
       document.querySelectorAll('.card').forEach((card)=>{
         const pid = Number(card.dataset.id);
         const p = byId[String(pid)];
 
-        // ברירת מחדל – מציגים 100 מ״ל (תמונות), גם אם טרם נבחר נפח
         renderImages(card, p.baseImages);
 
         const select     = card.querySelector('.size-select');
@@ -398,6 +400,7 @@
         const noteEl     = card.querySelector('.size-note');
         const waBtn      = card.querySelector('.wa-btn');
 
+        // כפתור – טוסט אם לא נבחר נפח
         waBtn.addEventListener('click', (e)=>{
           if (waBtn.classList.contains('disabled')) {
             e.preventDefault();
@@ -405,8 +408,18 @@
           }
         });
 
-        function onSizeChange(){
-          const v = select.value; // "100" | "10" | "5"
+        // אם כבר נבחר נפח בעבר – ליישם
+        if (selectedById[pid]) {
+          applySize(selectedById[pid]);
+        } else {
+          // מצב התחלתי: מציגים מחיר 100 מ״ל בלבד, הכפתור נשאר דהוי
+          priceVal.textContent = p.price["100"];
+          priceSize.textContent = "100 מ״ל";
+        }
+
+        select.addEventListener('change', e => applySize(e.target.value));
+
+        function applySize(v){
           selectedById[pid] = v;
 
           if (v === "100"){
@@ -422,7 +435,6 @@
           const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
           priceSize.textContent = sizeLabelHe;
           priceSep.style.display = price && sizeLabelHe ? 'inline' : 'none';
-          priceWrap.classList.add('show');
 
           // הערת 10 מ"ל בלבד
           if (v === "10"){
@@ -436,45 +448,40 @@
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
           waBtn.classList.remove('disabled');
         }
-
-        // אם כבר נבחר נפח בעבר – ליישם מיידית
-        if (selectedById[pid]) {
-          onSizeChange();
-        }
-
-        select.addEventListener('change', onSizeChange);
       });
     }
 
     // ===== סרגל פילטרים =====
     function uniqueBrands(list){
       const s = new Set();
-      list.forEach(p => { if (p.brand) s.add(p.brand); });
+      list.forEach(p => {
+        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
+        s.add(displayBrand);
+      });
       return Array.from(s);
     }
 
     function renderBrandOptions(list){
       const sel = document.getElementById('f-brand');
       const prev = sel.value;
-      // בסיס
       sel.innerHTML = `<option value="">הכל</option>`;
       uniqueBrands(list).forEach(b=>{
         const opt = document.createElement('option');
         opt.value = b; opt.textContent = b;
         sel.appendChild(opt);
       });
-      // משחזר בחירה אם עדיין קיימת
       if ([...sel.options].some(o=>o.value===prev)) sel.value = prev;
     }
 
     function applyFilters(){
       const q = document.getElementById('f-q').value.trim().toLowerCase();
-      const brand = document.getElementById('f-brand').value;
+      const brandSel = document.getElementById('f-brand').value;
       const sort = document.getElementById('f-sort').value;
 
       let list = products.filter(p=>{
+        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
         const matchName = !q || (p.name || '').toLowerCase().includes(q);
-        const matchBrand = !brand || p.brand === brand;
+        const matchBrand = !brandSel || displayBrand === brandSel;
         return matchName && matchBrand;
       });
 
@@ -489,7 +496,6 @@
 
     function initFilters(){
       renderBrandOptions(products);
-
       document.getElementById('f-q').addEventListener('input', applyFilters);
       document.getElementById('f-brand').addEventListener('change', applyFilters);
       document.getElementById('f-sort').addEventListener('change', applyFilters);
@@ -504,13 +510,8 @@
     // ===== Init =====
     document.addEventListener('DOMContentLoaded', ()=>{
       initFilters();
-      renderProducts(); // רינדור ראשון עם כל המוצרים
+      renderProducts(); // רינדור ראשון
       initTopWA();
-
-      // אם bg.jpg קיים – מוסיפים שכבת רקע עדינה מהתמונה
-      fetch('images/bg.jpg', {method:'HEAD'}).then(r=>{
-        if (r.ok) document.body.classList.add('has-hero');
-      }).catch(()=>{});
     });
   </script>
 </body>
