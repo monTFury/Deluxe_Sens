@@ -38,7 +38,6 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      /* רקע עדין וחי */
       background:
         radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
         radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
@@ -85,7 +84,7 @@
     .imagebox img.active{opacity:1}
     .cnav{
       position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;
-      pointer-events:none; direction:ltr; /* ← זה מסדר כיוונים/מיקומים ב-RTL */
+      pointer-events:none; direction:ltr; /* ← מסדר כיוונים/מיקומים ב-RTL */
     }
     .cbtn{
       pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
@@ -99,7 +98,7 @@
       margin:var(--s-3) 0 var(--s-2);
       font-size:18px; letter-spacing:.05em; line-height:1.25;
       font-family: Inter, Assistant, Arial, sans-serif;
-      font-weight:700; /* חיזקנו את ה-BOLD */
+      font-weight:700;
       text-align:center;
     }
 
@@ -118,22 +117,18 @@
       background-position: 16px 50%, 24px 50%, 0 0;
       background-size:8px 8px, 8px 8px, 2.5em 100%;
       background-repeat:no-repeat;
-      padding-left:48px; /* מקום לחץ */
+      padding-left:48px;
     }
 
-    /* מחיר */
-    .price{display:none;margin:0 0 var(--s-3)}
-    .price.show{display:flex;justify-content:flex-start}
-    .price-chip{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 16px; border-radius:999px; background:#fff3e0;
-      border:1px solid var(--accent); font-weight:800; letter-spacing:.2px; font-size:16px;
+    /* מחיר – קלאסי, טיפוגרפי */
+    .price{display:none;margin:0 0 var(--s-3); align-items:baseline; gap:10px; color:var(--fg)}
+    .price.show{display:flex}
+    .price-amount{font-weight:800; font-size:20px; letter-spacing:.02em}
+    .price-sep{color:#b9a98f}
+    .price-size{font-weight:600; font-size:14px; color:var(--muted)}
+    @media (max-width: 600px){
+      .price.show{justify-content:center}
     }
-    .size-badge{
-      font-weight:700; padding:4px 10px; border-radius:999px; border:1px dashed var(--accent); background:#fff; font-size:14px;
-      text-align:center;
-    }
-    .size-badge:empty{ display:none; }
 
     /* כפתור */
     .wa-btn{
@@ -143,12 +138,7 @@
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
     .wa-btn.disabled{opacity:.55; pointer-events:auto} /* ניתן ללחוץ לטובת הטוסט */
-
-    /* מיקוד טוב יותר במובייל: מרכז מחיר + כפתור */
-    @media (max-width: 600px){
-      .price.show{justify-content:center}
-      .wa-btn{display:block; width:100%; text-align:center}
-    }
+    @media (max-width: 600px){ .wa-btn{display:block;width:100%} }
 
     /* טוסט */
     .toast{
@@ -226,7 +216,7 @@
       t.textContent = msg;
       document.body.appendChild(t);
       const r = nearEl.getBoundingClientRect();
-      const top = window.scrollY + r.top - 46;  // קצת מעל הכפתור
+      const top = window.scrollY + r.top - 46;
       const left = window.scrollX + r.left + (r.width/2) - (t.offsetWidth/2);
       t.style.top = Math.max(10, top) + 'px';
       t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
@@ -248,7 +238,6 @@
         box.appendChild(img);
       });
 
-      // ניווט (כיוונים תקינים ב-RTL בזכות direction:ltr על .cnav)
       const nav = document.createElement('div');
       nav.className = 'cnav';
       nav.innerHTML = `
@@ -300,12 +289,11 @@
             </select>
           </div>
 
-          <p class="price">
-            <span class="price-chip">
-              ₪ <span class="price-val"></span>
-              <span class="size-badge"></span>
-            </span>
-          </p>
+          <div class="price" aria-live="polite">
+            <span class="price-amount">₪<span class="price-val"></span></span>
+            <span class="price-sep">·</span>
+            <span class="price-size"></span>
+          </div>
 
           <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
@@ -318,11 +306,12 @@
         // ברירת מחדל – מציגים 100 מ״ל
         renderImages(card, p.baseImages);
 
-        const select    = card.querySelector('.size-select');
-        const priceWrap = card.querySelector('.price');
-        const priceVal  = card.querySelector('.price-val');
-        const sizeBadge = card.querySelector('.size-badge');
-        const waBtn     = card.querySelector('.wa-btn');
+        const select     = card.querySelector('.size-select');
+        const priceWrap  = card.querySelector('.price');
+        const priceVal   = card.querySelector('.price-val');
+        const priceSize  = card.querySelector('.price-size');
+        const priceSep   = card.querySelector('.price-sep');
+        const waBtn      = card.querySelector('.wa-btn');
 
         waBtn.addEventListener('click', (e)=>{
           if (waBtn.classList.contains('disabled')) {
@@ -344,7 +333,8 @@
           const price = p.price[v];
           priceVal.textContent = price;
           const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
-          sizeBadge.textContent = sizeLabelHe;
+          priceSize.textContent = sizeLabelHe;
+          priceSep.style.display = price && sizeLabelHe ? 'inline' : 'none';
           priceWrap.classList.add('show');
 
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
