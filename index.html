@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="קטלוג בשמי בוטיק" />
+  <meta property="og:title" content="קטלוג בשמי דלוקס סנס" />
   <meta property="og:description" content="בשמים בייצור פרטי • קנייה דרך WhatsApp" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og.jpg" />
@@ -26,13 +26,7 @@
       --accent:#b07a2a;
       --border:#eadfce;
       --shadow: 0 6px 18px rgba(50,24,0,.06);
-
-      /* ריווחים עקביים */
-      --s-1: 6px;
-      --s-2: 10px;
-      --s-3: 14px;
-      --s-4: 18px;
-      --s-5: 22px;
+      --s-1: 6px; --s-2: 10px; --s-3: 14px; --s-4: 18px; --s-5: 22px;
     }
 
     *{box-sizing:border-box}
@@ -109,7 +103,6 @@
       flex:1; padding:10px 12px;
       border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:600; direction: rtl; text-align:right;
       appearance:none;
-      /* חץ בצד שמאל */
       background-image:
         linear-gradient(45deg, transparent 50%, var(--accent) 50%),
         linear-gradient(135deg, var(--accent) 50%, transparent 50%),
@@ -151,7 +144,7 @@
 <body>
   <header class="wrap">
     <img src="images/logo.png" alt="לוגו המותג" class="logo" onerror="this.style.display='none'">
-    <h1>קטלוג בשמי בוטיק</h1>
+    <h1>קטלוג בשמי דלוקס סנס</h1>
     <p>ייצור פרטי בכמויות קטנות. בחירה, שאלות והזמנה דרך WhatsApp.</p>
     <a class="cta" id="waTop" target="_blank" rel="noopener">דברו איתי ב-WhatsApp</a>
   </header>
@@ -209,17 +202,20 @@
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
-    // טוסט עדין
+    // טוסט עדין — מיקום נכון ל-position: fixed (ללא scrollX/scrollY)
     function showToast(msg, nearEl){
       const t = document.createElement('div');
       t.className = 'toast';
       t.textContent = msg;
       document.body.appendChild(t);
-      const r = nearEl.getBoundingClientRect();
-      const top = window.scrollY + r.top - 46;
-      const left = window.scrollX + r.left + (r.width/2) - (t.offsetWidth/2);
+
+      const r = nearEl.getBoundingClientRect(); // קואורדינטות יחסית למסך
+      const top = (r.top - 46);                 // מעט מעל הכפתור
+      const left = (r.left + (r.width/2) - (t.offsetWidth/2));
+
       t.style.top = Math.max(10, top) + 'px';
       t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
+
       requestAnimationFrame(()=> t.classList.add('show'));
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
