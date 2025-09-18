@@ -5,40 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>קטלוג בשמי בוטיק</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
-  <!-- Open Graph (for pretty sharing) -->
+  <!-- Fonts (עברית אלגנטית) -->
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Noto+Serif+Hebrew:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Open Graph -->
   <meta property="og:title" content="קטלוג בשמי בוטיק" />
   <meta property="og:description" content="בשמים בייצור פרטי • קנייה דרך WhatsApp" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og.jpg" />
   <link rel="icon" href="images/favicon.ico" />
   <style>
-    :root { --bg:#ffffff; --fg:#111; --muted:#666; --accent:#0a7; --border:#e9e9e9; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, -apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"; background:var(--bg); color:var(--fg); }
-    a { color: inherit; }
-    header { padding: 32px 16px 16px; text-align:center; }
-    .logo { height:56px; margin-bottom:10px; object-fit:contain; }
-    header h1 { margin: 0 0 8px; font-size: clamp(24px,3vw,36px); }
-    header p { margin: 6px 0; color:var(--muted); }
-    .wrap { max-width:1120px; margin:0 auto; padding:0 16px 48px; }
-    .cta { display:inline-block; margin-top:12px; padding:12px 16px; border:1px solid var(--accent); border-radius:12px; text-decoration:none; font-weight:600; }
-    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .card { border:1px solid var(--border); border-radius:14px; padding:12px; background:#fff; display:flex; flex-direction:column; }
-    .card img { width:100%; height:280px; object-fit:cover; border-radius:10px; background:#f5f5f5; }
-    .card h3 { margin:10px 0 4px; font-size:18px; }
-    .card p { margin:4px 0; color:#333; }
-    .meta { color:var(--muted); font-size:14px; }
-    .price { font-weight:700; margin-top:4px; }
-    .wa-btn { margin-top:auto; display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid var(--accent); text-decoration:none; align-self:flex-start; }
-    footer { color:var(--muted); font-size:14px; border-top:1px solid var(--border); padding:20px 16px 40px; }
-    .faq { margin-top:32px; }
-    .faq h2 { font-size:20px; margin-bottom:8px; }
-    .faq details { border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin:8px 0; }
+    :root{
+      /* ↔ שנה כאן את גודל הלוגו (למשל 120px / 160px / 200px) */
+      --logo-h: 300px;
+      /* פלטת צבעים בוטיקית */
+      --bg: #fbf8f3;      /* רקע חמים */
+      --card: #ffffff;
+      --fg: #1a1a1a;
+      --muted:#6f6a5f;
+      --accent:#b07a2a;   /* ענברי זהוב */
+      --border:#eadfce;
+      --shadow: 0 6px 18px rgba(50,24,0,.06);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0}
+    body{
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #fff 0, rgba(255,255,255,.6) 40%, transparent 70%),
+        linear-gradient(#fff, var(--bg));
+      color:var(--fg);
+      font-family: Heebo, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior:smooth;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:1160px; margin:0 auto; padding:0 16px 56px}
+    header{
+      text-align:center; padding:32px 16px 8px;
+    }
+    .logo{
+      display:block; margin:0 auto 12px;
+      height:var(--logo-h); max-width:90%; object-fit:contain;
+    }
+    header h1{
+      font-family:"Noto Serif Hebrew", serif;
+      font-weight:700; font-size:clamp(26px,3.5vw,40px); margin:0 0 8px;
+    }
+    header p{margin:6px 0; color:var(--muted)}
+    .cta{
+      display:inline-block; margin-top:12px; padding:12px 18px;
+      border:1px solid var(--accent); border-radius:14px; font-weight:700;
+      background:linear-gradient(#fff, #fff9f0);
+      transition:.2s transform,.2s box-shadow,.2s background;
+      box-shadow: var(--shadow);
+    }
+    .cta:hover{transform:translateY(-2px); box-shadow:0 10px 20px rgba(176,122,42,.12)}
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    }
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:12px; display:flex; flex-direction:column; box-shadow:var(--shadow);
+      transition:.2s transform,.2s box-shadow;
+    }
+    .card:hover{transform:translateY(-3px); box-shadow:0 12px 24px rgba(32,18,0,.08)}
+    .card img{
+      width:100%; height:280px; border-radius:12px; object-fit:cover; background:#f1f1f1;
+    }
+    .card h3{
+      margin:10px 0 4px; font-size:18px; font-weight:700; letter-spacing:.2px;
+      font-family:"Noto Serif Hebrew", serif;
+    }
+    .meta{color:var(--muted); font-size:14px}
+    .price{font-weight:800; margin:6px 0 0}
+    .wa-btn{
+      margin-top:auto; display:inline-block; padding:10px 14px; border-radius:12px;
+      border:1px solid var(--accent); background:#fff; font-weight:700;
+      transition:.2s background,.2s transform,.2s box-shadow;
+    }
+    .wa-btn:hover{background:#fff6ea; transform:translateY(-1px)}
+    footer{
+      color:var(--muted); font-size:14px; border-top:1px solid var(--border);
+      padding:24px 16px 40px; text-align:center;
+    }
+    .faq{margin-top:34px}
+    .faq h2{font-family:"Noto Serif Hebrew", serif; font-size:20px; margin:0 0 8px}
+    .faq details{border:1px solid var(--border); border-radius:12px; padding:10px 12px; margin:8px 0; background:#fff; box-shadow:var(--shadow)}
   </style>
 </head>
 <body>
   <header class="wrap">
-    <!-- לוגו: יוסתר אוטומטית אם הקובץ לא קיים -->
+    <!-- לוגו – יופיע אם קיים images/logo.png -->
     <img src="images/logo.png" alt="לוגו המותג" class="logo" onerror="this.style.display='none'">
     <h1>קטלוג בשמי בוטיק</h1>
     <p>ייצור פרטי בכמויות קטנות. בחירה, שאלות והזמנה דרך WhatsApp.</p>
@@ -46,427 +103,11 @@
   </header>
 
   <main class="wrap">
-    <!--
-      ✅ הוספת מוצר: שכפל <article class="card"> ושנה data-*, התמונה, הכותרת והתיאור.
-      ✅ לכל מוצר נתתי שם גנרי + SKU P01..P41. כל התמונות: images/1.jpg ... images/41.jpg
-    -->
-    <section class="grid" id="products">
-
-      <!-- 1 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Amber No.1" data-sku="P01" data-price="180" data-volume="50ml">
-        <img src="images/1.jpg" alt="Amber No.1" loading="lazy" />
-        <h3 itemprop="name">Amber No.1</h3>
-        <p class="meta">אמברי חמים • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Amber No.1","description":"אמברי חמים • 50ml EDP","image":"images/1.jpg","sku":"P01","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 2 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Citrus Breeze" data-sku="P02" data-price="180" data-volume="50ml">
-        <img src="images/2.jpg" alt="Citrus Breeze" loading="lazy" />
-        <h3 itemprop="name">Citrus Breeze</h3>
-        <p class="meta">הדרי רענן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Citrus Breeze","description":"הדרי רענן • 50ml EDP","image":"images/2.jpg","sku":"P02","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 3 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Woody Trail" data-sku="P03" data-price="180" data-volume="50ml">
-        <img src="images/3.jpg" alt="Woody Trail" loading="lazy" />
-        <h3 itemprop="name">Woody Trail</h3>
-        <p class="meta">וודי עצי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Woody Trail","description":"וודי עצי • 50ml EDP","image":"images/3.jpg","sku":"P03","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 4 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Musk Velvet" data-sku="P04" data-price="180" data-volume="50ml">
-        <img src="images/4.jpg" alt="Musk Velvet" loading="lazy" />
-        <h3 itemprop="name">Musk Velvet</h3>
-        <p class="meta">מאסק קטיפתי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Musk Velvet","description":"מאסק קטיפתי • 50ml EDP","image":"images/4.jpg","sku":"P04","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 5 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Ocean Mist" data-sku="P05" data-price="180" data-volume="50ml">
-        <img src="images/5.jpg" alt="Ocean Mist" loading="lazy" />
-        <h3 itemprop="name">Ocean Mist</h3>
-        <p class="meta">ימי רענן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Ocean Mist","description":"ימי רענן • 50ml EDP","image":"images/5.jpg","sku":"P05","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 6 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Spice Route" data-sku="P06" data-price="180" data-volume="50ml">
-        <img src="images/6.jpg" alt="Spice Route" loading="lazy" />
-        <h3 itemprop="name">Spice Route</h3>
-        <p class="meta">תבליני חם • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Spice Route","description":"תבליני חם • 50ml EDP","image":"images/6.jpg","sku":"P06","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 7 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Rose Garden" data-sku="P07" data-price="180" data-volume="50ml">
-        <img src="images/7.jpg" alt="Rose Garden" loading="lazy" />
-        <h3 itemprop="name">Rose Garden</h3>
-        <p class="meta">פרחוני ורדים • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Rose Garden","description":"פרחוני ורדים • 50ml EDP","image":"images/7.jpg","sku":"P07","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 8 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Vanilla Beam" data-sku="P08" data-price="180" data-volume="50ml">
-        <img src="images/8.jpg" alt="Vanilla Beam" loading="lazy" />
-        <h3 itemprop="name">Vanilla Beam</h3>
-        <p class="meta">וניל עדין • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Vanilla Beam","description":"וניל עדין • 50ml EDP","image":"images/8.jpg","sku":"P08","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 9 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Night Oud" data-sku="P09" data-price="180" data-volume="50ml">
-        <img src="images/9.jpg" alt="Night Oud" loading="lazy" />
-        <h3 itemprop="name">Night Oud</h3>
-        <p class="meta">אוד עמוק • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Night Oud","description":"אוד עמוק • 50ml EDP","image":"images/9.jpg","sku":"P09","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 10 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Fresh Linen" data-sku="P10" data-price="180" data-volume="50ml">
-        <img src="images/10.jpg" alt="Fresh Linen" loading="lazy" />
-        <h3 itemprop="name">Fresh Linen</h3>
-        <p class="meta">נקי ורענן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Fresh Linen","description":"נקי ורענן • 50ml EDP","image":"images/10.jpg","sku":"P10","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 11 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Golden Sandal" data-sku="P11" data-price="180" data-volume="50ml">
-        <img src="images/11.jpg" alt="Golden Sandal" loading="lazy" />
-        <h3 itemprop="name">Golden Sandal</h3>
-        <p class="meta">סנדלווד מוזהב • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Golden Sandal","description":"סנדלווד מוזהב • 50ml EDP","image":"images/11.jpg","sku":"P11","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 12 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Bergamot Leaf" data-sku="P12" data-price="180" data-volume="50ml">
-        <img src="images/12.jpg" alt="Bergamot Leaf" loading="lazy" />
-        <h3 itemprop="name">Bergamot Leaf</h3>
-        <p class="meta">ברגמוט רענן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Bergamot Leaf","description":"ברגמוט רענן • 50ml EDP","image":"images/12.jpg","sku":"P12","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 13 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Cedar Grove" data-sku="P13" data-price="180" data-volume="50ml">
-        <img src="images/13.jpg" alt="Cedar Grove" loading="lazy" />
-        <h3 itemprop="name">Cedar Grove</h3>
-        <p class="meta">ארז יבש • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Cedar Grove","description":"ארז יבש • 50ml EDP","image":"images/13.jpg","sku":"P13","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 14 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Patchouli Noir" data-sku="P14" data-price="180" data-volume="50ml">
-        <img src="images/14.jpg" alt="Patchouli Noir" loading="lazy" />
-        <h3 itemprop="name">Patchouli Noir</h3>
-        <p class="meta">פצ'ולי כהה • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Patchouli Noir","description":"פצ'ולי כהה • 50ml EDP","image":"images/14.jpg","sku":"P14","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 15 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Leather Smoke" data-sku="P15" data-price="180" data-volume="50ml">
-        <img src="images/15.jpg" alt="Leather Smoke" loading="lazy" />
-        <h3 itemprop="name">Leather Smoke</h3>
-        <p class="meta">עור מעושן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Leather Smoke","description":"עור מעושן • 50ml EDP","image":"images/15.jpg","sku":"P15","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 16 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Lavender Hill" data-sku="P16" data-price="180" data-volume="50ml">
-        <img src="images/16.jpg" alt="Lavender Hill" loading="lazy" />
-        <h3 itemprop="name">Lavender Hill</h3>
-        <p class="meta">לבנדר מרגיע • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Lavender Hill","description":"לבנדר מרגיע • 50ml EDP","image":"images/16.jpg","sku":"P16","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 17 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Fig Blossom" data-sku="P17" data-price="180" data-volume="50ml">
-        <img src="images/17.jpg" alt="Fig Blossom" loading="lazy" />
-        <h3 itemprop="name">Fig Blossom</h3>
-        <p class="meta">תאנה פרחונית • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Fig Blossom","description":"תאנה פרחונית • 50ml EDP","image":"images/17.jpg","sku":"P17","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 18 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Neroli Sun" data-sku="P18" data-price="180" data-volume="50ml">
-        <img src="images/18.jpg" alt="Neroli Sun" loading="lazy" />
-        <h3 itemprop="name">Neroli Sun</h3>
-        <p class="meta">נרולי שמשי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Neroli Sun","description":"נרולי שמשי • 50ml EDP","image":"images/18.jpg","sku":"P18","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 19 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="White Tea" data-sku="P19" data-price="180" data-volume="50ml">
-        <img src="images/19.jpg" alt="White Tea" loading="lazy" />
-        <h3 itemprop="name">White Tea</h3>
-        <p class="meta">תה לבן עדין • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"White Tea","description":"תה לבן עדין • 50ml EDP","image":"images/19.jpg","sku":"P19","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 20 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Ambergris Tide" data-sku="P20" data-price="180" data-volume="50ml">
-        <img src="images/20.jpg" alt="Ambergris Tide" loading="lazy" />
-        <h3 itemprop="name">Ambergris Tide</h3>
-        <p class="meta">אמברגריס ימי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Ambergris Tide","description":"אמברגריס ימי • 50ml EDP","image":"images/20.jpg","sku":"P20","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 21 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Tonka Drift" data-sku="P21" data-price="180" data-volume="50ml">
-        <img src="images/21.jpg" alt="Tonka Drift" loading="lazy" />
-        <h3 itemprop="name">Tonka Drift</h3>
-        <p class="meta">טונקה ונילי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Tonka Drift","description":"טונקה ונילי • 50ml EDP","image":"images/21.jpg","sku":"P21","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 22 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Forest Rain" data-sku="P22" data-price="180" data-volume="50ml">
-        <img src="images/22.jpg" alt="Forest Rain" loading="lazy" />
-        <h3 itemprop="name">Forest Rain</h3>
-        <p class="meta">גשם יער רענן • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Forest Rain","description":"גשם יער רענן • 50ml EDP","image":"images/22.jpg","sku":"P22","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 23 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Saffron Ember" data-sku="P23" data-price="180" data-volume="50ml">
-        <img src="images/23.jpg" alt="Saffron Ember" loading="lazy" />
-        <h3 itemprop="name">Saffron Ember</h3>
-        <p class="meta">כורכום-ענברי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Saffron Ember","description":"כורכום-ענברי • 50ml EDP","image":"images/23.jpg","sku":"P23","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 24 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Blackcurrant Muse" data-sku="P24" data-price="180" data-volume="50ml">
-        <img src="images/24.jpg" alt="Blackcurrant Muse" loading="lazy" />
-        <h3 itemprop="name">Blackcurrant Muse</h3>
-        <p class="meta">פרותי שחור • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Blackcurrant Muse","description":"פרותי שחור • 50ml EDP","image":"images/24.jpg","sku":"P24","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 25 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Ginger Spark" data-sku="P25" data-price="180" data-volume="50ml">
-        <img src="images/25.jpg" alt="Ginger Spark" loading="lazy" />
-        <h3 itemprop="name">Ginger Spark</h3>
-        <p class="meta">ג'ינג'ר חריף • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Ginger Spark","description":"ג'ינג'ר חריף • 50ml EDP","image":"images/25.jpg","sku":"P25","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 26 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Tuberose Cloud" data-sku="P26" data-price="180" data-volume="50ml">
-        <img src="images/26.jpg" alt="Tuberose Cloud" loading="lazy" />
-        <h3 itemprop="name">Tuberose Cloud</h3>
-        <p class="meta">טוברוז אוורירי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Tuberose Cloud","description":"טוברוז אוורירי • 50ml EDP","image":"images/26.jpg","sku":"P26","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 27 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Sacred Myrrh" data-sku="P27" data-price="180" data-volume="50ml">
-        <img src="images/27.jpg" alt="Sacred Myrrh" loading="lazy" />
-        <h3 itemprop="name">Sacred Myrrh</h3>
-        <p class="meta">מור עשיר • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Sacred Myrrh","description":"מור עשיר • 50ml EDP","image":"images/27.jpg","sku":"P27","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 28 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Pine Needle" data-sku="P28" data-price="180" data-volume="50ml">
-        <img src="images/28.jpg" alt="Pine Needle" loading="lazy" />
-        <h3 itemprop="name">Pine Needle</h3>
-        <p class="meta">אורן ירוק • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Pine Needle","description":"אורן ירוק • 50ml EDP","image":"images/28.jpg","sku":"P28","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 29 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Pear Shade" data-sku="P29" data-price="180" data-volume="50ml">
-        <img src="images/29.jpg" alt="Pear Shade" loading="lazy" />
-        <h3 itemprop="name">Pear Shade</h3>
-        <p class="meta">אגס עדין • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Pear Shade","description":"אגס עדין • 50ml EDP","image":"images/29.jpg","sku":"P29","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 30 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Orchid Veil" data-sku="P30" data-price="180" data-volume="50ml">
-        <img src="images/30.jpg" alt="Orchid Veil" loading="lazy" />
-        <h3 itemprop="name">Orchid Veil</h3>
-        <p class="meta">סחלב עדין • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Orchid Veil","description":"סחלב עדין • 50ml EDP","image":"images/30.jpg","sku":"P30","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 31 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Cocoa Wood" data-sku="P31" data-price="180" data-volume="50ml">
-        <img src="images/31.jpg" alt="Cocoa Wood" loading="lazy" />
-        <h3 itemprop="name">Cocoa Wood</h3>
-        <p class="meta">קקאו ועץ • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Cocoa Wood","description":"קקאו ועץ • 50ml EDP","image":"images/31.jpg","sku":"P31","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 32 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Jasmine Air" data-sku="P32" data-price="180" data-volume="50ml">
-        <img src="images/32.jpg" alt="Jasmine Air" loading="lazy" />
-        <h3 itemprop="name">Jasmine Air</h3>
-        <p class="meta">יסמין קליל • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Jasmine Air","description":"יסמין קליל • 50ml EDP","image":"images/32.jpg","sku":"P32","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 33 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Basil Citrus" data-sku="P33" data-price="180" data-volume="50ml">
-        <img src="images/33.jpg" alt="Basil Citrus" loading="lazy" />
-        <h3 itemprop="name">Basil Citrus</h3>
-        <p class="meta">בזיליקום הדרי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Basil Citrus","description":"בזיליקום הדרי • 50ml EDP","image":"images/33.jpg","sku":"P33","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 34 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Honey Amber" data-sku="P34" data-price="180" data-volume="50ml">
-        <img src="images/34.jpg" alt="Honey Amber" loading="lazy" />
-        <h3 itemprop="name">Honey Amber</h3>
-        <p class="meta">דבש-ענברי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Honey Amber","description":"דבש-ענברי • 50ml EDP","image":"images/34.jpg","sku":"P34","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 35 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Blue Vetiver" data-sku="P35" data-price="180" data-volume="50ml">
-        <img src="images/35.jpg" alt="Blue Vetiver" loading="lazy" />
-        <h3 itemprop="name">Blue Vetiver</h3>
-        <p class="meta">ותיבר כחול • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Blue Vetiver","description":"ותיבר כחול • 50ml EDP","image":"images/35.jpg","sku":"P35","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 36 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Maple Cedar" data-sku="P36" data-price="180" data-volume="50ml">
-        <img src="images/36.jpg" alt="Maple Cedar" loading="lazy" />
-        <h3 itemprop="name">Maple Cedar</h3>
-        <p class="meta">מייפל וארז • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Maple Cedar","description":"מייפל וארז • 50ml EDP","image":"images/36.jpg","sku":"P36","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 37 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Arctic Mint" data-sku="P37" data-price="180" data-volume="50ml">
-        <img src="images/37.jpg" alt="Arctic Mint" loading="lazy" />
-        <h3 itemprop="name">Arctic Mint</h3>
-        <p class="meta">נענע ארקטית • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Arctic Mint","description":"נענע ארקטית • 50ml EDP","image":"images/37.jpg","sku":"P37","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 38 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Ruby Rose" data-sku="P38" data-price="180" data-volume="50ml">
-        <img src="images/38.jpg" alt="Ruby Rose" loading="lazy" />
-        <h3 itemprop="name">Ruby Rose</h3>
-        <p class="meta">ורד רובי • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Ruby Rose","description":"ורד רובי • 50ml EDP","image":"images/38.jpg","sku":"P38","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 39 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Smoke & Salt" data-sku="P39" data-price="180" data-volume="50ml">
-        <img src="images/39.jpg" alt="Smoke & Salt" loading="lazy" />
-        <h3 itemprop="name">Smoke &amp; Salt</h3>
-        <p class="meta">מעושן-מלוח • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Smoke & Salt","description":"מעושן-מלוח • 50ml EDP","image":"images/39.jpg","sku":"P39","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 40 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Cashmere Musk" data-sku="P40" data-price="180" data-volume="50ml">
-        <img src="images/40.jpg" alt="Cashmere Musk" loading="lazy" />
-        <h3 itemprop="name">Cashmere Musk</h3>
-        <p class="meta">מאסק קשמיר • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Cashmere Musk","description":"מאסק קשמיר • 50ml EDP","image":"images/40.jpg","sku":"P40","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-      <!-- 41 -->
-      <article class="card" itemscope itemtype="https://schema.org/Product" data-name="Desert Bloom" data-sku="P41" data-price="180" data-volume="50ml">
-        <img src="images/41.jpg" alt="Desert Bloom" loading="lazy" />
-        <h3 itemprop="name">Desert Bloom</h3>
-        <p class="meta">פריחת מדבר • 50ml EDP</p>
-        <p class="price">₪<span itemprop="price" content="180">180</span></p>
-        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Desert Bloom","description":"פריחת מדבר • 50ml EDP","image":"images/41.jpg","sku":"P41","offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}}</script>
-      </article>
-
-    </section>
+    <section class="grid" id="products"><!-- ימולא אוטומטית ע"י JS --></section>
 
     <section class="faq">
       <h2>שאלות נפוצות</h2>
-      <details><summary>איך מבצעים הזמנה?</summary><div>לוחצים על כפתור ה-WhatsApp בכרטיס המוצר, ממלאים את ההודעה האוטומטית ושולחים. נחזור אליכם לתיאום תשלום ומשלוח.</div></details>
+      <details><summary>איך מבצעים הזמנה?</summary><div>לוחצים על כפתור ה-WhatsApp בכרטיס המוצר, ההודעה תתמלא אוטומטית ושולחים. נחזור אליכם לתיאום תשלום ומשלוח.</div></details>
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
       <details><summary>החלפות/החזרות</summary><div>לפי החוק ובהתאם למדיניות המותג (מוצרים סגורים/אטומים בלבד).</div></details>
       <details><summary>רגישויות לעור</summary><div>מומלץ לבצע בדיקת רגישות נקודתית. להפסיק שימוש במקרה של גירוי.</div></details>
@@ -479,32 +120,99 @@
 
   <script>
     // ⚙️ מספר ה-WhatsApp שלך (בפורמט בינלאומי, ללא +):
-    const WA_PHONE = "972509222727"; // דוגמה: 9725XXXXXXXX
+    const WA_PHONE = "972508939729";
 
-    function buildWaText(name, sku, price, volume) {
+    // פלייסהולדר לתמונה חסרה (SVG בהיר)
+    const PLACEHOLDER = 'data:image/svg+xml;utf8,'
+      + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">'
+      + '<rect width="100%" height="100%" fill="#f1f1f1"/>'
+      + '<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"'
+      + ' font-family="sans-serif" font-size="22" fill="#999">אין תמונה</text></svg>');
+
+    // רשימת מוצרים — הוצמדו 1:1 לקבצים images/1.jpg … images/41.jpg
+    const products = [
+      {name:"Amber No.1",        sku:"P01", img:"1.jpg",  note:"אמברי חמים", price:180, vol:"50ml"},
+      {name:"Citrus Breeze",     sku:"P02", img:"2.jpg",  note:"הדרי רענן",  price:180, vol:"50ml"},
+      {name:"Woody Trail",       sku:"P03", img:"3.jpg",  note:"וודי עצי",   price:180, vol:"50ml"},
+      {name:"Musk Velvet",       sku:"P04", img:"4.jpg",  note:"מאסק קטיפתי",price:180, vol:"50ml"},
+      {name:"Ocean Mist",        sku:"P05", img:"5.jpg",  note:"ימי רענן",   price:180, vol:"50ml"},
+      {name:"Spice Route",       sku:"P06", img:"6.jpg",  note:"תבליני חם",  price:180, vol:"50ml"},
+      {name:"Rose Garden",       sku:"P07", img:"7.jpg",  note:"ורדים עדין", price:180, vol:"50ml"},
+      {name:"Vanilla Beam",      sku:"P08", img:"8.jpg",  note:"וניל עדין",  price:180, vol:"50ml"},
+      {name:"Night Oud",         sku:"P09", img:"9.jpg",  note:"אוד עמוק",   price:180, vol:"50ml"},
+      {name:"Fresh Linen",       sku:"P10", img:"10.jpg", note:"נקי ורענן",  price:180, vol:"50ml"},
+      {name:"Golden Sandal",     sku:"P11", img:"11.jpg", note:"סנדלווד מוזהב",price:180, vol:"50ml"},
+      {name:"Bergamot Leaf",     sku:"P12", img:"12.jpg", note:"ברגמוט רענן",price:180, vol:"50ml"},
+      {name:"Cedar Grove",       sku:"P13", img:"13.jpg", note:"ארז יבש",    price:180, vol:"50ml"},
+      {name:"Patchouli Noir",    sku:"P14", img:"14.jpg", note:"פצ'ולי כהה", price:180, vol:"50ml"},
+      {name:"Leather Smoke",     sku:"P15", img:"15.jpg", note:"עור מעושן",  price:180, vol:"50ml"},
+      {name:"Lavender Hill",     sku:"P16", img:"16.jpg", note:"לבנדר מרגיע",price:180, vol:"50ml"},
+      {name:"Fig Blossom",       sku:"P17", img:"17.jpg", note:"תאנה פרחונית",price:180, vol:"50ml"},
+      {name:"Neroli Sun",        sku:"P18", img:"18.jpg", note:"נרולי שמשי", price:180, vol:"50ml"},
+      {name:"White Tea",         sku:"P19", img:"19.jpg", note:"תה לבן",     price:180, vol:"50ml"},
+      {name:"Ambergris Tide",    sku:"P20", img:"20.jpg", note:"אמברגריס ימי",price:180, vol:"50ml"},
+      {name:"Tonka Drift",       sku:"P21", img:"21.jpg", note:"טונקה ונילי",price:180, vol:"50ml"},
+      {name:"Forest Rain",       sku:"P22", img:"22.jpg", note:"גשם יער",    price:180, vol:"50ml"},
+      {name:"Saffron Ember",     sku:"P23", img:"23.jpg", note:"זעפרן חמים", price:180, vol:"50ml"},
+      {name:"Blackcurrant Muse", sku:"P24", img:"24.jpg", note:"פרותי שחור", price:180, vol:"50ml"},
+      {name:"Ginger Spark",      sku:"P25", img:"25.jpg", note:"ג'ינג'ר חריף",price:180, vol:"50ml"},
+      {name:"Tuberose Cloud",    sku:"P26", img:"26.jpg", note:"טוברוז",     price:180, vol:"50ml"},
+      {name:"Sacred Myrrh",      sku:"P27", img:"27.jpg", note:"מור עשיר",   price:180, vol:"50ml"},
+      {name:"Pine Needle",       sku:"P28", img:"28.jpg", note:"אורן ירוק",  price:180, vol:"50ml"},
+      {name:"Pear Shade",        sku:"P29", img:"29.jpg", note:"אגס עדין",   price:180, vol:"50ml"},
+      {name:"Orchid Veil",       sku:"P30", img:"30.jpg", note:"סחלב עדין",  price:180, vol:"50ml"},
+      {name:"Cocoa Wood",        sku:"P31", img:"31.jpg", note:"קקאו ועץ",   price:180, vol:"50ml"},
+      {name:"Jasmine Air",       sku:"P32", img:"32.jpg", note:"יסמין קליל", price:180, vol:"50ml"},
+      {name:"Basil Citrus",      sku:"P33", img:"33.jpg", note:"בזיליקום הדרי",price:180, vol:"50ml"},
+      {name:"Honey Amber",       sku:"P34", img:"34.jpg", note:"דבש-ענברי",  price:180, vol:"50ml"},
+      {name:"Blue Vetiver",      sku:"P35", img:"35.jpg", note:"ותיבר כחול", price:180, vol:"50ml"},
+      {name:"Maple Cedar",       sku:"P36", img:"36.jpg", note:"מייפל וארז", price:180, vol:"50ml"},
+      {name:"Arctic Mint",       sku:"P37", img:"37.jpg", note:"נענע ארקטית",price:180, vol:"50ml"},
+      {name:"Ruby Rose",         sku:"P38", img:"38.jpg", note:"ורד רובי",   price:180, vol:"50ml"},
+      {name:"Smoke & Salt",      sku:"P39", img:"39.jpg", note:"מעושן-מלוח", price:180, vol:"50ml"},
+      {name:"Cashmere Musk",     sku:"P40", img:"40.jpg", note:"מאסק קשמיר", price:180, vol:"50ml"},
+      {name:"Desert Bloom",      sku:"P41", img:"41.jpg", note:"פריחת מדבר", price:180, vol:"50ml"}
+    ];
+
+    function buildWaText({name, sku, price, vol}) {
       const lines = [
         "היי! מעוניין/ת בבושם:",
         `${name} (קוד: ${sku})`,
         price ? `מחיר מוצג: ₪${price}` : null,
-        volume ? `נפח: ${volume}` : null,
+        vol ? `נפח: ${vol}` : null,
         "אשמח לפרטים/הזמנה."
       ].filter(Boolean).join("\n");
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
-    function applyWaLinks() {
+    function renderProducts() {
+      const container = document.getElementById('products');
+      container.innerHTML = products.map(p => {
+        const meta = `${p.note ? p.note + " • " : ""}${p.vol || ""} EDP`;
+        const wa = buildWaText({name:p.name, sku:p.sku, price:p.price, vol:p.vol});
+        return `
+          <article class="card" itemscope itemtype="https://schema.org/Product"
+                   data-name="${p.name}" data-sku="${p.sku}" data-price="${p.price}" data-volume="${p.vol}">
+            <img src="images/${p.img}" alt="${p.name}" loading="lazy"
+                 onerror="this.onerror=null; this.src='${PLACEHOLDER}'" />
+            <h3 itemprop="name">${p.name}</h3>
+            <p class="meta">${meta}</p>
+            <p class="price">₪<span itemprop="price" content="${p.price}">${p.price}</span></p>
+            <a class="wa-btn" href="${wa}" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function initWhatsAppTop(){
       const waTop = document.getElementById('waTop');
       if (waTop) waTop.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים.')}`;
-      document.querySelectorAll('.card').forEach(card => {
-        const name = card.dataset.name || '';
-        const sku = card.dataset.sku || '';
-        const price = card.dataset.price || '';
-        const volume = card.dataset.volume || '';
-        const link = card.querySelector('.wa-btn');
-        if (link) link.href = buildWaText(name, sku, price, volume);
-      });
     }
-    document.addEventListener('DOMContentLoaded', applyWaLinks);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      initWhatsAppTop();
+    });
   </script>
 </body>
 </html>
