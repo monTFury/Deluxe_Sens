@@ -27,6 +27,7 @@
       --border:#eadfce;
       --shadow: 0 6px 18px rgba(50,24,0,.06);
       --s-1: 6px; --s-2: 10px; --s-3: 14px; --s-4: 18px; --s-5: 22px;
+      --input-h: 42px;
     }
 
     *{box-sizing:border-box}
@@ -74,9 +75,31 @@
     .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
     /* FAQ למעלה */
-    .faq{margin:20px 0 28px}
+    .faq{margin:20px 0 20px}
     .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
     .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
+
+    /* סרגל פילטרים */
+    .filters{
+      position:relative;
+      background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow);
+      padding:12px; margin:0 0 22px;
+    }
+    .filters .row{
+      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+    }
+    .f-field{display:flex; align-items:center; gap:8px}
+    .f-label{font-weight:700; font-size:14px}
+    .f-input, .f-select{
+      height:var(--input-h);
+      padding:0 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:600; min-width: 200px;
+    }
+    .f-input{min-width:240px}
+    @media (max-width: 700px){
+      .filters .row{flex-direction:column; align-items:stretch}
+      .f-input, .f-select{width:100%; min-width:unset}
+      .f-field{width:100%}
+    }
 
     /* גריד מוצרים */
     .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
@@ -136,9 +159,7 @@
     .price-amount{font-weight:800; font-size:20px; letter-spacing:.02em}
     .price-sep{color:#b9a98f}
     .price-size{font-weight:600; font-size:14px; color:var(--muted)}
-    @media (max-width: 600px){
-      .price.show{justify-content:center}
-    }
+    @media (max-width: 600px){ .price.show{justify-content:center} }
 
     /* הערת 10 מ"ל – קצרה ונקייה */
     .size-note{
@@ -164,6 +185,12 @@
       font-size:14px; box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.2s
     }
     .toast.show{opacity:1; transform:translateY(0)}
+
+    /* מצב ריק */
+    .empty{
+      text-align:center; color:var(--muted); padding:20px 0;
+      font-weight:700;
+    }
   </style>
 </head>
 <body>
@@ -182,7 +209,32 @@
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
 
+    <!-- סרגל פילטרים -->
+    <section class="filters" id="filters">
+      <div class="row">
+        <div class="f-field">
+          <label class="f-label" for="f-q">חיפוש</label>
+          <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם מוצר…" />
+        </div>
+        <div class="f-field">
+          <label class="f-label" for="f-brand">מותג</label>
+          <select id="f-brand" class="f-select">
+            <option value="">הכל</option>
+          </select>
+        </div>
+        <div class="f-field">
+          <label class="f-label" for="f-sort">סידור</label>
+          <select id="f-sort" class="f-select">
+            <option value="">ברירת מחדל</option>
+            <option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option>
+            <option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
     <section class="grid" id="products"></section>
+    <div id="empty" class="empty" style="display:none">לא נמצאו מוצרים בהתאמה לסינון</div>
   </main>
 
   <footer class="wrap">
@@ -201,12 +253,13 @@
       "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
     ];
 
-    // מוצרים: 100 מ״ל = N.jpg (+N-2.jpg/N-3.jpg אופציונלי), דוגמיות: N-10.jpg / N-5.jpg
+    // נתוני מוצרים (אפשר לעדכן brand כשיהיו לך מותגים אמיתיים)
     const products = Array.from({length:41}, (_,i) => {
       const n = i+1;
       return {
         id:n,
         name:NAMES[i] || `Perfume ${n}`,
+        brand:"Deluxe Sense",              // ← לעדכון בעתיד לפי טבלת המותגים שלך
         sku:`P${String(n).padStart(2,'0')}`,
         price:{ "100":180, "10":45, "5":25 },  // מחירי דוגמה
         baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`],
@@ -214,6 +267,9 @@
         sample5:[`${n}-5.jpg`],
       };
     });
+
+    const byId = Object.fromEntries(products.map(p=>[String(p.id), p]));
+    const selectedById = {}; // שומר בחירת נפח לכל מוצר בין רינדורים
 
     function buildWaHref(p, sizeLabel, price){
       const lines = [
@@ -241,7 +297,7 @@
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
 
-    // ציור/החלפת תמונות בקרוסלה
+    // קרוסלה
     function renderImages(card, files){
       const box = card.querySelector('.imagebox');
       box.innerHTML = '';
@@ -287,11 +343,19 @@
       box.querySelector('.next').addEventListener('click', ()=> goto(idx+1)); // ימינה = הבא
     }
 
-    function renderProducts(){
+    // רינדור כרטיסים
+    function renderProducts(list = products){
       const el = document.getElementById('products');
+      const empty = document.getElementById('empty');
+      if (!list.length){
+        el.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
 
-      el.innerHTML = products.map(p => `
-        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}">
+      el.innerHTML = list.map(p => `
+        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}" data-brand="${p.brand || ''}">
           <div class="imagebox"></div>
 
           <h3>${p.name}</h3>
@@ -299,10 +363,10 @@
           <div class="size-row">
             <span class="size-label">נפח</span>
             <select class="size-select" aria-label="בחר נפח">
-              <option value="" selected disabled>בחר נפח…</option>
-              <option value="100">100 מ״ל</option>
-              <option value="10">10 מ״ל</option>
-              <option value="5">5 מ״ל</option>
+              <option value="" ${!selectedById[p.id] ? 'selected' : ''} disabled>בחר נפח…</option>
+              <option value="100" ${selectedById[p.id]==="100" ? 'selected' : ''}>100 מ״ל</option>
+              <option value="10"  ${selectedById[p.id]==="10"  ? 'selected' : ''}>10 מ״ל (כולל שפריצר)</option>
+              <option value="5"   ${selectedById[p.id]==="5"   ? 'selected' : ''}>5 מ״ל</option>
             </select>
           </div>
 
@@ -314,15 +378,16 @@
 
           <p class="size-note" aria-live="polite"></p>
 
-          <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
+          <a class="wa-btn ${selectedById[p.id] ? '' : 'disabled'}" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
       `).join('');
 
       // אינטראקציה לכל כרטיס
-      document.querySelectorAll('.card').forEach((card, idx)=>{
-        const p = products[idx];
+      document.querySelectorAll('.card').forEach((card)=>{
+        const pid = Number(card.dataset.id);
+        const p = byId[String(pid)];
 
-        // ברירת מחדל – מציגים 100 מ״ל
+        // ברירת מחדל – מציגים 100 מ״ל (תמונות), גם אם טרם נבחר נפח
         renderImages(card, p.baseImages);
 
         const select     = card.querySelector('.size-select');
@@ -342,6 +407,8 @@
 
         function onSizeChange(){
           const v = select.value; // "100" | "10" | "5"
+          selectedById[pid] = v;
+
           if (v === "100"){
             renderImages(card, p.baseImages);
           } else if (v === "10"){
@@ -357,7 +424,7 @@
           priceSep.style.display = price && sizeLabelHe ? 'inline' : 'none';
           priceWrap.classList.add('show');
 
-          // הערת 10 מ"ל בלבד – קצרה ומתאימה למובייל
+          // הערת 10 מ"ל בלבד
           if (v === "10"){
             noteEl.textContent = "כולל שפריצר למילוי-מחדש (Refillable)";
             noteEl.classList.add('show');
@@ -370,20 +437,77 @@
           waBtn.classList.remove('disabled');
         }
 
+        // אם כבר נבחר נפח בעבר – ליישם מיידית
+        if (selectedById[pid]) {
+          onSizeChange();
+        }
+
         select.addEventListener('change', onSizeChange);
       });
     }
 
+    // ===== סרגל פילטרים =====
+    function uniqueBrands(list){
+      const s = new Set();
+      list.forEach(p => { if (p.brand) s.add(p.brand); });
+      return Array.from(s);
+    }
+
+    function renderBrandOptions(list){
+      const sel = document.getElementById('f-brand');
+      const prev = sel.value;
+      // בסיס
+      sel.innerHTML = `<option value="">הכל</option>`;
+      uniqueBrands(list).forEach(b=>{
+        const opt = document.createElement('option');
+        opt.value = b; opt.textContent = b;
+        sel.appendChild(opt);
+      });
+      // משחזר בחירה אם עדיין קיימת
+      if ([...sel.options].some(o=>o.value===prev)) sel.value = prev;
+    }
+
+    function applyFilters(){
+      const q = document.getElementById('f-q').value.trim().toLowerCase();
+      const brand = document.getElementById('f-brand').value;
+      const sort = document.getElementById('f-sort').value;
+
+      let list = products.filter(p=>{
+        const matchName = !q || (p.name || '').toLowerCase().includes(q);
+        const matchBrand = !brand || p.brand === brand;
+        return matchName && matchBrand;
+      });
+
+      if (sort === 'p_asc') {
+        list = list.slice().sort((a,b)=> (a.price["100"]||0) - (b.price["100"]||0));
+      } else if (sort === 'p_desc') {
+        list = list.slice().sort((a,b)=> (b.price["100"]||0) - (a.price["100"]||0));
+      }
+
+      renderProducts(list);
+    }
+
+    function initFilters(){
+      renderBrandOptions(products);
+
+      document.getElementById('f-q').addEventListener('input', applyFilters);
+      document.getElementById('f-brand').addEventListener('change', applyFilters);
+      document.getElementById('f-sort').addEventListener('change', applyFilters);
+    }
+
+    // ===== Top WhatsApp =====
     function initTopWA(){
       const waTop = document.getElementById('waTop');
       if (waTop) waTop.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`;
     }
 
+    // ===== Init =====
     document.addEventListener('DOMContentLoaded', ()=>{
-      renderProducts();
+      initFilters();
+      renderProducts(); // רינדור ראשון עם כל המוצרים
       initTopWA();
 
-      // אם bg.jpg קיים – נוסיף את המחלקה להפעלת שכבת רקע עדינה מהתמונה
+      // אם bg.jpg קיים – מוסיפים שכבת רקע עדינה מהתמונה
       fetch('images/bg.jpg', {method:'HEAD'}).then(r=>{
         if (r.ok) document.body.classList.add('has-hero');
       }).catch(()=>{});
