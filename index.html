@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>קטלוג בשמי בוטיק</title>
+  <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב‑WhatsApp" />
+  <!-- Open Graph (for pretty sharing) -->
+  <meta property="og:title" content="קטלוג בשמי בוטיק" />
+  <meta property="og:description" content="בשמים בייצור פרטי • קנייה דרך WhatsApp" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og.jpg" />
+  <link rel="icon" href="images/favicon.ico" />
+  <style>
+    :root {
+      --bg: #ffffff; --fg:#111; --muted:#666; --accent:#0a7; --border:#e9e9e9;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:var(--fg); }
+    a { color: inherit; }
+    header { padding: 32px 16px 16px; text-align: center; }
+    header h1 { margin: 0 0 8px; font-size: clamp(24px, 3vw, 36px); }
+    header p { margin: 6px 0; color:var(--muted); }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px 48px; }
+    .cta { display:inline-block; margin-top:12px; padding:12px 16px; border:1px solid var(--accent); border-radius: 12px; text-decoration: none; font-weight:600; }
+    .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .card { border:1px solid var(--border); border-radius: 14px; padding: 12px; background:#fff; display:flex; flex-direction:column; }
+    .card img { width:100%; height:280px; object-fit: cover; border-radius: 10px; background:#f5f5f5; }
+    .card h3 { margin: 10px 0 4px; font-size: 18px; }
+    .card p { margin: 4px 0; color:#333; }
+    .meta { color: var(--muted); font-size: 14px; }
+    .price { font-weight:700; margin-top: 4px; }
+    .wa-btn { margin-top: auto; display:inline-block; padding:10px 14px; border-radius: 12px; border:1px solid var(--accent); text-decoration: none; align-self:flex-start; }
+    footer { color: var(--muted); font-size:14px; border-top:1px solid var(--border); padding: 20px 16px 40px; }
+    .faq { margin-top: 32px; }
+    .faq h2 { font-size: 20px; margin-bottom: 8px; }
+    .faq details { border:1px solid var(--border); border-radius: 12px; padding: 10px 12px; margin: 8px 0; }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <h1>קטלוג בשמי בוטיק</h1>
+    <p>ייצור פרטי בכמויות קטנות. בחירה, שאלות והזמנה דרך WhatsApp.</p>
+    <a class="cta" id="waTop" target="_blank" rel="noopener">דברו איתי ב‑WhatsApp</a>
+  </header>
+
+  <main class="wrap">
+    <!--
+      ✅ איך מוסיפים מוצר חדש?
+      1) שכפל את ה-<article class="card"> ושנה:
+         - data-name (שם המוצר), data-sku (קוד), data-price (מחיר), data-volume (נפח)
+         - <img src="images/xxx.jpg" alt="שם הבושם"/>
+         - הכותרת/התיאור בתוכן הכרטיס
+      2) אין צורך לגעת בלינק WhatsApp — הוא נבנה אוטומטית מה-data-attributes.
+      3) הוסף/החלף תמונות בתיקייה images/ ושמור שמות קבצים באנגלית ללא רווחים.
+    -->
+    <section class="grid" id="products">
+
+      <!-- מוצר 1 -->
+      <article class="card" itemscope itemtype="https://schema.org/Product"
+               data-name="Amber No.1" data-sku="AMB1" data-price="180" data-volume="50ml">
+        <img src="images/p1.jpg" alt="Amber No.1" loading="lazy" />
+        <h3 itemprop="name">Amber No.1</h3>
+        <p class="meta">ניחוח אמברי חמים • <span itemprop="size">50ml EDP</span></p>
+        <p class="price"><span itemprop="offers" itemscope itemtype="https://schema.org/Offer">₪<span itemprop="price" content="180">180</span></span></p>
+        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב‑WhatsApp</a>
+        <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"Product",
+          "name":"Amber No.1",
+          "description":"ניחוח אמברי חמים • 50ml EDP",
+          "image":"images/p1.jpg",
+          "sku":"AMB1",
+          "offers":{"@type":"Offer","priceCurrency":"ILS","price":"180","availability":"https://schema.org/InStock"}
+        }
+        </script>
+      </article>
+
+      <!-- מוצר 2 -->
+      <article class="card" itemscope itemtype="https://schema.org/Product"
+               data-name="Citrus Breeze" data-sku="CTR2" data-price="170" data-volume="50ml">
+        <img src="images/p2.jpg" alt="Citrus Breeze" loading="lazy" />
+        <h3 itemprop="name">Citrus Breeze</h3>
+        <p class="meta">הדרי-רענן • <span itemprop="size">50ml EDP</span></p>
+        <p class="price"><span itemprop="offers" itemscope itemtype="https://schema.org/Offer">₪<span itemprop="price" content="170">170</span></span></p>
+        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב‑WhatsApp</a>
+        <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"Product",
+          "name":"Citrus Breeze",
+          "description":"הדרי-רענן • 50ml EDP",
+          "image":"images/p2.jpg",
+          "sku":"CTR2",
+          "offers":{"@type":"Offer","priceCurrency":"ILS","price":"170","availability":"https://schema.org/InStock"}
+        }
+        </script>
+      </article>
+
+      <!-- מוצר 3 -->
+      <article class="card" itemscope itemtype="https://schema.org/Product"
+               data-name="Woody Trail" data-sku="WD3" data-price="190" data-volume="50ml">
+        <img src="images/p3.jpg" alt="Woody Trail" loading="lazy" />
+        <h3 itemprop="name">Woody Trail</h3>
+        <p class="meta">וודי-עצי • <span itemprop="size">50ml EDP</span></p>
+        <p class="price"><span itemprop="offers" itemscope itemtype="https://schema.org/Offer">₪<span itemprop="price" content="190">190</span></span></p>
+        <a class="wa-btn" target="_blank" rel="noopener">הזמנה/שאלה ב‑WhatsApp</a>
+        <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"Product",
+          "name":"Woody Trail",
+          "description":"וודי-עצי • 50ml EDP",
+          "image":"images/p3.jpg",
+          "sku":"WD3",
+          "offers":{"@type":"Offer","priceCurrency":"ILS","price":"190","availability":"https://schema.org/InStock"}
+        }
+        </script>
+      </article>
+
+      <!-- שכפל בלוקים כמו אלה למוצרים נוספים -->
+
+    </section>
+
+    <section class="faq">
+      <h2>שאלות נפוצות</h2>
+      <details>
+        <summary>איך מבצעים הזמנה?</summary>
+        <div>לוחצים על כפתור ה‑WhatsApp בכרטיס המוצר, ממלאים את ההודעה האוטומטית ושולחים. נחזור אליכם לתיאום תשלום ומשלוח.</div>
+      </details>
+      <details>
+        <summary>משלוחים וזמני הכנה</summary>
+        <div>נשלח בד"כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div>
+      </details>
+      <details>
+        <summary>החלפות/החזרות</summary>
+        <div>לפי החוק ובהתאם למדיניות המותג (מוצרים סגורים/אטומים בלבד).</div>
+      </details>
+      <details>
+        <summary>רגישויות לעור</summary>
+        <div>מומלץ לבצע בדיקת רגישות נקודתית. להפסיק שימוש במקרה של גירוי.</div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="wrap">
+    <div>© 2025 שם המותג • הזמנה דרך WhatsApp בלבד • פרטי קשר: example@mail.com • 050‑0000000</div>
+  </footer>
+
+  <script>
+    // ⚙️ הגדר כאן את מספר ה‑WhatsApp שלך (בפורמט בינלאומי, ללא +):
+    const WA_PHONE = "972509222727"; // לדוגמה: 9725XXXXXXXX
+
+    // יוצר קישור וואטסאפ אוטומטי מכל כרטיס מוצר על בסיס data-attributes
+    function buildWaText(name, sku, price, volume) {
+      const lines = [
+        "היי! מעוניין/ת בבושם:",
+        `${name} (קוד: ${sku})`,
+        price ? `מחיר מוצג: ₪${price}` : null,
+        volume ? `נפח: ${volume}` : null,
+        "אשמח לפרטים/הזמנה."
+      ].filter(Boolean).join("\n");
+      return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
+    }
+
+    function applyWaLinks() {
+      // כפתור עליון כללי
+      const waTop = document.getElementById('waTop');
+      if (waTop) waTop.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים.')}`;
+
+      // כפתורי מוצרים
+      document.querySelectorAll('.card').forEach(card => {
+        const name = card.dataset.name || '';
+        const sku = card.dataset.sku || '';
+        const price = card.dataset.price || '';
+        const volume = card.dataset.volume || '';
+        const link = card.querySelector('.wa-btn');
+        if (link) link.href = buildWaText(name, sku, price, volume);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', applyWaLinks);
+  </script>
+</body>
+</html>
