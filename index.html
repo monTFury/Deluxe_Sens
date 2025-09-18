@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>קטלוג בשמי בוטיק</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
+
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&family=Noto+Serif+Hebrew:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@600;800&display=swap" rel="stylesheet">
+
   <!-- Open Graph -->
   <meta property="og:title" content="קטלוג בשמי בוטיק" />
   <meta property="og:description" content="בשמים בייצור פרטי • קנייה דרך WhatsApp" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="images/og.jpg" />
   <link rel="icon" href="images/favicon.ico" />
+
   <style>
     :root{
-      --logo-h: 160px;            /* ↔ שינוי גובה לוגו */
+      --logo-h: 160px; /* ↔ שנה כאן את גובה הלוגו */
       --bg: #fbf8f3;
       --card: #ffffff;
       --fg: #1a1a1a;
@@ -27,52 +30,66 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
+      /* רקע עדין, לא “יבש” */
       background:
-        radial-gradient(1200px 600px at 10% -10%, #fff 0, rgba(255,255,255,.6) 40%, transparent 70%),
+        radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
+        radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
         linear-gradient(#fff, var(--bg));
       color:var(--fg);
-      font-family: Heebo, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      font-family: Assistant, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       -webkit-font-smoothing: antialiased;
       scroll-behavior:smooth;
     }
     a{color:inherit;text-decoration:none}
+
     .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
     header{text-align:center;padding:32px 16px 8px}
     .logo{display:block;margin:0 auto 12px;height:var(--logo-h);max-width:90%;object-fit:contain}
-    header h1{font-family:"Noto Serif Hebrew",serif;font-weight:700;font-size:clamp(26px,3.5vw,40px);margin:0 0 8px}
+    header h1{
+      font-family: Rubik, "Noto Serif Hebrew", serif;
+      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 8px; letter-spacing:.3px;
+    }
     header p{margin:6px 0;color:var(--muted)}
     .cta{
       display:inline-block;margin-top:12px;padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:800;
       background:linear-gradient(#fff,#fff9f0);transition:.2s transform,.2s box-shadow,.2s background;box-shadow:var(--shadow)
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
+
     .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.2s transform,.2s box-shadow}
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
-    /* Carousel */
-    .carousel{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1}
-    .slides{position:relative;height:280px}
-    .slide{position:absolute;inset:0;opacity:0;transition:opacity .25s}
-    .slide.active{opacity:1}
-    .slide img{width:100%;height:100%;object-fit:cover;display:block}
-    .nav{position:absolute;top:50%;transform:translateY(-50%);display:flex;gap:8px;width:100%;justify-content:space-between;padding:0 8px;pointer-events:none}
-    .nav button{pointer-events:auto;width:36px;height:36px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;font-weight:800}
-    .dots{display:flex;gap:6px;justify-content:center;padding:6px}
-    .dot{width:8px;height:8px;border-radius:999px;background:#ddd}
-    .dot.active{background:var(--accent)}
-    .card h3{margin:10px 0 4px;font-size:18px;font-weight:800;letter-spacing:.2px;font-family:"Noto Serif Hebrew",serif}
+
+    /* תצוגת תמונה/קרוסלה מינימלית */
+    .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
+    .imagebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .2s}
+    .imagebox img.active{opacity:1}
+
+    .card h3{margin:10px 0 4px;font-size:18px;font-weight:800;letter-spacing:.2px;font-family: Rubik, "Noto Serif Hebrew", serif}
     .meta{color:var(--muted);font-size:14px}
-    .price{font-weight:800;margin:6px 0 0}
-    .sizes{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .size-btn{
-      padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:700;font-size:14px
+
+    .size-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+    .size-label{font-weight:700}
+    .size-select{
+      flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:700;
+      appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--accent) 50%), linear-gradient(135deg, var(--accent) 50%, transparent 50%), linear-gradient(to right, #fff, #fff);
+      background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px), 100% 0;
+      background-size: 6px 6px, 6px 6px, 2.5em 2.5em; background-repeat:no-repeat;
     }
-    .size-btn.active{border-color:var(--accent);background:#fff6ea}
-    .wa-btn{margin-top:auto;display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:800;transition:.2s background,.2s transform,.2s box-shadow}
+
+    .price{font-weight:800;margin:10px 0 0;display:none}
+    .price.show{display:block}
+
+    .wa-btn{
+      margin-top:auto; display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:800;
+      transition:.2s background,.2s transform,.2s box-shadow; pointer-events:auto
+    }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
+    .wa-btn.disabled{opacity:.5; pointer-events:none}
+
     footer{color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding:24px 16px 40px;text-align:center}
     .faq{margin-top:34px}
-    .faq h2{font-family:"Noto Serif Hebrew",serif;font-size:20px;margin:0 0 8px}
+    .faq h2{font-family: Rubik, "Noto Serif Hebrew", serif; font-size:20px;margin:0 0 8px}
     .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
   </style>
 </head>
@@ -89,8 +106,8 @@
 
     <section class="faq">
       <h2>שאלות נפוצות</h2>
-      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100ml / 10ml Refillable / 5ml Sample), לוחצים על כפתור ה-WhatsApp בכרטיס; ההודעה תתמלא אוטומטית.</div></details>
-      <details><summary>דוגמיות 5ml ו-10ml</summary><div>5ml — טעימה קצרה; 10ml — מיכל מילוי-מחדש (Refillable) לנשיאה יומית.</div></details>
+      <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר מוצג, לוחצים על כפתור ה-WhatsApp בכרטיס וההודעה תתמלא אוטומטית.</div></details>
+      <details><summary>דוגמיות</summary><div>5 מ״ל — טעימה קצרה; 10 מ״ל — מיכל למילוי־מחדש (Refillable) לנשיאה יומיומית.</div></details>
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
   </main>
@@ -103,25 +120,25 @@
     // מספר ה-WhatsApp שלך (בפורמט בינלאומי, ללא +):
     const WA_PHONE = "972508939729";
 
-    // products: 41 מוצרים, תמונה ראשית images/N.jpg
-    // אפשר להוסיף בעתיד גם images/N-2.jpg , images/N-3.jpg לקרוסלה לכל מוצר
-    const names = [
+    // שמות באנגלית (אחידות), 41 פריטים
+    const NAMES = [
       "Amber No.1","Citrus Breeze","Woody Trail","Musk Velvet","Ocean Mist","Spice Route","Rose Garden","Vanilla Beam","Night Oud","Fresh Linen",
       "Golden Sandal","Bergamot Leaf","Cedar Grove","Patchouli Noir","Leather Smoke","Lavender Hill","Fig Blossom","Neroli Sun","White Tea","Ambergris Tide",
       "Tonka Drift","Forest Rain","Saffron Ember","Blackcurrant Muse","Ginger Spark","Tuberose Cloud","Sacred Myrrh","Pine Needle","Pear Shade","Orchid Veil",
       "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
     ];
+
+    // בניית רשימת מוצרים (תמונה ראשית images/N.jpg; וריאנטים לדוגמיות: N-10.jpg / N-5.jpg אם יועלו)
     const products = Array.from({length:41}, (_,i) => {
       const n = i+1;
       return {
         id:n,
-        name:names[i] || `Perfume ${n}`,
+        name:NAMES[i] || `Perfume ${n}`,
         sku:`P${String(n).padStart(2,'0')}`,
-        price100:180,  // מחיר מלא לדוגמה
-        price10:45,    // 10ml Refillable (Y לדוגמה)
-        price5:25,     // 5ml Sample (X לדוגמה)
-        images:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`], // הראשונה קיימת; השאר אופציונליות
-        note:"EDP"
+        price:{ "100":180, "10":45, "5":25 },  // מחירי דוגמה — נשנה בקלות בהמשך
+        baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`], // קיימת בוודאות הראשונה
+        sample10:[`${n}-10.jpg`], // אופציונלי
+        sample5:[`${n}-5.jpg`],   // אופציונלי
       };
     });
 
@@ -136,102 +153,91 @@
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
+    // יוצר/מחליף את אזור התמונות לפי בחירת נפח
+    function renderImages(container, files){
+      const box = container.querySelector('.imagebox');
+      const oldImgs = box.querySelectorAll('img');
+      oldImgs.forEach(el => el.remove());
+
+      files.forEach((file, idx) => {
+        const img = document.createElement('img');
+        img.src = `images/${file}`;
+        img.alt = container.dataset.name || '';
+        img.className = idx === 0 ? 'active' : '';
+        img.onerror = () => { img.remove(); }; // אם לא קיים – להסיר בשקט
+        box.appendChild(img);
+      });
+    }
+
     function renderProducts(){
       const el = document.getElementById('products');
-      el.innerHTML = products.map(p => {
-        const defaultSize = "100ml";
-        const defaultPrice = p.price100;
 
-        const slidesHtml = p.images.map((file,idx)=>`
-          <div class="slide ${idx===0?'active':''}">
-            <img src="images/${file}" alt="${p.name}" onerror="this.parentElement.remove()">
+      el.innerHTML = products.map(p => `
+        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}">
+          <div class="imagebox"></div>
+
+          <h3>${p.name}</h3>
+          <p class="meta">EDP</p>
+
+          <div class="size-row">
+            <span class="size-label">בחר נפח:</span>
+            <select class="size-select" aria-label="בחר נפח">
+              <option value="" selected disabled>בחר נפח…</option>
+              <option value="100">100 מ״ל</option>
+              <option value="10">10 מ״ל</option>
+              <option value="5">5 מ״ל</option>
+            </select>
           </div>
-        `).join('');
 
-        const waHref = buildWaHref(p, defaultSize, defaultPrice);
+          <p class="price">₪<span class="price-val"></span></p>
 
-        return `
-          <article class="card" data-id="${p.id}" data-sku="${p.sku}">
-            <div class="carousel" data-idx="0">
-              <div class="slides">
-                ${slidesHtml}
-              </div>
-              <div class="nav">
-                <button class="prev" aria-label="הקודם">‹</button>
-                <button class="next" aria-label="הבא">›</button>
-              </div>
-              <div class="dots"></div>
-            </div>
+          <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
+        </article>
+      `).join('');
 
-            <h3>${p.name}</h3>
-            <p class="meta">${p.note}</p>
-
-            <div class="sizes">
-              <button class="size-btn active" data-size="100ml" data-price="${p.price100}">100ml ₪${p.price100}</button>
-              <button class="size-btn" data-size="10ml Refillable" data-price="${p.price10}">10ml Refill ₪${p.price10}</button>
-              <button class="size-btn" data-size="5ml Sample" data-price="${p.price5}">5ml ₪${p.price5}</button>
-            </div>
-
-            <p class="price">₪<span class="price-val">${defaultPrice}</span></p>
-
-            <a class="wa-btn" href="${waHref}" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-          </article>
-        `;
-      }).join('');
-
-      // אינטראקציות לכל כרטיס
+      // מילוי תמונות ברירת מחדל (100 מ״ל) לכל כרטיס
       document.querySelectorAll('.card').forEach((card, idx)=>{
-        const product = products[idx];
+        const p = products[idx];
+        renderImages(card, p.baseImages);
 
-        // --- קרוסלה ---
-        const carousel = card.querySelector('.carousel');
-        const slides = Array.from(carousel.querySelectorAll('.slide'));
-        const dotsWrap = carousel.querySelector('.dots');
-
-        // בונים נקודות לפי כמות שקיימת בפועל אחרי onerror/remove
-        function rebuildDots(){
-          const currentSlides = Array.from(carousel.querySelectorAll('.slide'));
-          dotsWrap.innerHTML = currentSlides.map((_,i)=>`<span class="dot ${i===0?'active':''}" data-i="${i}"></span>`).join('');
-        }
-        rebuildDots();
-
-        function gotoSlide(i){
-          const currentSlides = Array.from(carousel.querySelectorAll('.slide'));
-          if (!currentSlides.length) return;
-          const m = currentSlides.length;
-          i = ((i % m) + m) % m;
-          currentSlides.forEach((s,k)=>s.classList.toggle('active', k===i));
-          carousel.dataset.idx = i;
-          dotsWrap.querySelectorAll('.dot').forEach((d,k)=>d.classList.toggle('active', k===i));
-        }
-        const prev = carousel.querySelector('.prev');
-        const next = carousel.querySelector('.next');
-        prev.addEventListener('click', ()=> gotoSlide(Number(carousel.dataset.idx||0)-1));
-        next.addEventListener('click', ()=> gotoSlide(Number(carousel.dataset.idx||0)+1));
-        dotsWrap.addEventListener('click', e=>{
-          const dot = e.target.closest('.dot');
-          if (!dot) return;
-          gotoSlide(Number(dot.dataset.i));
-        });
-
-        // אם תמונות אופציונליות הוסרו, בונה נקודות מחדש לאחר טעינה
-        setTimeout(()=>{ rebuildDots(); gotoSlide(0); }, 400);
-
-        // --- בחירת נפח + מחיר + וואטסאפ ---
-        const sizeBtns = card.querySelectorAll('.size-btn');
-        const priceEl = card.querySelector('.price-val');
+        const select = card.querySelector('.size-select');
+        const priceEl = card.querySelector('.price');
+        const priceVal = card.querySelector('.price-val');
         const waBtn = card.querySelector('.wa-btn');
 
-        function selectSize(btn){
-          sizeBtns.forEach(b=>b.classList.toggle('active', b===btn));
-          const price = Number(btn.dataset.price || 0);
-          const sizeLabel = btn.dataset.size;
-          priceEl.textContent = price;
-          waBtn.href = buildWaHref(product, sizeLabel, price);
+        function onSizeChange(){
+          const v = select.value; // "100" | "10" | "5"
+          if(!v){ // שמירה תאורטית, לא אמור לקרות
+            priceEl.classList.remove('show');
+            waBtn.classList.add('disabled');
+            waBtn.href = '#';
+            renderImages(card, p.baseImages);
+            return;
+          }
+
+          // תמונות לפי בחירה
+          if(v === "100"){
+            renderImages(card, p.baseImages);
+          } else if(v === "10"){
+            // אם אין N-10.jpg — יישאר רק N.jpg (כי onerror מסיר)
+            const candidates = p.sample10.concat(p.baseImages);
+            renderImages(card, candidates);
+          } else if(v === "5"){
+            const candidates = p.sample5.concat(p.baseImages);
+            renderImages(card, candidates);
+          }
+
+          // מחיר + לינק וואטסאפ
+          const price = p.price[v];
+          priceVal.textContent = price;
+          priceEl.classList.add('show');
+
+          const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
+          waBtn.href = buildWaHref(p, sizeLabelHe, price);
+          waBtn.classList.remove('disabled');
         }
-        sizeBtns.forEach(btn=>{
-          btn.addEventListener('click', ()=> selectSize(btn));
-        });
+
+        select.addEventListener('change', onSizeChange);
       });
     }
 
