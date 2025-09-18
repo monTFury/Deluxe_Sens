@@ -19,7 +19,7 @@
   <style>
     :root{
       --logo-h: 160px;
-      --bg: #fbf8f3;
+      --bg: #f7f3ec;
       --card: #ffffff;
       --fg: #1a1a1a;
       --muted:#6f6a5f;
@@ -32,15 +32,32 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      background:
-        radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
-        radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
-        linear-gradient(#fff, var(--bg));
       color:var(--fg);
       font-family: Assistant, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       -webkit-font-smoothing: antialiased;
       scroll-behavior:smooth;
+
+      /* רקע אלגנטי ועדין */
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
+        radial-gradient(900px 400px at 110% 0%, #fff3e0 0 30%, transparent 70%),
+        linear-gradient(#fff, var(--bg)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 32 32"><g fill="none" stroke="%23eadfce" stroke-width=".35" opacity=".25"><path d="M0 16H32M16 0V32"/></g></svg>');
+      background-size: auto, auto, auto, 64px 64px;
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
     }
+    body::before{
+      content:""; position: fixed; inset: 0; pointer-events:none;
+      mix-blend-mode: multiply; opacity:.04;
+      background-image: url('data:image/svg+xml;utf8,<?xml version="1.0"?><svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/></filter><rect width="100%" height="100%" filter="url(%23n)"/></svg>');
+      background-size: 300px 300px;
+    }
+    body.has-hero::after{
+      content:""; position: fixed; inset:0; pointer-events:none; opacity:.045;
+      background: center/cover no-repeat url("images/bg.jpg");
+    }
+
     a{color:inherit;text-decoration:none}
 
     .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
@@ -78,7 +95,7 @@
     .imagebox img.active{opacity:1}
     .cnav{
       position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;
-      pointer-events:none; direction:ltr; /* ← מסדר כיוונים/מיקומים ב-RTL */
+      pointer-events:none; direction:ltr;
     }
     .cbtn{
       pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
@@ -114,7 +131,7 @@
     }
 
     /* מחיר – קלאסי, טיפוגרפי */
-    .price{display:none;margin:0 0 var(--s-3); align-items:baseline; gap:10px; color:var(--fg)}
+    .price{display:none;margin:0 0 var(--s-2); align-items:baseline; gap:10px; color:var(--fg)}
     .price.show{display:flex}
     .price-amount{font-weight:800; font-size:20px; letter-spacing:.02em}
     .price-sep{color:#b9a98f}
@@ -123,6 +140,14 @@
       .price.show{justify-content:center}
     }
 
+    /* הערת 10 מ"ל – קצרה ונקייה */
+    .size-note{
+      display:none; margin:0 0 var(--s-3);
+      font-size:13px; color:var(--muted); font-weight:600; text-align:center;
+      line-height:1.35;
+    }
+    .size-note.show{display:block}
+
     /* כפתור */
     .wa-btn{
       margin-top:auto;
@@ -130,7 +155,7 @@
       transition:.2s background,.2s transform,.2s box-shadow; text-align:center;
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
-    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* ניתן ללחוץ לטובת הטוסט */
+    .wa-btn.disabled{opacity:.55; pointer-events:auto}
     @media (max-width: 600px){ .wa-btn{display:block;width:100%} }
 
     /* טוסט */
@@ -150,7 +175,6 @@
   </header>
 
   <main class="wrap">
-    <!-- FAQ קודם -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp בכרטיס וההודעה תתמלא אוטומטית.</div></details>
@@ -202,20 +226,17 @@
       return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
     }
 
-    // טוסט עדין — מיקום נכון ל-position: fixed (ללא scrollX/scrollY)
+    // טוסט עדין
     function showToast(msg, nearEl){
       const t = document.createElement('div');
       t.className = 'toast';
       t.textContent = msg;
       document.body.appendChild(t);
-
-      const r = nearEl.getBoundingClientRect(); // קואורדינטות יחסית למסך
-      const top = (r.top - 46);                 // מעט מעל הכפתור
+      const r = nearEl.getBoundingClientRect();
+      const top = (r.top - 46);
       const left = (r.left + (r.width/2) - (t.offsetWidth/2));
-
       t.style.top = Math.max(10, top) + 'px';
       t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
-
       requestAnimationFrame(()=> t.classList.add('show'));
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
@@ -291,6 +312,8 @@
             <span class="price-size"></span>
           </div>
 
+          <p class="size-note" aria-live="polite"></p>
+
           <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
       `).join('');
@@ -307,6 +330,7 @@
         const priceVal   = card.querySelector('.price-val');
         const priceSize  = card.querySelector('.price-size');
         const priceSep   = card.querySelector('.price-sep');
+        const noteEl     = card.querySelector('.size-note');
         const waBtn      = card.querySelector('.wa-btn');
 
         waBtn.addEventListener('click', (e)=>{
@@ -333,6 +357,15 @@
           priceSep.style.display = price && sizeLabelHe ? 'inline' : 'none';
           priceWrap.classList.add('show');
 
+          // הערת 10 מ"ל בלבד – קצרה ומתאימה למובייל
+          if (v === "10"){
+            noteEl.textContent = "כולל שפריצר למילוי-מחדש (Refillable)";
+            noteEl.classList.add('show');
+          } else {
+            noteEl.textContent = "";
+            noteEl.classList.remove('show');
+          }
+
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
           waBtn.classList.remove('disabled');
         }
@@ -349,6 +382,11 @@
     document.addEventListener('DOMContentLoaded', ()=>{
       renderProducts();
       initTopWA();
+
+      // אם bg.jpg קיים – נוסיף את המחלקה להפעלת שכבת רקע עדינה מהתמונה
+      fetch('images/bg.jpg', {method:'HEAD'}).then(r=>{
+        if (r.ok) document.body.classList.add('has-hero');
+      }).catch(()=>{});
     });
   </script>
 </body>
