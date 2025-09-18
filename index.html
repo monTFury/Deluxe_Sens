@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>קטלוג בשמי דלוקס סנס</title>
+  <title>קטלוג בשמי בוטיק</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@600;800&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Fonts: Assistant לעברית; Inter לשמות האנגליים -->
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
   <meta property="og:title" content="קטלוג בשמי בוטיק" />
@@ -18,7 +18,7 @@
 
   <style>
     :root{
-      --logo-h: 160px; /* ↔ שינוי גובה לוגו */
+      --logo-h: 160px;
       --bg: #fbf8f3;
       --card: #ffffff;
       --fg: #1a1a1a;
@@ -26,11 +26,17 @@
       --accent:#b07a2a;
       --border:#eadfce;
       --shadow: 0 6px 18px rgba(50,24,0,.06);
+
+      --space-1: 6px;
+      --space-2: 10px;
+      --space-3: 14px;
+      --space-4: 18px;
     }
+
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
-      /* רקע עדין וחי */
+      /* רקע עדין */
       background:
         radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
         radial-gradient(900px 400px at 120% 10%, #fff6e6 0 30%, transparent 70%),
@@ -44,82 +50,92 @@
 
     .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
     header{text-align:center;padding:32px 16px 8px}
-    .logo{display:block;margin:0 auto 12px;height:var(--logo-h);max-width:90%;object-fit:contain}
+    .logo{display:block;margin:0 auto var(--space-2);height:var(--logo-h);max-width:90%;object-fit:contain}
     header h1{
-      font-family: Rubik, "Noto Serif Hebrew", serif;
-      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 8px; letter-spacing:.2px;
+      font-family: Assistant, sans-serif;
+      font-weight:800; font-size:clamp(26px,3.5vw,40px); margin:0 0 var(--space-1); letter-spacing:.2px;
     }
-    header p{margin:6px 0;color:var(--muted)}
+    header p{margin:var(--space-1) 0;color:var(--muted); font-weight:400}
     .cta{
-      display:inline-block;margin-top:12px;padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:800;
+      display:inline-block;margin-top:var(--space-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;
       background:linear-gradient(#fff,#fff9f0);transition:.2s transform,.2s box-shadow,.2s background;box-shadow:var(--shadow)
     }
     .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
     /* FAQ לפני המוצרים */
     .faq{margin:20px 0 28px}
-    .faq h2{font-family: Rubik, "Noto Serif Hebrew", serif; font-size:20px;margin:0 0 8px}
+    .faq h2{font-weight:700; font-size:20px;margin:0 0 var(--space-1)}
     .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
-    /* גריד מוצרים: במובייל 2 בעמודה, בינוני 3, גדול אוטומטי */
-    .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    /* גריד מוצרים */
+    .grid{display:grid;gap:var(--space-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
     @media (max-width: 900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
     @media (max-width: 600px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
 
-    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.2s transform,.2s box-shadow}
+    .card{
+      background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;box-shadow:var(--shadow);
+      transition:.2s transform,.2s box-shadow
+    }
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
     /* קרוסלה */
     .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
     .imagebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .2s}
     .imagebox img.active{opacity:1}
-    .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none}
+    .cnav{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;
+      pointer-events:none; direction:ltr; /* ← מוודא שהכפתור הראשון בצד שמאל והשני בימין */
+    }
     .cbtn{
       pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);
       background:#fff9f0; display:flex;align-items:center;justify-content:center; box-shadow:var(--shadow)
     }
     .cbtn svg{width:18px;height:18px}
-    .cbtn:disabled{opacity:.3}
     .imagebox.single .cnav{display:none}
 
+    /* טקסטים/ריווחים */
     .card h3{
-      margin:10px 0 4px;font-size:18px;font-weight:700;letter-spacing:.1px;
-      /* Inter ללועזית, Rubik לעברית */
-      font-family: Inter, Rubik, Arial, sans-serif;
+      margin:var(--space-3) 0 var(--space-2);
+      font-size:18px; letter-spacing:.1px;
+      font-family: Inter, Assistant, Arial, sans-serif; /* לאנגלית נקי */
+      font-weight:600; /* לא מודגש מדי */
     }
 
-    .size-row{display:flex;gap:8px;align-items:center;margin-top:8px}
+    .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--space-2)}
     .size-label{font-weight:700}
     .size-select{
       flex:1; padding:10px 12px;
-      border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:700; direction: rtl; text-align:right;
-      /* חץ בשמאל */
+      border:1px solid var(--border); border-radius:10px; background:#fff; font-weight:600; direction: rtl; text-align:right;
       appearance:none;
+      /* חץ בשמאל */
       background-image:
         linear-gradient(45deg, transparent 50%, var(--accent) 50%),
         linear-gradient(135deg, var(--accent) 50%, transparent 50%),
         linear-gradient(to left, #fff, #fff);
-      background-position:
-        16px 50%, 24px 50%, 0 0;
+      background-position: 16px 50%, 24px 50%, 0 0;
       background-size:8px 8px, 8px 8px, 2.5em 100%;
       background-repeat:no-repeat;
       padding-left:48px; /* מקום לחץ */
     }
 
-    /* מחיר כתוית ברורה */
-    .price{display:none;margin:10px 0 0}
+    /* מחיר */
+    .price{display:none;margin:0 0 var(--space-2)}
     .price.show{display:block}
     .price-chip{
-      display:inline-block; padding:8px 14px; border-radius:999px; background:#fff3e0;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 14px; border-radius:999px; background:#fff3e0;
       border:1px solid var(--accent); font-weight:800; letter-spacing:.2px;
+    }
+    .size-badge{
+      font-weight:700; padding:4px 10px; border-radius:999px; border:1px dashed var(--accent); background:#fff;
     }
 
     .wa-btn{
-      margin-top:auto; display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:800;
+      margin-top:auto; display:inline-block; padding:12px 16px; border-radius:12px; border:1px solid var(--accent); background:#fff; font-weight:700;
       transition:.2s background,.2s transform,.2s box-shadow
     }
     .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
-    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* כן נלחיץ כדי להראות התראה */
+    .wa-btn.disabled{opacity:.55; pointer-events:auto} /* נותן ללחוץ לטובת הטוסט */
 
     /* טוסט */
     .toast{
@@ -196,31 +212,32 @@
       t.className = 'toast';
       t.textContent = msg;
       document.body.appendChild(t);
+      // מרכז מעל הכפתור, עם תיקון גלילה
       const r = nearEl.getBoundingClientRect();
-      const y = r.top - 12; // מעל הכפתור
-      const x = r.right - r.width/2; // אמצע הכפתור
-      t.style.top = Math.max(10, y - t.offsetHeight) + 'px';
-      t.style.left = Math.min(window.innerWidth-10, Math.max(10, x)) + 'px';
-      t.classList.add('show');
+      const top = window.scrollY + r.top - 46; // קצת מעל
+      const left = window.scrollX + r.left + (r.width/2) - (t.offsetWidth/2);
+      t.style.top = Math.max(10, top) + 'px';
+      t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
+      requestAnimationFrame(()=> t.classList.add('show'));
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
 
-    // מצייר/מחליף תמונות בקרוסלה
+    // ציור/החלפת תמונות בקרוסלה
     function renderImages(card, files){
       const box = card.querySelector('.imagebox');
-      box.innerHTML = ''; // ריקון
+      box.innerHTML = '';
       let count = 0;
+
       files.forEach((file, idx) => {
         const img = document.createElement('img');
         img.src = `images/${file}`;
         img.alt = card.dataset.name || '';
         img.className = idx===0 ? 'active' : '';
         img.onerror = () => { img.remove(); updateNav(); };
-        img.onload = () => { count++; updateNav(); };
+        img.onload  = () => { count++; updateNav(); };
         box.appendChild(img);
       });
 
-      // חצים
       const nav = document.createElement('div');
       nav.className = 'cnav';
       nav.innerHTML = `
@@ -238,8 +255,7 @@
 
       function updateNav(){
         const imgs = box.querySelectorAll('img');
-        const single = imgs.length <= 1;
-        box.classList.toggle('single', single);
+        box.classList.toggle('single', imgs.length <= 1);
       }
       updateNav();
 
@@ -250,8 +266,8 @@
         idx = (n + imgs.length) % imgs.length;
         imgs.forEach((im,i)=>im.classList.toggle('active', i===idx));
       }
-      box.querySelector('.prev').addEventListener('click', ()=> goto(idx-1));
-      box.querySelector('.next').addEventListener('click', ()=> goto(idx+1));
+      box.querySelector('.prev').addEventListener('click', ()=> goto(idx-1)); // שמאלה = קודם
+      box.querySelector('.next').addEventListener('click', ()=> goto(idx+1)); // ימינה = הבא
     }
 
     function renderProducts(){
@@ -273,7 +289,12 @@
             </select>
           </div>
 
-          <p class="price"><span class="price-chip">₪ <span class="price-val"></span></span></p>
+          <p class="price">
+            <span class="price-chip">
+              ₪ <span class="price-val"></span>
+              <span class="size-badge"></span>
+            </span>
+          </p>
 
           <a class="wa-btn disabled" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
         </article>
@@ -283,15 +304,15 @@
       document.querySelectorAll('.card').forEach((card, idx)=>{
         const p = products[idx];
 
-        // תמונת ברירת מחדל: 100 מ״ל
+        // תצוגת 100 מ״ל כברירת מחדל
         renderImages(card, p.baseImages);
 
-        const select = card.querySelector('.size-select');
+        const select    = card.querySelector('.size-select');
         const priceWrap = card.querySelector('.price');
-        const priceVal = card.querySelector('.price-val');
-        const waBtn = card.querySelector('.wa-btn');
+        const priceVal  = card.querySelector('.price-val');
+        const sizeBadge = card.querySelector('.size-badge');
+        const waBtn     = card.querySelector('.wa-btn');
 
-        // אם לוחצים על כפתור כשהוא מושבת – נציג טוסט
         waBtn.addEventListener('click', (e)=>{
           if (waBtn.classList.contains('disabled')) {
             e.preventDefault();
@@ -311,9 +332,10 @@
 
           const price = p.price[v];
           priceVal.textContent = price;
+          const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
+          sizeBadge.textContent = sizeLabelHe;
           priceWrap.classList.add('show');
 
-          const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
           waBtn.classList.remove('disabled');
         }
