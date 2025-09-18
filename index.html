@@ -97,14 +97,23 @@
       .f-field{width:100%}
     }
 
-    /* גריד מוצרים */
-    .grid{display:grid;gap:var(--s-4);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    @media (max-width: 900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
-    @media (max-width: 600px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+    /* Masonry columns: כל כרטיס עם גובה עצמאי */
+    .grid.masonry{
+      column-count: 4;
+      column-gap: var(--s-4);
+    }
+    @media (max-width: 1200px){ .grid.masonry{ column-count: 3; } }
+    @media (max-width: 800px){  .grid.masonry{ column-count: 2; } }
+    @media (max-width: 520px){  .grid.masonry{ column-count: 2; } } /* 2 בעמודה גם במובייל צפוף */
 
     .card{
-      background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;display:flex;flex-direction:column;box-shadow:var(--shadow);
-      transition:.2s transform,.2s box-shadow
+      display: inline-block; /* הכרחי ל-columns */
+      width: 100%;
+      background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;
+      box-shadow:var(--shadow);
+      transition:.2s transform,.2s box-shadow;
+      margin: 0 0 var(--s-4);      /* רווח אנכי בין אריחים */
+      break-inside: avoid;          /* מונע שבירה בין עמודות */
     }
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
@@ -125,12 +134,17 @@
       font-size:12px; color:var(--muted); background:#fff; margin-top:var(--s-3);
     }
 
-    /* שם המוצר (אנגלית) */
+    /* שם המוצר (אנגלית) + כותרת משנה "בהשראת" */
     .card h3{
-      margin:var(--s-2) 0 var(--s-2);
+      margin:var(--s-2) 0 2px;
       font-size:18px; letter-spacing:.05em; line-height:1.25;
       font-family: Inter, Assistant, Arial, sans-serif;
       font-weight:700; text-align:center;
+    }
+    .sub{
+      margin:0 0 var(--s-2);
+      font-weight:600; font-size:14px; color:var(--muted);
+      text-align:center;
     }
 
     /* בחירת נפח */
@@ -219,7 +233,8 @@
       </div>
     </section>
 
-    <section class="grid" id="products"></section>
+    <!-- גריד Masonry -->
+    <section class="grid masonry" id="products"></section>
     <div id="empty" class="empty" style="display:none">לא נמצאו מוצרים בהתאמה לסינון</div>
   </main>
 
@@ -239,7 +254,7 @@
       "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
     ];
 
-    // מחירי 100 מ״ל מגוונים לכל מוצר (סידור יעבוד גם בלי בחירה)
+    // מחירי 100 מ״ל מגוונים לכל מוצר
     const PRICE_100 = [
       180,195,170,210,185,220,200,175,230,190,
       205,215,225,199,240,185,235,210,200,195,
@@ -251,14 +266,17 @@
     function derive10ml(base){ return Math.max(35, roundTo5(base * 0.32)); }
     function derive5ml(base){ return Math.max(20, roundTo5(base * 0.18)); }
 
-    // נתוני מוצרים (brand יוכנס בעתיד; כרגע נציג "שם מותג")
+    // נתוני מוצרים:
+    // - brand ריק כרגע → יוצג "שם מותג" כתג דמה, עד שתספק מותגים אמיתיים.
+    // - inspiredBy: הוסף שם הבושם המקורי כדי להציג "בהשראת X".
     const products = Array.from({length:41}, (_,i) => {
       const n = i+1;
       const base = PRICE_100[i] || 180;
       return {
         id:n,
         name:NAMES[i] || `Perfume ${n}`,
-        brand:"", // ← כשיהיו מותגים אמיתיים נמלא כאן
+        brand:"",           // ← נמלא יצרן/מותג כשיהיו נתונים
+        inspiredBy:"",      // ← נמלא "Dior Sauvage" וכו' כשיגיע האקסל
         sku:`P${String(n).padStart(2,'0')}`,
         price:{ "100":base, "10":derive10ml(base), "5":derive5ml(base) },
         baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`],
@@ -296,17 +314,26 @@
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
 
-    // קרוסלה
+    // קרוסלה — עם נפילה חכמה לתמונת בסיס אם דוגמית חסרה
     function renderImages(card, files){
       const box = card.querySelector('.imagebox');
       box.innerHTML = '';
+
+      function ensureActive(){
+        const imgs = box.querySelectorAll('img');
+        if (!imgs.length) return;
+        const anyActive = Array.from(imgs).some(im => im.classList.contains('active'));
+        if (!anyActive) imgs[0].classList.add('active');
+        box.classList.toggle('single', imgs.length <= 1);
+      }
+
       files.forEach((file, idx) => {
         const img = document.createElement('img');
         img.src = `images/${file}`;
         img.alt = card.dataset.name || '';
-        img.className = idx===0 ? 'active' : '';
-        img.onerror = () => { img.remove(); updateNav(); };
-        img.onload  = () => { updateNav(); };
+        if (idx===0) img.classList.add('active');
+        img.onerror = () => { img.remove(); ensureActive(); };
+        img.onload  = () => { ensureActive(); };
         box.appendChild(img);
       });
 
@@ -325,21 +352,23 @@
         </button>`;
       box.appendChild(nav);
 
-      function updateNav(){
-        const imgs = box.querySelectorAll('img');
-        box.classList.toggle('single', imgs.length <= 1);
-      }
-      updateNav();
-
       let idx = 0;
       function goto(n){
-        const imgs = [...box.querySelectorAll('img')];
+        const imgs = [...box.querySelectorAll('img')].filter(im => im.isConnected);
         if (!imgs.length) return;
         idx = (n + imgs.length) % imgs.length;
         imgs.forEach((im,i)=>im.classList.toggle('active', i===idx));
       }
       box.querySelector('.prev').addEventListener('click', ()=> goto(idx-1)); // שמאלה = קודם
       box.querySelector('.next').addEventListener('click', ()=> goto(idx+1)); // ימינה = הבא
+
+      setTimeout(()=>{ 
+        const imgs = box.querySelectorAll('img');
+        if (imgs.length) {
+          const anyActive = Array.from(imgs).some(im => im.classList.contains('active'));
+          if (!anyActive) imgs[0].classList.add('active');
+        }
+      }, 0);
     }
 
     // רינדור כרטיסים
@@ -355,12 +384,14 @@
 
       el.innerHTML = list.map(p => {
         const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
+        const inspiredLine = (p.inspiredBy && p.inspiredBy.trim()) ? `<div class="sub">בהשראת ${p.inspiredBy}</div>` : "";
         return `
         <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}" data-brand="${displayBrand}">
           <div class="imagebox"></div>
 
           <div class="brand-tag">${displayBrand}</div>
           <h3>${p.name}</h3>
+          ${inspiredLine}
 
           <div class="size-row">
             <span class="size-label">נפח</span>
@@ -393,14 +424,12 @@
         renderImages(card, p.baseImages);
 
         const select     = card.querySelector('.size-select');
-        const priceWrap  = card.querySelector('.price');
         const priceVal   = card.querySelector('.price-val');
         const priceSize  = card.querySelector('.price-size');
         const priceSep   = card.querySelector('.price-sep');
         const noteEl     = card.querySelector('.size-note');
         const waBtn      = card.querySelector('.wa-btn');
 
-        // כפתור – טוסט אם לא נבחר נפח
         waBtn.addEventListener('click', (e)=>{
           if (waBtn.classList.contains('disabled')) {
             e.preventDefault();
@@ -408,11 +437,9 @@
           }
         });
 
-        // אם כבר נבחר נפח בעבר – ליישם
         if (selectedById[pid]) {
           applySize(selectedById[pid]);
         } else {
-          // מצב התחלתי: מציגים מחיר 100 מ״ל בלבד, הכפתור נשאר דהוי
           priceVal.textContent = p.price["100"];
           priceSize.textContent = "100 מ״ל";
         }
@@ -425,7 +452,7 @@
           if (v === "100"){
             renderImages(card, p.baseImages);
           } else if (v === "10"){
-            renderImages(card, p.sample10.concat(p.baseImages));
+            renderImages(card, p.sample10.concat(p.baseImages)); // אם חסר — תישאר הבסיס
           } else if (v === "5"){
             renderImages(card, p.sample5.concat(p.baseImages));
           }
@@ -436,7 +463,6 @@
           priceSize.textContent = sizeLabelHe;
           priceSep.style.display = price && sizeLabelHe ? 'inline' : 'none';
 
-          // הערת 10 מ"ל בלבד
           if (v === "10"){
             noteEl.textContent = "כולל שפריצר למילוי-מחדש (Refillable)";
             noteEl.classList.add('show');
