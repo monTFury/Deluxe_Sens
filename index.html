@@ -39,26 +39,39 @@
   .cta{display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;background:linear-gradient(#fff,#fff9f0);box-shadow:var(--shadow);transition:.2s}
   .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-  /* FAQ – העליתי עוד קצת למעלה */
-  .faq{margin:4px 0 14px}
-  .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
-  .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
+  /* FAQ – עיצוב ונשיאה מעט למעלה */
+  .faq{margin:0 0 12px}
+  .faq h2{font-weight:800;font-size:20px;margin:0 0 8px}
+  .faq details{border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:8px 0;overflow:hidden}
+  .faq summary{padding:12px 14px;cursor:pointer;font-weight:700;list-style:none}
+  .faq summary::marker{content:""}
+  .faq details > div{padding:0 14px 12px 14px;color:var(--muted);font-weight:600;border-top:1px dashed var(--border)}
 
-  /* אזור פילטרים עם כפתור "סינון מתקדם" */
+  /* אזור פילטרים: חיפוש גלוי + כפתורי פעולה צמודים */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
-  .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .filters .top{justify-content:space-between}
-  .f-field{display:flex;align-items:center;gap:8px}
+  .filters .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .f-field{display:flex;align-items:center;gap:8px;min-width:280px}
+  .f-field.grow{flex:1}
   .f-label{font-weight:700;font-size:14px;white-space:nowrap}
-  .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:220px}
-  .f-input{min-width:260px}
-  .filters-toggle{margin-inline-start:auto;height:var(--input-h);padding:0 12px;border:1px dashed var(--border);border-radius:10px;background:#fff;font-weight:700;color:#6b5a43}
+  .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600}
+  .f-input{width:100%}
+  .filters-actions{display:flex;gap:8px;align-items:center}
+  .filters-toggle,.filters-reset{
+    height:var(--input-h);padding:0 12px;border-radius:10px;background:#fff;font-weight:700
+  }
+  .filters-toggle{border:1px dashed var(--border);color:#6b5a43}
+  .filters-reset{border:1px solid var(--border);color:#7a6c57}
+  .filters .panel{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
   .filters .panel[hidden]{display:none}
+  .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .f-select{min-width:220px}
+
   @media (max-width:700px){
-    .filters .row{flex-direction:column;align-items:stretch;gap:12px}
-    .f-field{display:grid;grid-template-columns:1fr;grid-row-gap:6px}
-    .f-input,.f-select,.filters-toggle{width:100%;min-width:unset}
-    .f-label{margin:0 2px}
+    .filters .top{flex-direction:column;align-items:stretch}
+    .f-field,.filters-actions{width:100%}
+    .filters-actions > *{flex:1}
+    .filters .row{flex-direction:column;align-items:stretch}
+    .f-select{width:100%;min-width:unset}
   }
 
   /* גריד מוצרים */
@@ -117,13 +130,12 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* מובייל קומפקטי יותר + חצים בפנים */
+  /* מובייל – תמונה מעט גבוהה יותר + חצים פנימה */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
-    .imagebox{height:min(52vw,300px)}       /* תמונה מעט נמוכה יותר */
-    .cnav{padding:0 10px}                   /* מכניס את החצים פנימה */
-    .cnav .prev,.cnav .next{transform:none}
+    .imagebox{height:min(60vw,340px)}   /* ↑ קצת יותר גבוה כדי שלא ייחתך */
+    .cnav{padding:0 10px}
     .title{min-height:unset;margin:10px 0 8px}
     .t1,.t2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.9em;overflow:hidden;word-break:break-word}
     .t1{font-size:17px}
@@ -145,7 +157,7 @@
   </header>
 
   <main class="wrap">
-    <!-- FAQ מעט גבוה יותר -->
+    <!-- FAQ -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp וההודעה תתמלא אוטומטית.</div></details>
@@ -153,14 +165,17 @@
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
 
-    <!-- פילטרים: חיפוש גלוי + כפתור לפתיחת פאנל סינון מתקדם -->
+    <!-- פילטרים: חיפוש גלוי + פעולות -->
     <section class="filters" id="filters">
-      <div class="row top">
-        <div class="f-field">
+      <div class="top">
+        <div class="f-field grow">
           <label class="f-label" for="f-q">חיפוש</label>
           <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/>
         </div>
-        <button class="filters-toggle" id="filtersToggle" aria-controls="filtersPanel" aria-expanded="false">סינון מתקדם</button>
+        <div class="filters-actions">
+          <button class="filters-toggle" id="filtersToggle" aria-controls="filtersPanel" aria-expanded="false">סינון מתקדם</button>
+          <button class="filters-reset" id="filtersReset" type="button">איפוס סינון</button>
+        </div>
       </div>
       <div class="panel" id="filtersPanel" hidden>
         <div class="row">
@@ -496,7 +511,7 @@ function mapRow(row,idx){
   return {id:idx+1,longTitle:parsed.longTitle,dupeTitle:parsed.dupeTitle,dupeName:parsed.dupeName,inspBrand:parsed.inspBrand,inspProduct:parsed.inspProduct,inspStr:parsed.inspStr,gender:parsed.gender,genderText:parsed.genderText,price:{"100":price100,"10":price10,"5":price5}};
 }
 
-/* init + toggle panel */
+/* init + toggle + reset */
 function initTopWA(){ const waTop=document.getElementById('waTop'); if(waTop) waTop.href=`https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`; }
 document.addEventListener('DOMContentLoaded',async()=>{
   initTopWA();
@@ -506,10 +521,15 @@ document.addEventListener('DOMContentLoaded',async()=>{
   renderBrandOptions(ALL);
   renderProducts(ALL);
 
-  document.getElementById('f-q').addEventListener('input',()=>applyFilters(ALL));
-  document.getElementById('f-brand').addEventListener('change',()=>applyFilters(ALL));
-  document.getElementById('f-gender').addEventListener('change',()=>applyFilters(ALL));
-  document.getElementById('f-sort').addEventListener('change',()=>applyFilters(ALL));
+  const qEl=document.getElementById('f-q');
+  const brandEl=document.getElementById('f-brand');
+  const genderEl=document.getElementById('f-gender');
+  const sortEl=document.getElementById('f-sort');
+
+  qEl.addEventListener('input',()=>applyFilters(ALL));
+  brandEl.addEventListener('change',()=>applyFilters(ALL));
+  genderEl.addEventListener('change',()=>applyFilters(ALL));
+  sortEl.addEventListener('change',()=>applyFilters(ALL));
 
   const toggle=document.getElementById('filtersToggle');
   const panel=document.getElementById('filtersPanel');
@@ -517,6 +537,12 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const open=panel.hasAttribute('hidden');
     if(open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden','');
     toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  /* איפוס סינון */
+  document.getElementById('filtersReset').addEventListener('click',()=>{
+    qEl.value=""; brandEl.value=""; genderEl.value=""; sortEl.value="";
+    applyFilters(ALL);
   });
 });
 </script>
