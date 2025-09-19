@@ -19,7 +19,7 @@
   }
   *{box-sizing:border-box} html,body{margin:0}
   body{
-    overflow-x:hidden; /* לא לתת למסך "לברוח" במובייל */
+    overflow-x:hidden; /* מונע גלילה הצידה במובייל */
     color:var(--fg); font-family:Assistant,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     -webkit-font-smoothing:antialiased;
     background-color:var(--bg);
@@ -43,28 +43,35 @@
   .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
   .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
+  /* פילטרים */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px}
   .f-label{font-weight:700;font-size:14px}
   .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:200px}
   .f-input{min-width:240px}
-  @media (max-width:700px){.filters .row{flex-direction:column;align-items:stretch}.f-input,.f-select{width:100%;min-width:unset}.f-field{width:100%}}
+  @media (max-width:700px){
+    .filters .row{flex-direction:column;align-items:stretch}
+    .f-input,.f-select{width:100%;min-width:unset}
+    .f-field{width:100%}
+  }
 
+  /* גריד */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
-  @media (max-width:520px){.grid{grid-template-columns:repeat(2,1fr);} }
 
+  /* כרטיס מוצר */
   .card{
     display:flex;flex-direction:column;background:var(--card);
-    border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;min-height:620px;
+    border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
+    min-height:620px;
   }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
   /* קרוסלה */
   .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:240px}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .25s;z-index:1;pointer-events:none;} /* לא קולט קליקים כשהוא מוסתר */
-  .slide.active{opacity:1;pointer-events:auto;}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .25s;z-index:1;pointer-events:none}
+  .slide.active{opacity:1;pointer-events:auto}
   .slide img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:#000a;color:#fff;font-size:12px;padding:4px 8px;border-radius:999px;backdrop-filter:blur(2px)}
   .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;direction:ltr;z-index:3;pointer-events:none}
@@ -72,24 +79,27 @@
   .cbtn svg{width:13px;height:13px}
   .cbtn,.cbtn *{pointer-events:auto;cursor:pointer}
   .imagebox.single .cnav{display:none}
-  .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9a98f;font-weight:700;z-index:0}
+  .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9a98f;font-weight:700;z-index:0;text-align:center;padding:0 8px}
 
-  .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2)}
+  /* מטה/תגים */
+  .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
+  /* כותרות – 3 שכבות  */
   .title{margin:var(--s-2) 0 calc(var(--s-3) + 10px);text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:7.8em;gap:6px}
   .t1{font-weight:800;font-size:clamp(15px,2.1vw,18px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t2{font-weight:600;font-size:clamp(13px,1.7vw,15px);line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t3{font-weight:600;font-size:13px;color:var(--muted)}
   .t2 .insp{color:var(--accent);font-weight:800}
-  .t2 .sep{color:var(--muted);font-weight:600}
 
+  /* בחירת נפח */
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
   .size-label{font-weight:700}
   .size-select{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;direction:rtl;text-align:right;appearance:none;
     background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%),linear-gradient(to left,#fff,#fff);
     background-position:16px 50%,24px 50%,0 0;background-size:8px 8px,8px 8px,2.5em 100%;background-repeat:no-repeat;padding-left:48px}
 
+  /* מחיר נקי */
   .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex;justify-content:center}
   .price-amount{font-weight:800;font-size:20px;letter-spacing:.02em}
   .price-sep{color:#b9a98f}
@@ -98,20 +108,33 @@
   .size-note{display:none;margin:0 0 var(--s-3);font-size:13px;color:var(--muted);font-weight:600;text-align:center;line-height:1.35}
   .size-note.show{display:block}
 
+  /* כפתור וואטסאפ */
   .wa-btn{margin-top:auto;display:block;width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
   .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
   .wa-btn.disabled{opacity:.55;pointer-events:auto}
 
   .toast{position:fixed;z-index:9999;padding:10px 14px;border-radius:12px;background:#111;color:#fff;font-size:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s}
   .toast.show{opacity:1;transform:translateY(0)}
-
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
+  /* ===== מובייל חדש: כרטיס מלא-רוחב, טקסט לא נחתך, חצים מחוץ למסגרת מעט ===== */
   @media (max-width:520px){
-    .imagebox{height:220px}
-    .title{min-height:8.4em}
-    .t1{font-size:15.5px}.t2{font-size:13.5px}.t3{font-size:12.5px}
-    .card{min-height:610px}
+    .wrap{padding:0 12px 48px}
+    .grid{grid-template-columns:1fr;gap:14px;justify-items:center}
+    .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
+    .imagebox{height:min(62vw,340px)}
+    .cnav{padding:0 0}
+    .cnav .prev{transform:translateX(-8px)}
+    .cnav .next{transform:translateX(8px)}
+    .title{min-height:unset}
+    .t1,.t2{display:block;max-height:none;-webkit-line-clamp:unset;overflow:visible;word-break:break-word}
+    .t1{font-size:18px}
+    .t2{font-size:14px}
+    .t3{font-size:12.5px}
+    .meta-row{justify-content:center}
+    .price{margin:8px 0 10px}
+    .wa-btn{margin-top:10px}
+    .placeholder{font-size:12px}
   }
 </style>
 </head>
@@ -147,7 +170,7 @@
 
   <footer class="wrap"><div>© 2025 שם המותג • הזמנה דרך WhatsApp בלבד • פרטי קשר: example@mail.com • 050-0000000</div></footer>
 
-  <!-- מודאל זום עם ניווט -->
+  <!-- Lightbox / Zoom עם ניווט -->
   <div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;">
     <div style="position:relative;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;gap:10px;align-items:center;">
       <img id="lb-img" alt="" style="max-width:95vw;max-height:80vh;object-fit:contain;transform-origin:center center;"/>
@@ -166,7 +189,7 @@
 const WA_PHONE = "972508939729";
 const CSV_URL  = "data/perfumes.csv";
 
-/* ===== utils ===== */
+/* ===== עזר ===== */
 function round5(x){ return Math.round(x/5)*5; }
 function hashNum(str){ let h=0; for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i)|0; return (Math.abs(h)%1000)/1000; }
 function deriveBasePrice100(slug){ return round5(170 + hashNum(slug)*70); }
@@ -183,20 +206,17 @@ function slugify(s){
   out = out.toLowerCase().replace(/['\"`´]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"");
   return out;
 }
-/* משאיר ניקוד/גרשיים – מותאם לשמות כמו mango-kiss-stéphane-humbert-lucas-777 */
+/* גם וריאנט “יוניקוד” – לשמות כמו mango-kiss-stéphane-… */
 function rawSlug(s){
   if(!s) return "";
-  return s.trim().toLowerCase()
-    .replace(/\s+/g,"-")
-    .replace(/[\/\\]/g,"-")
-    .replace(/-{2,}/g,"-")
-    .replace(/^-|-$/g,"");
+  return s.trim().toLowerCase().replace(/\s+/g,"-").replace(/[\/\\]/g,"-").replace(/-{2,}/g,"-").replace(/^-|-$/g,"");
 }
 
 function showToast(msg, nearEl){
   const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t);
   const r=nearEl.getBoundingClientRect();
-  t.style.top=Math.max(10,r.top-46)+'px'; t.style.left=Math.max(10,Math.min(r.left+r.width/2-80,window.innerWidth-160))+'px';
+  t.style.top=Math.max(10,r.top-46)+'px';
+  t.style.left=Math.max(10,Math.min(r.left+r.width/2-80,window.innerWidth-160))+'px';
   requestAnimationFrame(()=>t.classList.add('show'));
   setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),200);},1600);
 }
@@ -223,7 +243,7 @@ async function loadCSV(url){
   return {headers,rows};
 }
 
-/* ===== parse title ===== */
+/* ===== פירוק הכותרת הארוכה ===== */
 const BRAND_ALIASES=["Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada","Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier","Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage","Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas","Dior","Valentino"];
 function normalizeBrand(raw){ if(!raw) return ""; let s=raw.trim().replace(/^By\s+/i,""); if(/By\s+Kilian/i.test(raw)||/^Kilian$/i.test(s)) s="Kilian"; return s; }
 
@@ -246,7 +266,7 @@ function parseFromLongTitle(longTitle){
   return {dupeName,dupeTitle,inspBrand,inspProduct,inspStr,gender,genderText:rightPart,longTitle:norm};
 }
 
-/* ===== filename candidates ===== */
+/* ===== שמות קבצים אפשריים ===== */
 function candidateBasesForDupe(dupeName,dupeTitle){
   const set=new Set(); const add=v=>{ if(v){ set.add(`images/${slugify(v)}`); set.add(`images/${rawSlug(v)}`); } };
   add(dupeName); add(dupeTitle);
@@ -258,11 +278,8 @@ function candidateBasesForInsp(inspBrand,inspProduct,inspStr){
   const both2=`${inspProduct||""} ${inspBrand||""}`.trim();
   const firstBrandWord=(inspBrand||"").split(/\s+/)[0]||"";
   const prodPlusFirstBrand=`${inspProduct||""} ${firstBrandWord}`.trim();
-
   add(both1); add(both2); add(prodPlusFirstBrand); add(inspStr);
-
-  /* וריאנט מקוצר: 2–3 המילים האחרונות של המוצר + כל המותג
-     תופס שמות כמו: mango-kiss-stéphane-humbert-lucas-777 */
+  /* וריאנט מקוצר: 2–3 מילים אחרונות של שם המוצר + שם המותג */
   const prodTokens=(inspProduct||"").trim().split(/\s+/);
   if(prodTokens.length>=2){
     const last2=prodTokens.slice(-2).join(" ");
@@ -274,7 +291,7 @@ function candidateBasesForInsp(inspBrand,inspProduct,inspStr){
 }
 function tryLoadOne(img,base,ok,fail){ const exts=[".jpg",".jpeg",".png",".webp"]; let i=0; img.onload=()=>ok(); img.onerror=()=>{ i++; if(i<exts.length){ img.src=base+exts[i]; } else fail(); }; img.src=base+exts[0]; }
 
-/* ===== carousel + zoom ===== */
+/* ===== קרוסלה + זום ===== */
 function buildCarousel(container,p){
   container.innerHTML="";
   const holders=[];
@@ -284,7 +301,6 @@ function buildCarousel(container,p){
   const inspCands=candidateBasesForInsp(p.inspBrand,p.inspProduct,p.inspStr);
 
   let loadedSlides=[];
-
   function addWithCandidates(label,cands){
     if(!cands.length) return;
     const {s,img}=makeSlide(label); container.appendChild(s);
@@ -292,7 +308,6 @@ function buildCarousel(container,p){
       const base=cands[j++]; tryLoadOne(img,base,()=>{ s.dataset.loaded="1"; loadedSlides.push(s); activate(); },tryNext); }
     tryNext(); holders.push(s);
   }
-
   addWithCandidates("מוצר",dupeCands);
   addWithCandidates("השראה",inspCands);
 
@@ -305,14 +320,14 @@ function buildCarousel(container,p){
 
   let idx=0;
   function activate(){
-    loadedSlides = holders.filter(s=>s.dataset.loaded==="1");
+    loadedSlides=holders.filter(s=>s.dataset.loaded==="1");
     if(!loadedSlides.length){ nav.style.display='none'; container.classList.add('single'); return; }
     ph.style.display='none';
     loadedSlides.forEach((s,i)=>s.classList.toggle('active',i===0));
     container.classList.toggle('single',loadedSlides.length<=1);
 
-    /* חיבור זום – על ה-active בלבד */
-    const srcs = loadedSlides.map(s=>s.querySelector('img').src);
+    /* זום – רק על השקופית הפעילה, וממקור הקליק */
+    const srcs=loadedSlides.map(s=>s.querySelector('img').src);
     loadedSlides.forEach((s,i)=>{
       const img=s.querySelector('img');
       img.onclick=()=>openLB(srcs,i);
@@ -329,7 +344,7 @@ function buildCarousel(container,p){
   console.debug("IMAGE CANDIDATES:",{dupe:dupeCands,insp:inspCands});
 }
 
-/* ===== Lightbox / Zoom with next/prev ===== */
+/* Lightbox / Zoom + ניווט */
 const lb=document.getElementById('lightbox');
 const lbImg=document.getElementById('lb-img');
 const lbIn=document.getElementById('lb-zoom-in');
@@ -339,12 +354,10 @@ const lbClose=document.getElementById('lb-close');
 const lbPrev=document.getElementById('lb-prev');
 const lbNext=document.getElementById('lb-next');
 let lbScale=1, lbList=[], lbIndex=0;
-
 function showCurrent(){ lbImg.src=lbList[lbIndex]; lbScale=1; lbImg.style.transform='scale(1)'; }
 function openLB(list,index){ lbList=list||[]; lbIndex=index||0; if(!lbList.length) return; showCurrent(); lb.style.display='flex'; document.body.style.overflow='hidden'; }
 function closeLB(){ lb.style.display='none'; lbImg.src=""; document.body.style.overflow=''; }
-
-lbIn.addEventListener('click', ()=>{ lbScale=Math.min(5,lbScale+0.2); lbImg.style.transform=`scale(${lbScale})`; });
+lbIn.addEventListener('click',()=>{ lbScale=Math.min(5,lbScale+0.2); lbImg.style.transform=`scale(${lbScale})`; });
 lbOut.addEventListener('click',()=>{ lbScale=Math.max(1,lbScale-0.2); lbImg.style.transform=`scale(${lbScale})`; });
 lbReset.addEventListener('click',()=>{ lbScale=1; lbImg.style.transform='scale(1)'; });
 lbClose.addEventListener('click',closeLB);
@@ -358,7 +371,7 @@ window.addEventListener('keydown',e=>{
   if(e.key==='Escape') lbClose.click();
 });
 
-/* ===== WhatsApp ===== */
+/* WhatsApp */
 function buildWaHref(p,sizeLabel,price){
   const lines=[
     "היי! מעוניין/ת בבושם:", p.longTitle,
@@ -369,7 +382,7 @@ function buildWaHref(p,sizeLabel,price){
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
 }
 
-/* ===== render ===== */
+/* Render */
 const selectedById={};
 function renderProducts(list){
   const el=document.getElementById('products'), empty=document.getElementById('empty');
@@ -416,7 +429,6 @@ function renderProducts(list){
     const noteEl=card.querySelector('.size-note'); const waBtn=card.querySelector('.wa-btn'); const box=card.querySelector('.imagebox');
 
     buildCarousel(box,p);
-
     waBtn.addEventListener('click',e=>{ if(waBtn.classList.contains('disabled')){ e.preventDefault(); showToast('בחר/י נפח קודם 🙂',waBtn);} });
 
     if(selectedById[pid]) applySize(selectedById[pid]); else { priceVal.textContent=p.price["100"]; priceSize.textContent="100 מ״ל"; }
@@ -433,8 +445,8 @@ function renderProducts(list){
   });
 }
 
-/* ===== filters ===== */
-function unique(list, get){ return Array.from(new Set(list.map(get).filter(Boolean))); }
+/* פילטרים */
+function unique(list,get){ return Array.from(new Set(list.map(get).filter(Boolean))); }
 function renderBrandOptions(list){
   const sel=document.getElementById('f-brand'), prev=sel.value;
   sel.innerHTML=`<option value="">הכל</option>`;
@@ -457,7 +469,7 @@ function applyFilters(all){
   renderProducts(list);
 }
 
-/* ===== map row ===== */
+/* map row */
 function mapRow(row,idx){
   const longTitle=(row["שם מלא כותרת"]||row["Title"]||row["name"]||"").trim();
   const parsed=parseFromLongTitle(longTitle);
@@ -466,7 +478,7 @@ function mapRow(row,idx){
   return {id:idx+1,longTitle:parsed.longTitle,dupeTitle:parsed.dupeTitle,dupeName:parsed.dupeName,inspBrand:parsed.inspBrand,inspProduct:parsed.inspProduct,inspStr:parsed.inspStr,gender:parsed.gender,genderText:parsed.genderText,price:{"100":price100,"10":price10,"5":price5}};
 }
 
-/* ===== init ===== */
+/* init */
 function initTopWA(){ const waTop=document.getElementById('waTop'); if(waTop) waTop.href=`https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`; }
 document.addEventListener('DOMContentLoaded',async()=>{
   initTopWA();
