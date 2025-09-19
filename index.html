@@ -19,7 +19,7 @@
   }
   *{box-sizing:border-box} html,body{margin:0}
   body{
-    overflow-x:hidden; /* מונע גלילה הצידה במובייל */
+    overflow-x:hidden;
     color:var(--fg); font-family:Assistant,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     -webkit-font-smoothing:antialiased;
     background-color:var(--bg);
@@ -39,7 +39,8 @@
   .cta{display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;background:linear-gradient(#fff,#fff9f0);box-shadow:var(--shadow);transition:.2s}
   .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-  .faq{margin:20px 0 20px}
+  /* FAQ – העליתי קצת למעלה */
+  .faq{margin:12px 0 18px}
   .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
   .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
@@ -47,20 +48,23 @@
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px}
-  .f-label{font-weight:700;font-size:14px}
+  .f-label{font-weight:700;font-size:14px;white-space:nowrap}
   .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:200px}
   .f-input{min-width:240px}
+
+  /* מובייל — אזור פילטרים סימטרי: תווית מעל שדה, רוחב מלא וריווח אחיד */
   @media (max-width:700px){
-    .filters .row{flex-direction:column;align-items:stretch}
+    .filters .row{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+    .f-field{display:grid;grid-template-columns:1fr;grid-row-gap:6px}
+    .f-label{margin:0 2px}
     .f-input,.f-select{width:100%;min-width:unset}
-    .f-field{width:100%}
   }
 
-  /* גריד */
+  /* גריד מוצרים */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr;gap:14px;justify-items:center}}
 
-  /* כרטיס מוצר */
   .card{
     display:flex;flex-direction:column;background:var(--card);
     border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
@@ -81,25 +85,21 @@
   .imagebox.single .cnav{display:none}
   .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9a98f;font-weight:700;z-index:0;text-align:center;padding:0 8px}
 
-  /* מטה/תגים */
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
-  /* כותרות – 3 שכבות  */
   .title{margin:var(--s-2) 0 calc(var(--s-3) + 10px);text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:7.8em;gap:6px}
   .t1{font-weight:800;font-size:clamp(15px,2.1vw,18px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t2{font-weight:600;font-size:clamp(13px,1.7vw,15px);line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t3{font-weight:600;font-size:13px;color:var(--muted)}
   .t2 .insp{color:var(--accent);font-weight:800}
 
-  /* בחירת נפח */
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
   .size-label{font-weight:700}
   .size-select{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;direction:rtl;text-align:right;appearance:none;
     background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%),linear-gradient(to left,#fff,#fff);
     background-position:16px 50%,24px 50%,0 0;background-size:8px 8px,8px 8px,2.5em 100%;background-repeat:no-repeat;padding-left:48px}
 
-  /* מחיר נקי */
   .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex;justify-content:center}
   .price-amount{font-weight:800;font-size:20px;letter-spacing:.02em}
   .price-sep{color:#b9a98f}
@@ -108,7 +108,6 @@
   .size-note{display:none;margin:0 0 var(--s-3);font-size:13px;color:var(--muted);font-weight:600;text-align:center;line-height:1.35}
   .size-note.show{display:block}
 
-  /* כפתור וואטסאפ */
   .wa-btn{margin-top:auto;display:block;width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
   .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
   .wa-btn.disabled{opacity:.55;pointer-events:auto}
@@ -117,10 +116,9 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* ===== מובייל חדש: כרטיס מלא-רוחב, טקסט לא נחתך, חצים מחוץ למסגרת מעט ===== */
+  /* מובייל – כרטיס מלא-רוחב, טקסט לא נחתך, חצים מוזחים מעט החוצה */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
-    .grid{grid-template-columns:1fr;gap:14px;justify-items:center}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
     .imagebox{height:min(62vw,340px)}
     .cnav{padding:0 0}
@@ -157,10 +155,28 @@
     <!-- פילטרים -->
     <section class="filters" id="filters">
       <div class="row">
-        <div class="f-field"><label class="f-label" for="f-q">חיפוש</label><input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/></div>
-        <div class="f-field"><label class="f-label" for="f-brand">מותג השראה</label><select id="f-brand" class="f-select"><option value="">הכל</option></select></div>
-        <div class="f-field"><label class="f-label" for="f-gender">מין</label><select id="f-gender" class="f-select"><option value="">הכל</option><option>לגבר</option><option>לאישה</option><option>יוניסקס</option></select></div>
-        <div class="f-field"><label class="f-label" for="f-sort">סידור</label><select id="f-sort" class="f-select"><option value="">ברירת מחדל</option><option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option><option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option></select></div>
+        <div class="f-field">
+          <label class="f-label" for="f-q">חיפוש</label>
+          <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/>
+        </div>
+        <div class="f-field">
+          <label class="f-label" for="f-brand">מותג השראה</label>
+          <select id="f-brand" class="f-select"><option value="">הכל</option></select>
+        </div>
+        <div class="f-field">
+          <label class="f-label" for="f-gender">מין</label>
+          <select id="f-gender" class="f-select">
+            <option value="">הכל</option><option>לגבר</option><option>לאישה</option><option>יוניסקס</option>
+          </select>
+        </div>
+        <div class="f-field">
+          <label class="f-label" for="f-sort">סידור</label>
+          <select id="f-sort" class="f-select">
+            <option value="">ברירת מחדל</option>
+            <option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option>
+            <option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option>
+          </select>
+        </div>
       </div>
     </section>
 
@@ -170,7 +186,7 @@
 
   <footer class="wrap"><div>© 2025 שם המותג • הזמנה דרך WhatsApp בלבד • פרטי קשר: example@mail.com • 050-0000000</div></footer>
 
-  <!-- Lightbox / Zoom עם ניווט -->
+  <!-- Lightbox / Zoom -->
   <div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;">
     <div style="position:relative;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;gap:10px;align-items:center;">
       <img id="lb-img" alt="" style="max-width:95vw;max-height:80vh;object-fit:contain;transform-origin:center center;"/>
@@ -189,7 +205,7 @@
 const WA_PHONE = "972508939729";
 const CSV_URL  = "data/perfumes.csv";
 
-/* ===== עזר ===== */
+/* ===== utils ===== */
 function round5(x){ return Math.round(x/5)*5; }
 function hashNum(str){ let h=0; for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i)|0; return (Math.abs(h)%1000)/1000; }
 function deriveBasePrice100(slug){ return round5(170 + hashNum(slug)*70); }
@@ -206,12 +222,10 @@ function slugify(s){
   out = out.toLowerCase().replace(/['\"`´]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"");
   return out;
 }
-/* גם וריאנט “יוניקוד” – לשמות כמו mango-kiss-stéphane-… */
 function rawSlug(s){
   if(!s) return "";
   return s.trim().toLowerCase().replace(/\s+/g,"-").replace(/[\/\\]/g,"-").replace(/-{2,}/g,"-").replace(/^-|-$/g,"");
 }
-
 function showToast(msg, nearEl){
   const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t);
   const r=nearEl.getBoundingClientRect();
@@ -243,7 +257,7 @@ async function loadCSV(url){
   return {headers,rows};
 }
 
-/* ===== פירוק הכותרת הארוכה ===== */
+/* ===== parsing title ===== */
 const BRAND_ALIASES=["Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada","Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier","Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage","Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas","Dior","Valentino"];
 function normalizeBrand(raw){ if(!raw) return ""; let s=raw.trim().replace(/^By\s+/i,""); if(/By\s+Kilian/i.test(raw)||/^Kilian$/i.test(s)) s="Kilian"; return s; }
 
@@ -266,7 +280,7 @@ function parseFromLongTitle(longTitle){
   return {dupeName,dupeTitle,inspBrand,inspProduct,inspStr,gender,genderText:rightPart,longTitle:norm};
 }
 
-/* ===== שמות קבצים אפשריים ===== */
+/* ===== filename candidates ===== */
 function candidateBasesForDupe(dupeName,dupeTitle){
   const set=new Set(); const add=v=>{ if(v){ set.add(`images/${slugify(v)}`); set.add(`images/${rawSlug(v)}`); } };
   add(dupeName); add(dupeTitle);
@@ -279,7 +293,6 @@ function candidateBasesForInsp(inspBrand,inspProduct,inspStr){
   const firstBrandWord=(inspBrand||"").split(/\s+/)[0]||"";
   const prodPlusFirstBrand=`${inspProduct||""} ${firstBrandWord}`.trim();
   add(both1); add(both2); add(prodPlusFirstBrand); add(inspStr);
-  /* וריאנט מקוצר: 2–3 מילים אחרונות של שם המוצר + שם המותג */
   const prodTokens=(inspProduct||"").trim().split(/\s+/);
   if(prodTokens.length>=2){
     const last2=prodTokens.slice(-2).join(" ");
@@ -291,7 +304,7 @@ function candidateBasesForInsp(inspBrand,inspProduct,inspStr){
 }
 function tryLoadOne(img,base,ok,fail){ const exts=[".jpg",".jpeg",".png",".webp"]; let i=0; img.onload=()=>ok(); img.onerror=()=>{ i++; if(i<exts.length){ img.src=base+exts[i]; } else fail(); }; img.src=base+exts[0]; }
 
-/* ===== קרוסלה + זום ===== */
+/* ===== carousel + zoom ===== */
 function buildCarousel(container,p){
   container.innerHTML="";
   const holders=[];
@@ -326,7 +339,6 @@ function buildCarousel(container,p){
     loadedSlides.forEach((s,i)=>s.classList.toggle('active',i===0));
     container.classList.toggle('single',loadedSlides.length<=1);
 
-    /* זום – רק על השקופית הפעילה, וממקור הקליק */
     const srcs=loadedSlides.map(s=>s.querySelector('img').src);
     loadedSlides.forEach((s,i)=>{
       const img=s.querySelector('img');
@@ -344,7 +356,7 @@ function buildCarousel(container,p){
   console.debug("IMAGE CANDIDATES:",{dupe:dupeCands,insp:inspCands});
 }
 
-/* Lightbox / Zoom + ניווט */
+/* Lightbox / Zoom */
 const lb=document.getElementById('lightbox');
 const lbImg=document.getElementById('lb-img');
 const lbIn=document.getElementById('lb-zoom-in');
@@ -445,7 +457,7 @@ function renderProducts(list){
   });
 }
 
-/* פילטרים */
+/* Filters */
 function unique(list,get){ return Array.from(new Set(list.map(get).filter(Boolean))); }
 function renderBrandOptions(list){
   const sel=document.getElementById('f-brand'), prev=sel.value;
