@@ -58,7 +58,7 @@
   .card{
     display:flex; flex-direction:column;
     background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
-    min-height:520px; /* גובה אחיד ונעים */
+    min-height:560px; /* יותר גובה כדי לא לחתוך כותרות */
   }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
@@ -77,11 +77,13 @@
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2)}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
-  /* כותרת עם הדגשת "בהשראת" */
+  /* כותרת עם הדגשת "בהשראת" + רווח בריא מתחתיה */
   .card h3{
-    margin:var(--s-2) 0 var(--s-2);font-size:16px;line-height:1.35;font-weight:700;text-align:center;
+    margin:var(--s-2) 0 calc(var(--s-3) + 6px);
+    font-size:15.5px; line-height:1.35; font-weight:700; text-align:center;
     font-family:Assistant,Inter,Arial,sans-serif;
-    min-height:3.6em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+    min-height:4.8em; /* ~3 שורות */
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
   }
   .insp-sep{color:var(--muted);font-weight:600}
   .insp-text{color:var(--accent);font-weight:800}
@@ -94,7 +96,7 @@
     background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%),linear-gradient(to left,#fff,#fff);
     background-position:16px 50%,24px 50%,0 0;background-size:8px 8px,8px 8px,2.5em 100%;background-repeat:no-repeat;padding-left:48px}
 
-  /* מחיר */
+  /* מחיר – נקי ומרוכז */
   .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex;justify-content:center}
   .price-amount{font-weight:800;font-size:20px;letter-spacing:.02em}
   .price-sep{color:#b9a98f}
@@ -239,7 +241,8 @@ const BRAND_ALIASES = [
   "Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada",
   "Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier",
   "Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage",
-  "Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas"
+  "Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas",
+  "Dior","Valentino" /* ← נוספו */
 ];
 
 function parseFromLongTitle(longTitle){
@@ -314,7 +317,6 @@ function buildCarousel(container, dupeNoExt, inspNoExt){
     const v=visible();
     if(v.length){ v.forEach((s,i)=>s.classList.toggle('active',i===0)); container.classList.toggle('single', v.length<=1); return; }
     if(allMissing()){ container.classList.add('single'); nav.style.display='none'; return; }
-    // עדיין ממתינים לטעינה
     setTimeout(activateFirst, 50);
   }
   activateFirst();
