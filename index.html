@@ -6,7 +6,7 @@
   <title>קטלוג בשמי דלוקס סנס</title>
   <meta name="description" content="בשמים בייצור פרטי • הזמנה ושאלות ב-WhatsApp" />
 
-  <!-- Fonts: Assistant לעברית; Inter לשמות האנגליים -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&family=Inter:wght@600;700;800&display=swap" rel="stylesheet" />
 
   <!-- Open Graph -->
@@ -37,8 +37,6 @@
       font-family: Assistant, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       -webkit-font-smoothing: antialiased;
       scroll-behavior:smooth;
-
-      /* רקע אלגנטי ועדין */
       background-color: var(--bg);
       background-image:
         radial-gradient(1200px 500px at 15% -10%, #ffffff 0 40%, transparent 70%),
@@ -60,9 +58,7 @@
     .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
     header{text-align:center;padding:32px 16px 8px}
     .logo{display:block;margin:0 auto var(--s-2);height:var(--logo-h);max-width:90%;object-fit:contain}
-    header h1{
-      font-weight:800;font-size:clamp(26px,3.5vw,40px);margin:0 0 var(--s-1);letter-spacing:.2px
-    }
+    header h1{font-weight:800;font-size:clamp(26px,3.5vw,40px);margin:0 0 var(--s-1);letter-spacing:.2px}
     header p{margin:var(--s-1) 0;color:var(--muted);font-weight:400}
     .cta{
       display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;
@@ -81,9 +77,7 @@
       background:#fff; border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow);
       padding:12px; margin:0 0 22px;
     }
-    .filters .row{
-      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
-    }
+    .filters .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap;}
     .f-field{display:flex; align-items:center; gap:8px}
     .f-label{font-weight:700; font-size:14px}
     .f-input, .f-select{
@@ -97,54 +91,43 @@
       .f-field{width:100%}
     }
 
-    /* Masonry columns: כל כרטיס עם גובה עצמאי */
-    .grid.masonry{
-      column-count: 4;
-      column-gap: var(--s-4);
-    }
+    /* Masonry columns */
+    .grid.masonry{ column-count: 4; column-gap: var(--s-4); }
     @media (max-width: 1200px){ .grid.masonry{ column-count: 3; } }
     @media (max-width: 800px){  .grid.masonry{ column-count: 2; } }
-    @media (max-width: 520px){  .grid.masonry{ column-count: 2; } } /* 2 בעמודה גם במובייל צפוף */
+    @media (max-width: 520px){  .grid.masonry{ column-count: 2; } }
 
     .card{
-      display: inline-block; /* הכרחי ל-columns */
-      width: 100%;
+      display: inline-block; width: 100%;
       background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;
-      box-shadow:var(--shadow);
-      transition:.2s transform,.2s box-shadow;
-      margin: 0 0 var(--s-4);      /* רווח אנכי בין אריחים */
-      break-inside: avoid;          /* מונע שבירה בין עמודות */
+      box-shadow:var(--shadow);transition:.2s transform,.2s box-shadow;
+      margin: 0 0 var(--s-4); break-inside: avoid;
     }
     .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
-    /* קרוסלה */
+    /* קרוסלה – שתי שקופיות מקסימום */
     .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
-    .imagebox img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .2s}
-    .imagebox img.active{opacity:1}
+    .slide{position:absolute; inset:0; opacity:0; transition:opacity .2s}
+    .slide.active{opacity:1}
+    .slide img{width:100%; height:100%; object-fit:cover; display:block}
+    .badge{
+      position:absolute; top:10px; inset-inline-start:10px;
+      background:#000a; color:#fff; font-size:12px; padding:4px 8px; border-radius:999px; backdrop-filter: blur(2px);
+    }
     .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none; direction:ltr;}
     .cbtn{pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border); background:#fff9f0; display:flex;align-items:center;justify-content:center; box-shadow:var(--shadow)}
     .cbtn svg{width:18px;height:18px}
     .imagebox.single .cnav{display:none}
 
-    /* תג מותג */
-    .brand-tag{
-      align-self:center;
-      display:inline-flex; gap:8px; align-items:center;
-      padding:4px 10px; border:1px dashed var(--border); border-radius:999px;
-      font-size:12px; color:var(--muted); background:#fff; margin-top:var(--s-3);
-    }
+    /* תג השראה + מין */
+    .meta-row{display:flex; gap:8px; align-items:center; justify-content:center; margin: var(--s-2) 0 var(--s-2)}
+    .tag{display:inline-flex; gap:6px; align-items:center; padding:4px 10px; border:1px dashed var(--border); border-radius:999px; font-size:12px; color:var(--muted); background:#fff}
 
-    /* שם המוצר (אנגלית) + כותרת משנה "בהשראת" */
+    /* שם המוצר – השם המלא שלך (ארוך) */
     .card h3{
-      margin:var(--s-2) 0 2px;
-      font-size:18px; letter-spacing:.05em; line-height:1.25;
-      font-family: Inter, Assistant, Arial, sans-serif;
-      font-weight:700; text-align:center;
-    }
-    .sub{
-      margin:0 0 var(--s-2);
-      font-weight:600; font-size:14px; color:var(--muted);
-      text-align:center;
+      margin: var(--s-2) 0 var(--s-2);
+      font-size:16px; line-height:1.35; font-weight:700; text-align:center;
+      font-family: Assistant, Inter, Arial, sans-serif;
     }
 
     /* בחירת נפח */
@@ -164,14 +147,14 @@
       padding-left:48px;
     }
 
-    /* מחיר – קלאסי, טיפוגרפי */
+    /* מחיר – קלאסי ונקי */
     .price{margin:0 0 var(--s-2); align-items:baseline; gap:10px; color:var(--fg); display:flex}
     .price-amount{font-weight:800; font-size:20px; letter-spacing:.02em}
     .price-sep{color:#b9a98f}
     .price-size{font-weight:600; font-size:14px; color:var(--muted)}
     @media (max-width: 600px){ .price{justify-content:center} }
 
-    /* הערת 10 מ"ל – קצרה ונקייה */
+    /* הערת 10 מ"ל */
     .size-note{display:none; margin:0 0 var(--s-3); font-size:13px; color:var(--muted); font-weight:600; text-align:center; line-height:1.35;}
     .size-note.show{display:block}
 
@@ -189,7 +172,6 @@
     .toast{position:fixed; z-index:9999; padding:10px 14px; border-radius:12px; background:#111; color:#fff; font-size:14px; box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.2s}
     .toast.show{opacity:1; transform:translateY(0)}
 
-    /* מצב ריק */
     .empty{text-align:center; color:var(--muted); padding:20px 0; font-weight:700;}
   </style>
 </head>
@@ -214,10 +196,10 @@
       <div class="row">
         <div class="f-field">
           <label class="f-label" for="f-q">חיפוש</label>
-          <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם מוצר…" />
+          <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…" />
         </div>
         <div class="f-field">
-          <label class="f-label" for="f-brand">מותג</label>
+          <label class="f-label" for="f-brand">מותג השראה</label>
           <select id="f-brand" class="f-select">
             <option value="">הכל</option>
           </select>
@@ -243,100 +225,119 @@
   </footer>
 
   <script>
-    // מספר ה-WhatsApp שלך (בפורמט בינלאומי, ללא +):
-    const WA_PHONE = "972508939729";
+    // ===== הגדרות =====
+    const WA_PHONE = "972508939729"; // פורמט בינ"ל, ללא +
+    const CSV_URL  = "data/perfumes.csv"; // הקובץ שהכנת
 
-    // שמות באנגלית (41 פריטים)
-    const NAMES = [
-      "Amber No.1","Citrus Breeze","Woody Trail","Musk Velvet","Ocean Mist","Spice Route","Rose Garden","Vanilla Beam","Night Oud","Fresh Linen",
-      "Golden Sandal","Bergamot Leaf","Cedar Grove","Patchouli Noir","Leather Smoke","Lavender Hill","Fig Blossom","Neroli Sun","White Tea","Ambergris Tide",
-      "Tonka Drift","Forest Rain","Saffron Ember","Blackcurrant Muse","Ginger Spark","Tuberose Cloud","Sacred Myrrh","Pine Needle","Pear Shade","Orchid Veil",
-      "Cocoa Wood","Jasmine Air","Basil Citrus","Honey Amber","Blue Vetiver","Maple Cedar","Arctic Mint","Ruby Rose","Smoke & Salt","Cashmere Musk","Desert Bloom"
-    ];
+    // נגזרות מחיר (אם אין לך עדיין מחירים אמיתיים)
+    function round5(x){ return Math.round(x/5)*5; }
+    function hashNum(str){ // דטרמיניסטי 0..1
+      let h=0; for(let i=0;i<str.length;i++) h = ((h<<5)-h)+str.charCodeAt(i)|0;
+      return (Math.abs(h)%1000)/1000;
+    }
+    function deriveBasePrice100(slug){
+      // 170–240 ₪, מדרגות של 5, דטרמיניסטי לפי שם
+      const n = hashNum(slug);
+      return round5(170 + n * 70);
+    }
+    function derive10ml(p100){ return Math.max(35, round5(p100*0.32)); }
+    function derive5ml(p100){ return Math.max(20, round5(p100*0.18)); }
 
-    // מחירי 100 מ״ל מגוונים לכל מוצר
-    const PRICE_100 = [
-      180,195,170,210,185,220,200,175,230,190,
-      205,215,225,199,240,185,235,210,200,195,
-      205,175,245,190,220,180,225,215,205,235,
-      200,210,185,195,240,205,215,225,190,230,200
-    ]; // 41 ערכים
-
-    function roundTo5(x){ return Math.round(x/5)*5; }
-    function derive10ml(base){ return Math.max(35, roundTo5(base * 0.32)); }
-    function derive5ml(base){ return Math.max(20, roundTo5(base * 0.18)); }
-
-    // נתוני מוצרים:
-    // - brand ריק כרגע → יוצג "שם מותג" כתג דמה, עד שתספק מותגים אמיתיים.
-    // - inspiredBy: הוסף שם הבושם המקורי כדי להציג "בהשראת X".
-    const products = Array.from({length:41}, (_,i) => {
-      const n = i+1;
-      const base = PRICE_100[i] || 180;
-      return {
-        id:n,
-        name:NAMES[i] || `Perfume ${n}`,
-        brand:"",           // ← נמלא יצרן/מותג כשיהיו נתונים
-        inspiredBy:"",      // ← נמלא "Dior Sauvage" וכו' כשיגיע האקסל
-        sku:`P${String(n).padStart(2,'0')}`,
-        price:{ "100":base, "10":derive10ml(base), "5":derive5ml(base) },
-        baseImages:[`${n}.jpg`, `${n}-2.jpg`, `${n}-3.jpg`],
-        sample10:[`${n}-10.jpg`],
-        sample5:[`${n}-5.jpg`],
-      };
-    });
-
-    const byId = Object.fromEntries(products.map(p=>[String(p.id), p]));
-    const selectedById = {}; // שומר בחירת נפח לכל מוצר בין רינדורים
-
-    function buildWaHref(p, sizeLabel, price){
-      const lines = [
-        "היי! מעוניין/ת בבושם:",
-        `${p.name} (קוד: ${p.sku})`,
-        `נפח: ${sizeLabel}`,
-        price ? `מחיר מוצג: ₪${price}` : null,
-        "אשמח לפרטים/הזמנה."
-      ].filter(Boolean).join("\n");
-      return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
+    // ===== עזרי טקסט/slug =====
+    function slugify(s){
+      if (!s) return "";
+      const from = "ÁÀÂÄÃÅáàâäãåÉÈÊËéèêëÍÌÎÏíìîïÓÒÔÖÕóòôöõÚÙÛÜúùûüÇçÑñŸÿŽžŠš";
+      const to   = "AAAAAAaaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUUuuuuCcNnYyZzSs";
+      let out = s;
+      for (let i=0;i<from.length;i++){ out = out.replaceAll(from[i], to[i]); }
+      out = out.normalize?.("NFKD").replace(/[\u0300-\u036f]/g,"") || out;
+      out = out.toLowerCase().replace(/['"’`´]/g,"");
+      out = out.replace(/[^a-z0-9]+/g, "-").replace(/-+/g,"-").replace(/^-|-$/g,"");
+      return out;
     }
 
-    // טוסט עדין
+    // ===== CSV parser קטן (תומך במרכאות) =====
+    async function loadCSV(url){
+      const res = await fetch(url, {cache:"no-store"});
+      const text = await res.text();
+      const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(l=>l.trim().length);
+      const rows = [];
+      let headers = [];
+      function parseLine(line){
+        const out = []; let cur = ""; let inQ = false;
+        for (let i=0;i<line.length;i++){
+          const ch = line[i], nx = line[i+1];
+          if (ch === '"' && inQ && nx === '"'){ cur+='"'; i++; continue; }
+          if (ch === '"'){ inQ = !inQ; continue; }
+          if (ch === ',' && !inQ){ out.push(cur); cur=""; continue; }
+          cur += ch;
+        }
+        out.push(cur);
+        return out.map(s=>s.trim());
+      }
+      lines.forEach((line,idx)=>{
+        const cells = parseLine(line);
+        if (idx===0){ headers = cells; }
+        else{
+          const obj = {};
+          cells.forEach((v,i)=> obj[headers[i]||`col${i}`] = v);
+          rows.push(obj);
+        }
+      });
+      return {headers, rows};
+    }
+
+    // ===== טוסט עדין =====
     function showToast(msg, nearEl){
-      const t = document.createElement('div');
-      t.className = 'toast';
-      t.textContent = msg;
-      document.body.appendChild(t);
+      const t = document.createElement('div'); t.className='toast'; t.textContent = msg; document.body.appendChild(t);
       const r = nearEl.getBoundingClientRect();
-      const top = (r.top - 46);
-      const left = (r.left + (r.width/2) - (t.offsetWidth/2));
-      t.style.top = Math.max(10, top) + 'px';
-      t.style.left = Math.max(10, Math.min(left, window.innerWidth - t.offsetWidth - 10)) + 'px';
+      t.style.top  = Math.max(10, r.top - 46) + 'px';
+      t.style.left = Math.max(10, Math.min(r.left + r.width/2 - 80, window.innerWidth - 160)) + 'px';
       requestAnimationFrame(()=> t.classList.add('show'));
       setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),200); }, 1600);
     }
 
-    // קרוסלה — עם נפילה חכמה לתמונת בסיס אם דוגמית חסרה
-    function renderImages(card, files){
-      const box = card.querySelector('.imagebox');
-      box.innerHTML = '';
+    // ===== יצירת שקופית תמונה עם fallback סיומות =====
+    function createSmartSlide(label, basePathNoExt){
+      const slide = document.createElement('div'); slide.className='slide';
+      const img   = document.createElement('img');
+      const badge = document.createElement('span'); badge.className='badge'; badge.textContent = label;
+      slide.appendChild(img); slide.appendChild(badge);
 
-      function ensureActive(){
-        const imgs = box.querySelectorAll('img');
-        if (!imgs.length) return;
-        const anyActive = Array.from(imgs).some(im => im.classList.contains('active'));
-        if (!anyActive) imgs[0].classList.add('active');
-        box.classList.toggle('single', imgs.length <= 1);
+      const exts = [".jpg",".jpeg",".png",".webp"];
+      let i = 0;
+      function tryNext(){
+        if (i>=exts.length){ slide.dataset.missing = "1"; return; }
+        img.src = `${basePathNoExt}${exts[i++]}`;
       }
+      img.onerror = tryNext;
+      tryNext(); // התחל
+      return slide;
+    }
 
-      files.forEach((file, idx) => {
-        const img = document.createElement('img');
-        img.src = `images/${file}`;
-        img.alt = card.dataset.name || '';
-        if (idx===0) img.classList.add('active');
-        img.onerror = () => { img.remove(); ensureActive(); };
-        img.onload  = () => { ensureActive(); };
-        box.appendChild(img);
-      });
+    // ===== קרוסלה 2-שקופיות =====
+    function buildCarousel(container, dupeSrcNoExt, inspSrcNoExt){
+      container.innerHTML = "";
+      const slides = [];
+      if (dupeSrcNoExt){
+        slides.push(createSmartSlide("מוצר", dupeSrcNoExt));
+      }
+      if (inspSrcNoExt){
+        slides.push(createSmartSlide("השראה", inspSrcNoExt));
+      }
+      slides.forEach(s=>container.appendChild(s));
+      // אם נשארנו בלי שקופיות (לא אמור לקרות) – עצור
+      if (!slides.length) return;
+      // סמן פעילות ראשונית לאחר טעינה
+      function ensureActive(){
+        const ok = slides.filter(s => !s.dataset.missing);
+        const target = ok[0] || slides[0];
+        slides.forEach(s=> s.classList.toggle('active', s===target));
+        container.classList.toggle('single', ok.length<=1);
+      }
+      setTimeout(ensureActive, 0);
 
+      // ניווט
       const nav = document.createElement('div');
       nav.className = 'cnav';
       nav.innerHTML = `
@@ -350,86 +351,96 @@
             <polyline points="9 6 15 12 9 18"></polyline>
           </svg>
         </button>`;
-      box.appendChild(nav);
+      container.appendChild(nav);
 
       let idx = 0;
+      function visibleSlides(){ return slides.filter(s=>!s.dataset.missing); }
       function goto(n){
-        const imgs = [...box.querySelectorAll('img')].filter(im => im.isConnected);
-        if (!imgs.length) return;
-        idx = (n + imgs.length) % imgs.length;
-        imgs.forEach((im,i)=>im.classList.toggle('active', i===idx));
+        const vis = visibleSlides(); if (!vis.length) return;
+        idx = (n + vis.length) % vis.length;
+        vis.forEach((s,i)=> s.classList.toggle('active', i===idx));
       }
-      box.querySelector('.prev').addEventListener('click', ()=> goto(idx-1)); // שמאלה = קודם
-      box.querySelector('.next').addEventListener('click', ()=> goto(idx+1)); // ימינה = הבא
-
-      setTimeout(()=>{ 
-        const imgs = box.querySelectorAll('img');
-        if (imgs.length) {
-          const anyActive = Array.from(imgs).some(im => im.classList.contains('active'));
-          if (!anyActive) imgs[0].classList.add('active');
-        }
-      }, 0);
+      container.querySelector('.prev').addEventListener('click', ()=> goto(idx-1));
+      container.querySelector('.next').addEventListener('click', ()=> goto(idx+1));
     }
 
-    // רינדור כרטיסים
-    function renderProducts(list = products){
+    // ===== בניית קישור וואטסאפ =====
+    function buildWaHref(p, sizeLabel, price){
+      const lines = [
+        "היי! מעוניין/ת בבושם:",
+        p.longTitle, // הכותרת המלאה שלך (ללא SKU)
+        sizeLabel ? `נפח: ${sizeLabel}` : null,
+        price ? `מחיר מוצג: ₪${price}` : null,
+        p.sku ? `קוד פנימי: ${p.sku}` : null,
+        "אשמח לפרטים/הזמנה."
+      ].filter(Boolean).join("\n");
+      return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
+    }
+
+    // ===== הצגת כרטיס =====
+    const selectedById = {};
+    function renderProducts(list){
       const el = document.getElementById('products');
       const empty = document.getElementById('empty');
-      if (!list.length){
-        el.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-      empty.style.display = 'none';
+      if (!list.length){ el.innerHTML=""; empty.style.display='block'; return; }
+      empty.style.display='none';
 
-      el.innerHTML = list.map(p => {
-        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
-        const inspiredLine = (p.inspiredBy && p.inspiredBy.trim()) ? `<div class="sub">בהשראת ${p.inspiredBy}</div>` : "";
+      el.innerHTML = list.map(p=>{
+        const vol100 = p.price["100"];
+        const dupeSlug = slugify(p.dupeName);
+        const inspSlug = slugify(`${p.inspiredBrand} ${p.inspiredProduct}`.trim());
         return `
-        <article class="card" data-id="${p.id}" data-sku="${p.sku}" data-name="${p.name}" data-brand="${displayBrand}">
-          <div class="imagebox"></div>
+          <article class="card" data-id="${p.id}">
+            <div class="imagebox"></div>
 
-          <div class="brand-tag">${displayBrand}</div>
-          <h3>${p.name}</h3>
-          ${inspiredLine}
+            <div class="meta-row">
+              ${p.inspiredBrand ? `<span class="tag">מותג השראה: ${p.inspiredBrand}</span>` : ""}
+              ${p.gender ? `<span class="tag">${p.gender}</span>` : ""}
+            </div>
 
-          <div class="size-row">
-            <span class="size-label">נפח</span>
-            <select class="size-select" aria-label="בחר נפח">
-              <option value="" ${!selectedById[p.id] ? 'selected' : ''} disabled>בחר נפח…</option>
-              <option value="100" ${selectedById[p.id]==="100" ? 'selected' : ''}>100 מ״ל</option>
-              <option value="10"  ${selectedById[p.id]==="10"  ? 'selected' : ''}>10 מ״ל (כולל שפריצר)</option>
-              <option value="5"   ${selectedById[p.id]==="5"   ? 'selected' : ''}>5 מ״ל</option>
-            </select>
-          </div>
+            <h3>${p.longTitle}</h3>
 
-          <!-- מחיר מוצג כברירת מחדל עבור 100 מ"ל -->
-          <div class="price" aria-live="polite">
-            <span class="price-amount">₪<span class="price-val">${p.price["100"]}</span></span>
-            <span class="price-sep">·</span>
-            <span class="price-size">100 מ״ל</span>
-          </div>
+            <div class="size-row">
+              <span class="size-label">נפח</span>
+              <select class="size-select" aria-label="בחר נפח">
+                <option value="" ${!selectedById[p.id] ? 'selected' : ''} disabled>בחר נפח…</option>
+                <option value="100" ${selectedById[p.id]==="100" ? 'selected' : ''}>100 מ״ל</option>
+                <option value="10"  ${selectedById[p.id]==="10"  ? 'selected' : ''}>10 מ״ל (כולל שפריצר)</option>
+                <option value="5"   ${selectedById[p.id]==="5"   ? 'selected' : ''}>5 מ״ל</option>
+              </select>
+            </div>
 
-          <p class="size-note" aria-live="polite"></p>
+            <div class="price" aria-live="polite">
+              <span class="price-amount">₪<span class="price-val">${vol100}</span></span>
+              <span class="price-sep">·</span>
+              <span class="price-size">100 מ״ל</span>
+            </div>
 
-          <a class="wa-btn ${selectedById[p.id] ? '' : 'disabled'}" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
-        </article>
-      `}).join('');
+            <p class="size-note"></p>
 
-      // אינטראקציה לכל כרטיס
-      document.querySelectorAll('.card').forEach((card)=>{
+            <a class="wa-btn ${selectedById[p.id] ? '' : 'disabled'}" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
+          </article>
+        `;
+      }).join('');
+
+      // אינטראקציה
+      document.querySelectorAll('.card').forEach(card=>{
         const pid = Number(card.dataset.id);
-        const p = byId[String(pid)];
+        const p   = list.find(x=>x.id===pid);
+        const select    = card.querySelector('.size-select');
+        const priceVal  = card.querySelector('.price-val');
+        const priceSize = card.querySelector('.price-size');
+        const priceSep  = card.querySelector('.price-sep');
+        const noteEl    = card.querySelector('.size-note');
+        const waBtn     = card.querySelector('.wa-btn');
+        const box       = card.querySelector('.imagebox');
 
-        renderImages(card, p.baseImages);
+        // קרוסלה (מוצר + השראה)
+        const dupeSlug = slugify(p.dupeName);
+        const inspSlug = slugify(`${p.inspiredBrand} ${p.inspiredProduct}`.trim());
+        buildCarousel(box, dupeSlug ? `images/${dupeSlug}` : "", inspSlug ? `images/${inspSlug}` : "");
 
-        const select     = card.querySelector('.size-select');
-        const priceVal   = card.querySelector('.price-val');
-        const priceSize  = card.querySelector('.price-size');
-        const priceSep   = card.querySelector('.price-sep');
-        const noteEl     = card.querySelector('.size-note');
-        const waBtn      = card.querySelector('.wa-btn');
-
+        // וואטסאפ (מנוע טוסט)
         waBtn.addEventListener('click', (e)=>{
           if (waBtn.classList.contains('disabled')) {
             e.preventDefault();
@@ -437,26 +448,15 @@
           }
         });
 
-        if (selectedById[pid]) {
-          applySize(selectedById[pid]);
-        } else {
+        // בחירה התחלתית
+        if (selectedById[pid]) applySize(selectedById[pid]); else {
           priceVal.textContent = p.price["100"];
           priceSize.textContent = "100 מ״ל";
         }
-
-        select.addEventListener('change', e => applySize(e.target.value));
+        select.addEventListener('change', e=> applySize(e.target.value));
 
         function applySize(v){
           selectedById[pid] = v;
-
-          if (v === "100"){
-            renderImages(card, p.baseImages);
-          } else if (v === "10"){
-            renderImages(card, p.sample10.concat(p.baseImages)); // אם חסר — תישאר הבסיס
-          } else if (v === "5"){
-            renderImages(card, p.sample5.concat(p.baseImages));
-          }
-
           const price = p.price[v];
           priceVal.textContent = price;
           const sizeLabelHe = (v==="100" ? "100 מ״ל" : v==="10" ? "10 מ״ל" : "5 מ״ל");
@@ -466,10 +466,7 @@
           if (v === "10"){
             noteEl.textContent = "כולל שפריצר למילוי-מחדש (Refillable)";
             noteEl.classList.add('show');
-          } else {
-            noteEl.textContent = "";
-            noteEl.classList.remove('show');
-          }
+          } else { noteEl.textContent = ""; noteEl.classList.remove('show'); }
 
           waBtn.href = buildWaHref(p, sizeLabelHe, price);
           waBtn.classList.remove('disabled');
@@ -477,67 +474,82 @@
       });
     }
 
-    // ===== סרגל פילטרים =====
-    function uniqueBrands(list){
-      const s = new Set();
-      list.forEach(p => {
-        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
-        s.add(displayBrand);
-      });
-      return Array.from(s);
-    }
-
+    // ===== חיפוש/פילטר/סידור =====
+    function unique(list, getter){ return Array.from(new Set(list.map(getter).filter(Boolean))); }
     function renderBrandOptions(list){
       const sel = document.getElementById('f-brand');
       const prev = sel.value;
       sel.innerHTML = `<option value="">הכל</option>`;
-      uniqueBrands(list).forEach(b=>{
-        const opt = document.createElement('option');
-        opt.value = b; opt.textContent = b;
-        sel.appendChild(opt);
+      unique(list, p=>p.inspiredBrand).forEach(b=>{
+        const opt = document.createElement('option'); opt.value=b; opt.textContent=b; sel.appendChild(opt);
       });
       if ([...sel.options].some(o=>o.value===prev)) sel.value = prev;
     }
-
-    function applyFilters(){
+    function applyFilters(all){
       const q = document.getElementById('f-q').value.trim().toLowerCase();
-      const brandSel = document.getElementById('f-brand').value;
+      const brand = document.getElementById('f-brand').value;
       const sort = document.getElementById('f-sort').value;
 
-      let list = products.filter(p=>{
-        const displayBrand = (p.brand && p.brand.trim()) ? p.brand : "שם מותג";
-        const matchName = !q || (p.name || '').toLowerCase().includes(q);
-        const matchBrand = !brandSel || displayBrand === brandSel;
-        return matchName && matchBrand;
+      let list = all.filter(p=>{
+        const hay = [
+          p.dupeName, p.inspiredBrand, p.inspiredProduct, p.longTitle
+        ].join(" ").toLowerCase();
+        const okQ = !q || hay.includes(q);
+        const okB = !brand || p.inspiredBrand === brand;
+        return okQ && okB;
       });
 
-      if (sort === 'p_asc') {
-        list = list.slice().sort((a,b)=> (a.price["100"]||0) - (b.price["100"]||0));
-      } else if (sort === 'p_desc') {
-        list = list.slice().sort((a,b)=> (b.price["100"]||0) - (a.price["100"]||0));
-      }
+      if (sort==='p_asc') list = list.slice().sort((a,b)=> (a.price["100"]||0) - (b.price["100"]||0));
+      if (sort==='p_desc') list = list.slice().sort((a,b)=> (b.price["100"]||0) - (a.price["100"]||0));
 
       renderProducts(list);
     }
 
-    function initFilters(){
-      renderBrandOptions(products);
-      document.getElementById('f-q').addEventListener('input', applyFilters);
-      document.getElementById('f-brand').addEventListener('change', applyFilters);
-      document.getElementById('f-sort').addEventListener('change', applyFilters);
+    // ===== CSV → אובייקטים =====
+    function mapRowToProduct(row, idx){
+      const longTitle     = (row["שם מלא כותרת"]||"").trim();
+      const dupeBrand     = (row["שם מותג הדיופ"]||"").trim();
+      const dupeName      = (row["שם מוצר הדיופ"]||"").trim();
+      const inspiredBrand = (row["שם מותג ההשראה"]||"").trim();
+      const inspiredProduct = (row["שם מוצר ההשראה"]||"").trim();
+      const gender        = (row["מין מומלץ לבושם"]||"").trim();
+      const sku           = (row["מספר סידורי/SKU"]||"").trim();
+
+      // מחירים דטרמיניסטיים לפי השם, עד שתקבע מחירים אמיתיים
+      const base = deriveBasePrice100(slugify(dupeName||longTitle||("p"+idx)));
+      const price100 = base, price10 = derive10ml(base), price5 = derive5ml(base);
+
+      return {
+        id: idx+1,
+        sku,
+        longTitle,      // מוצג ככותרת בכרטיס
+        dupeBrand,
+        dupeName,       // לשימוש ב-slug ובחיפוש
+        inspiredBrand,
+        inspiredProduct,
+        gender,
+        price: { "100": price100, "10": price10, "5": price5 }
+      };
     }
 
-    // ===== Top WhatsApp =====
+    // ===== Init =====
+    let ALL = [];
     function initTopWA(){
       const waTop = document.getElementById('waTop');
       if (waTop) waTop.href = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`;
     }
 
-    // ===== Init =====
-    document.addEventListener('DOMContentLoaded', ()=>{
-      initFilters();
-      renderProducts(); // רינדור ראשון
+    document.addEventListener('DOMContentLoaded', async ()=>{
       initTopWA();
+      const {rows} = await loadCSV(CSV_URL);
+      ALL = rows.map(mapRowToProduct);
+      renderBrandOptions(ALL);
+      renderProducts(ALL);
+
+      // מאזינים לפילטרים
+      document.getElementById('f-q').addEventListener('input', ()=> applyFilters(ALL));
+      document.getElementById('f-brand').addEventListener('change', ()=> applyFilters(ALL));
+      document.getElementById('f-sort').addEventListener('change', ()=> applyFilters(ALL));
     });
   </script>
 </body>
