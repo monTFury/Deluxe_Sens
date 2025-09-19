@@ -58,7 +58,7 @@
   .card{
     display:flex; flex-direction:column;
     background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
-    min-height:560px; /* יותר גובה כדי לא לחתוך כותרות */
+    min-height:600px; /* אחיד ונעים */
   }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
@@ -68,26 +68,32 @@
   .slide.active{opacity:1}
   .slide img{width:100%;height:100%;object-fit:cover;display:block}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:#000a;color:#fff;font-size:12px;padding:4px 8px;border-radius:999px;backdrop-filter:blur(2px)}
-  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;direction:ltr;z-index:2}
+  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;direction:ltr;z-index:3}
   .cbtn{width:40px;height:40px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);cursor:pointer}
   .cbtn svg{width:18px;height:18px}
   .imagebox.single .cnav{display:none}
+  .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9a98f;font-weight:700;z-index:0}
 
   /* מטה/תגים */
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2)}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
-  /* כותרת עם הדגשת "בהשראת" + רווח בריא מתחתיה */
-  .card h3{
-    margin:var(--s-2) 0 calc(var(--s-3) + 6px);
-    font-size:15.5px; line-height:1.35; font-weight:700; text-align:center;
-    font-family:Assistant,Inter,Arial,sans-serif;
-    min-height:4.8em; /* ~3 שורות */
-    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  /* כותרת – שתי שכבות עם clamp נפרד וריווח בריא */
+  .title{
+    margin:var(--s-2) 0 calc(var(--s-3) + 8px);
+    text-align:center; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    min-height:5.8em; gap:6px;
   }
-  .insp-sep{color:var(--muted);font-weight:600}
-  .insp-text{color:var(--accent);font-weight:800}
-  .gender-inline{color:var(--muted);font-weight:600}
+  .t1{
+    font-weight:800; font-size:clamp(15px, 2.1vw, 18px); line-height:1.35;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; max-height:2.8em;
+  }
+  .t2{
+    font-weight:600; font-size:clamp(13px, 1.7vw, 15px); line-height:1.35; color:var(--muted);
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; max-height:2.8em;
+  }
+  .t2 .insp{color:var(--accent);font-weight:800}
+  .t2 .sep{color:var(--muted);font-weight:600}
 
   /* בחירת נפח */
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
@@ -106,7 +112,7 @@
   .size-note{display:none;margin:0 0 var(--s-3);font-size:13px;color:var(--muted);font-weight:600;text-align:center;line-height:1.35}
   .size-note.show{display:block}
 
-  /* כפתור וואטסאפ – ממורכז */
+  /* כפתור וואטסאפ – ממורכז ואחיד */
   .wa-btn{margin-top:auto;display:block;width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
   .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
   .wa-btn.disabled{opacity:.55;pointer-events:auto}
@@ -242,8 +248,15 @@ const BRAND_ALIASES = [
   "Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier",
   "Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage",
   "Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas",
-  "Dior","Valentino" /* ← נוספו */
+  "Dior","Valentino"
 ];
+
+function normalizeBrand(raw){
+  if(!raw) return "";
+  const s = raw.trim().replace(/^By\s+/i,""); // הסר "By " בהתחלה
+  if(/By\s+Kilian/i.test(raw) || /^Kilian$/i.test(s)) return "Kilian"; // By Kilian → Kilian
+  return s;
+}
 
 function parseFromLongTitle(longTitle){
   // "<DUPE> בהשראת <INSP> | בושם <מין>"
@@ -273,9 +286,13 @@ function parseFromLongTitle(longTitle){
       if(inspStr.toLowerCase().includes(b.toLowerCase())){ found=b; break; }
     }
     if(found){
-      inspBrand = (found.toLowerCase()==="kayali fragrances") ? "Kayali" : found;
-      inspProduct = inspStr.replace(new RegExp(found,"i"),"").replace(/\b[Bb]y\b/,"").trim();
-    }else{ inspProduct = inspStr; }
+      inspBrand = normalizeBrand(found);
+      const productRaw = inspStr.replace(new RegExp(found,"i"),"").replace(/\b[Bb]y\b/,"").trim();
+      inspProduct = productRaw;
+    }else{
+      // אין זיהוי – נשתמש בכל השרשרת כמוצר, והמותג ריק
+      inspProduct = inspStr;
+    }
   }
 
   // dupeName for filenames – strip house tokens
@@ -285,24 +302,54 @@ function parseFromLongTitle(longTitle){
   return {dupeName, dupeTitle, inspBrand, inspProduct, inspStr, gender, genderText: rightPart, longTitle:norm};
 }
 
-/* ---- carousel with reliable loading ---- */
-function createSmartSlide(label, baseNoExt){
-  const slide=document.createElement('div'); slide.className='slide';
-  const img=document.createElement('img'); const badge=document.createElement('span'); badge.className='badge'; badge.textContent=label;
-  slide.appendChild(img); slide.appendChild(badge);
-  const exts=[".jpg",".jpeg",".png",".webp"]; let i=0;
-  function tryNext(){ if(i>=exts.length){ slide.dataset.missing="1"; return; } img.src=`${baseNoExt}${exts[i++]}`; }
-  img.onerror=tryNext;
-  img.onload=()=>{ slide.dataset.loaded="1"; };
-  tryNext();
-  return slide;
+/* ---- carousel with smart candidates & reliable loading ---- */
+function candidateBasesForDupe(dupeName, dupeTitle){
+  const a = slugify(dupeName);
+  const b = slugify(dupeTitle);
+  const set = new Set([a,b].filter(Boolean));
+  return Array.from(set).map(s=>`images/${s}`);
 }
-function buildCarousel(container, dupeNoExt, inspNoExt){
-  container.innerHTML=""; const slides=[];
-  if(dupeNoExt) slides.push(createSmartSlide("מוצר", dupeNoExt));
-  if(inspNoExt) slides.push(createSmartSlide("השראה", inspNoExt));
-  slides.forEach(s=>container.appendChild(s));
-  if(!slides.length){ container.classList.add('single'); return; }
+function candidateBasesForInsp(inspBrand,inspProduct,inspStr){
+  const list=[];
+  const bp = slugify(`${inspBrand} ${inspProduct}`.trim());
+  const justStr = slugify(inspStr);
+  if(bp) list.push(bp);
+  if(justStr && justStr!==bp) list.push(justStr);
+  return Array.from(new Set(list)).map(s=>`images/${s}`);
+}
+function tryLoadOne(img, base, cbOk, cbFail){
+  const exts=[".jpg",".jpeg",".png",".webp"]; let i=0;
+  img.onload=()=>cbOk(); img.onerror=()=>{ i++; if(i<exts.length){ img.src=base+exts[i]; } else cbFail(); };
+  img.src=base+exts[0];
+}
+function buildCarousel(container, p){
+  container.innerHTML="";
+  const holders=[];
+  function makeSlide(label){ const s=document.createElement('div'); s.className='slide'; const img=document.createElement('img'); const badge=document.createElement('span'); badge.className='badge'; badge.textContent=label; s.appendChild(img); s.appendChild(badge); return {s,img}; }
+
+  const dupeCands = candidateBasesForDupe(p.dupeName, p.dupeTitle);
+  const inspCands = candidateBasesForInsp(p.inspBrand, p.inspProduct, p.inspStr);
+
+  let loadedSlides=[];
+
+  function addWithCandidates(label, cands){
+    if(!cands.length) return;
+    const {s,img}=makeSlide(label); container.appendChild(s);
+    let j=0;
+    function tryNextBase(){
+      if(j>=cands.length){ s.dataset.missing="1"; return; }
+      const base=cands[j++];
+      tryLoadOne(img, base, ()=>{ s.dataset.loaded="1"; loadedSlides.push(s); activate(); }, tryNextBase);
+    }
+    tryNextBase();
+    holders.push(s);
+  }
+
+  addWithCandidates("מוצר", dupeCands);
+  addWithCandidates("השראה", inspCands);
+
+  // placeholder אם אין כלום
+  const ph=document.createElement('div'); ph.className='placeholder'; ph.textContent='הוסיפו תמונות ל/images/ בשם ה-slug המתאים'; container.appendChild(ph);
 
   const nav=document.createElement('div'); nav.className='cnav';
   nav.innerHTML=`<button class="cbtn prev" aria-label="הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
@@ -310,23 +357,23 @@ function buildCarousel(container, dupeNoExt, inspNoExt){
   container.appendChild(nav);
 
   let idx=0;
-  function visible(){ return slides.filter(s=>s.dataset.loaded==="1"); }
-  function allMissing(){ return slides.every(s=>s.dataset.missing==="1"); }
-
-  function activateFirst(){
-    const v=visible();
-    if(v.length){ v.forEach((s,i)=>s.classList.toggle('active',i===0)); container.classList.toggle('single', v.length<=1); return; }
-    if(allMissing()){ container.classList.add('single'); nav.style.display='none'; return; }
-    setTimeout(activateFirst, 50);
+  function activate(){
+    loadedSlides = holders.filter(s=>s.dataset.loaded==="1");
+    if(!loadedSlides.length){ nav.style.display='none'; container.classList.add('single'); return; }
+    ph.style.display='none';
+    loadedSlides.forEach((s,i)=>s.classList.toggle('active', i===0));
+    container.classList.toggle('single', loadedSlides.length<=1);
   }
-  activateFirst();
-
   function goto(n){
-    const v=visible(); if(!v.length) return;
-    idx=(n+v.length)%v.length; v.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    if(!loadedSlides.length) return;
+    idx=(n+loadedSlides.length)%loadedSlides.length;
+    loadedSlides.forEach((s,i)=>s.classList.toggle('active', i===idx));
   }
   nav.querySelector('.prev').addEventListener('click',()=>goto(idx-1));
   nav.querySelector('.next').addEventListener('click',()=>goto(idx+1));
+
+  // דיבאג לקונסול — לראות אילו שמות ניסינו
+  console.debug("IMAGE CANDIDATES:", {dupe:dupeCands, insp:inspCands});
 }
 
 /* ---- WhatsApp ---- */
@@ -349,13 +396,8 @@ function renderProducts(list){
 
   el.innerHTML = list.map(p=>{
     const vol100 = p.price["100"];
-    const dupeSlug = slugify(p.dupeName);
-    const inspSlug = slugify(`${p.inspBrand} ${p.inspProduct}`.trim());
-    const titleHTML = `
-      <span class="dupe-title">${p.dupeTitle}</span>
-      ${p.inspStr ? ` <span class="insp-sep">בהשראת</span> <span class="insp-text">${p.inspStr}</span>` : ``}
-      ${p.genderText ? ` <span class="gender-inline">| ${p.genderText}</span>` : ``}
-    `;
+    const t1 = p.dupeTitle;
+    const t2 = `${p.inspStr ? `בהשראת <span class="insp">${p.inspStr}</span>` : ""}${p.genderText ? ` <span class="sep">|</span> ${p.genderText}` : ""}`;
     return `
       <article class="card" data-id="${p.id}">
         <div class="imagebox"></div>
@@ -365,7 +407,10 @@ function renderProducts(list){
           ${p.gender ? `<span class="tag">${p.gender}</span>` : ""}
         </div>
 
-        <h3>${titleHTML}</h3>
+        <div class="title">
+          <div class="t1">${t1}</div>
+          <div class="t2">${t2}</div>
+        </div>
 
         <div class="size-row">
           <span class="size-label">נפח</span>
@@ -395,11 +440,8 @@ function renderProducts(list){
     const priceVal=card.querySelector('.price-val'); const priceSize=card.querySelector('.price-size'); const priceSep=card.querySelector('.price-sep');
     const noteEl=card.querySelector('.size-note'); const waBtn=card.querySelector('.wa-btn'); const box=card.querySelector('.imagebox');
 
-    // קרוסלה (טעינה אמינה)
-    const dupeSlug=slugify(p.dupeName); const inspSlug=slugify(`${p.inspBrand} ${p.inspProduct}`.trim());
-    buildCarousel(box, dupeSlug?`images/${dupeSlug}`:"", inspSlug?`images/${inspSlug}`:"");
+    buildCarousel(box, p);
 
-    // WA
     waBtn.addEventListener('click', (e)=>{ if(waBtn.classList.contains('disabled')){ e.preventDefault(); showToast('בחר/י נפח קודם 🙂', waBtn); } });
 
     if(selectedById[pid]) applySize(selectedById[pid]); else { priceVal.textContent=p.price["100"]; priceSize.textContent="100 מ״ל"; }
@@ -430,7 +472,7 @@ function applyFilters(all){
   const sort=document.getElementById('f-sort').value;
 
   let list = all.filter(p=>{
-    const hay=(p.dupeName+" "+p.inspBrand+" "+p.inspProduct+" "+p.longTitle).toLowerCase();
+    const hay=(p.dupeTitle+" "+p.dupeName+" "+p.inspBrand+" "+p.inspProduct+" "+p.inspStr+" "+p.longTitle).toLowerCase();
     const okQ=!q || hay.includes(q);
     const okB=!brand || p.inspBrand===brand;
     const okG=!genderSel || p.gender===genderSel;
