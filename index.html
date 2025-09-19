@@ -39,29 +39,32 @@
   .cta{display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;background:linear-gradient(#fff,#fff9f0);box-shadow:var(--shadow);transition:.2s}
   .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-  /* FAQ – מעט למעלה */
-  .faq{margin:12px 0 18px}
+  /* FAQ – העליתי עוד קצת למעלה */
+  .faq{margin:4px 0 14px}
   .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
   .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
-  /* פילטרים */
+  /* אזור פילטרים עם כפתור "סינון מתקדם" */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .filters .top{justify-content:space-between}
   .f-field{display:flex;align-items:center;gap:8px}
   .f-label{font-weight:700;font-size:14px;white-space:nowrap}
-  .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:200px}
-  .f-input{min-width:240px}
+  .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:220px}
+  .f-input{min-width:260px}
+  .filters-toggle{margin-inline-start:auto;height:var(--input-h);padding:0 12px;border:1px dashed var(--border);border-radius:10px;background:#fff;font-weight:700;color:#6b5a43}
+  .filters .panel[hidden]{display:none}
   @media (max-width:700px){
-    .filters .row{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+    .filters .row{flex-direction:column;align-items:stretch;gap:12px}
     .f-field{display:grid;grid-template-columns:1fr;grid-row-gap:6px}
+    .f-input,.f-select,.filters-toggle{width:100%;min-width:unset}
     .f-label{margin:0 2px}
-    .f-input,.f-select{width:100%;min-width:unset}
   }
 
   /* גריד מוצרים */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
-  @media (max-width:520px){.grid{grid-template-columns:1fr;gap:14px;justify-items:center}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr;gap:12px;justify-items:center}}
 
   .card{
     display:flex;flex-direction:column;background:var(--card);
@@ -77,11 +80,10 @@
   .slide img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:#000a;color:#fff;font-size:12px;padding:4px 8px;border-radius:999px;backdrop-filter:blur(2px)}
   .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;direction:ltr;z-index:3;pointer-events:none}
-  .cbtn{width:26px;height:26px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:.9}
+  .cbtn{width:26px;height:26px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:.95}
   .cbtn svg{width:13px;height:13px}
   .cbtn,.cbtn *{pointer-events:auto;cursor:pointer}
   .imagebox.single .cnav{display:none}
-  /* placeholder – משולב לצורך “ריבוע ריק” בלבד */
   .placeholder{position:absolute;inset:0}
 
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
@@ -115,22 +117,22 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
+  /* מובייל קומפקטי יותר + חצים בפנים */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
-    .imagebox{height:min(62vw,340px)}
-    .cnav{padding:0 0}
-    .cnav .prev{transform:translateX(-8px)}
-    .cnav .next{transform:translateX(8px)}
-    .title{min-height:unset}
-    .t1,.t2{display:block;max-height:none;-webkit-line-clamp:unset;overflow:visible;word-break:break-word}
-    .t1{font-size:18px}
+    .imagebox{height:min(52vw,300px)}       /* תמונה מעט נמוכה יותר */
+    .cnav{padding:0 10px}                   /* מכניס את החצים פנימה */
+    .cnav .prev,.cnav .next{transform:none}
+    .title{min-height:unset;margin:10px 0 8px}
+    .t1,.t2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.9em;overflow:hidden;word-break:break-word}
+    .t1{font-size:17px}
     .t2{font-size:14px}
     .t3{font-size:12.5px}
-    .meta-row{justify-content:center}
-    .price{margin:8px 0 10px}
-    .wa-btn{margin-top:10px}
-    .placeholder{font-size:12px}
+    .meta-row{justify-content:center;margin:8px 0}
+    .size-row{margin:6px 0 8px}
+    .price{margin:6px 0 8px}
+    .wa-btn{margin-top:8px}
   }
 </style>
 </head>
@@ -143,6 +145,7 @@
   </header>
 
   <main class="wrap">
+    <!-- FAQ מעט גבוה יותר -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp וההודעה תתמלא אוטומטית.</div></details>
@@ -150,30 +153,35 @@
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
 
-    <!-- פילטרים -->
+    <!-- פילטרים: חיפוש גלוי + כפתור לפתיחת פאנל סינון מתקדם -->
     <section class="filters" id="filters">
-      <div class="row">
+      <div class="row top">
         <div class="f-field">
           <label class="f-label" for="f-q">חיפוש</label>
           <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/>
         </div>
-        <div class="f-field">
-          <label class="f-label" for="f-brand">מותג השראה</label>
-          <select id="f-brand" class="f-select"><option value="">הכל</option></select>
-        </div>
-        <div class="f-field">
-          <label class="f-label" for="f-gender">מין</label>
-          <select id="f-gender" class="f-select">
-            <option value="">הכל</option><option>לגבר</option><option>לאישה</option><option>יוניסקס</option>
-          </select>
-        </div>
-        <div class="f-field">
-          <label class="f-label" for="f-sort">סידור</label>
-          <select id="f-sort" class="f-select">
-            <option value="">ברירת מחדל</option>
-            <option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option>
-            <option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option>
-          </select>
+        <button class="filters-toggle" id="filtersToggle" aria-controls="filtersPanel" aria-expanded="false">סינון מתקדם</button>
+      </div>
+      <div class="panel" id="filtersPanel" hidden>
+        <div class="row">
+          <div class="f-field">
+            <label class="f-label" for="f-brand">מותג השראה</label>
+            <select id="f-brand" class="f-select"><option value="">הכל</option></select>
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="f-gender">מין</label>
+            <select id="f-gender" class="f-select">
+              <option value="">הכל</option><option>לגבר</option><option>לאישה</option><option>יוניסקס</option>
+            </select>
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="f-sort">סידור</label>
+            <select id="f-sort" class="f-select">
+              <option value="">ברירת מחדל</option>
+              <option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option>
+              <option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option>
+            </select>
+          </div>
         </div>
       </div>
     </section>
@@ -322,7 +330,6 @@ function buildCarousel(container,p){
   addWithCandidates("מוצר",dupeCands);
   addWithCandidates("השראה",inspCands);
 
-  /* placeholder ריק – רק ריבוע עד טעינה / חוסר תמונות */
   const ph=document.createElement('div'); ph.className='placeholder'; container.appendChild(ph);
 
   const nav=document.createElement('div'); nav.className='cnav';
@@ -489,7 +496,7 @@ function mapRow(row,idx){
   return {id:idx+1,longTitle:parsed.longTitle,dupeTitle:parsed.dupeTitle,dupeName:parsed.dupeName,inspBrand:parsed.inspBrand,inspProduct:parsed.inspProduct,inspStr:parsed.inspStr,gender:parsed.gender,genderText:parsed.genderText,price:{"100":price100,"10":price10,"5":price5}};
 }
 
-/* init */
+/* init + toggle panel */
 function initTopWA(){ const waTop=document.getElementById('waTop'); if(waTop) waTop.href=`https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`; }
 document.addEventListener('DOMContentLoaded',async()=>{
   initTopWA();
@@ -498,10 +505,19 @@ document.addEventListener('DOMContentLoaded',async()=>{
   const ALL=rows.map(mapRow);
   renderBrandOptions(ALL);
   renderProducts(ALL);
+
   document.getElementById('f-q').addEventListener('input',()=>applyFilters(ALL));
   document.getElementById('f-brand').addEventListener('change',()=>applyFilters(ALL));
   document.getElementById('f-gender').addEventListener('change',()=>applyFilters(ALL));
   document.getElementById('f-sort').addEventListener('change',()=>applyFilters(ALL));
+
+  const toggle=document.getElementById('filtersToggle');
+  const panel=document.getElementById('filtersPanel');
+  toggle.addEventListener('click',()=>{
+    const open=panel.hasAttribute('hidden');
+    if(open) panel.removeAttribute('hidden'); else panel.setAttribute('hidden','');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
 });
 </script>
 </body>
