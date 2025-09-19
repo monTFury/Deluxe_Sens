@@ -39,8 +39,8 @@
   .cta{display:inline-block;margin-top:var(--s-2);padding:12px 18px;border:1px solid var(--accent);border-radius:14px;font-weight:700;background:linear-gradient(#fff,#fff9f0);box-shadow:var(--shadow);transition:.2s}
   .cta:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(176,122,42,.12)}
 
-  /* FAQ – העליתי קצת למעלה */
-  .faq{margin:12px 0 18px}
+  /* FAQ – מוקפץ עוד קצת מעלה */
+  .faq{margin:-8px 0 18px}
   .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
   .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
@@ -52,18 +52,27 @@
   .f-input,.f-select{height:var(--input-h);padding:0 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;min-width:200px}
   .f-input{min-width:240px}
 
-  /* מובייל — אזור פילטרים סימטרי: תווית מעל שדה, רוחב מלא וריווח אחיד */
+  /* Toggle for advanced filters */
+  .filters-toggle{height:var(--input-h); padding:0 12px; border-radius:10px; border:1px dashed var(--border); background:#fff; font-weight:700; color:var(--muted); cursor:pointer}
+  .filters-toggle[aria-expanded="true"]{border-style:solid; color:var(--fg)}
+  .filters-hint{font-size:13px;color:var(--muted)}
+  .filters-more{margin-top:10px; display:grid; gap:10px; grid-template-columns:repeat(12,1fr)}
+  .filters-more .f-field{grid-column: span 4}
+  .filters-more .f-field.small{grid-column: span 2}
+
+  /* מובייל — אזור פילטרים סימטרי */
   @media (max-width:700px){
     .filters .row{display:flex;flex-direction:column;align-items:stretch;gap:12px}
     .f-field{display:grid;grid-template-columns:1fr;grid-row-gap:6px}
     .f-label{margin:0 2px}
-    .f-input,.f-select{width:100%;min-width:unset}
+    .f-input,.f-select,.filters-toggle{width:100%;min-width:unset}
+    .filters-more{grid-template-columns:1fr}
   }
 
   /* גריד מוצרים */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
-  @media (max-width:520px){.grid{grid-template-columns:1fr;gap:14px;justify-items:center}}
+  @media (max-width:520px){.grid{grid-template-columns:1fr;gap:12px;justify-items:center}}
 
   .card{
     display:flex;flex-direction:column;background:var(--card);
@@ -78,12 +87,11 @@
   .slide.active{opacity:1;pointer-events:auto}
   .slide img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:#000a;color:#fff;font-size:12px;padding:4px 8px;border-radius:999px;backdrop-filter:blur(2px)}
-  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 6px;direction:ltr;z-index:3;pointer-events:none}
-  .cbtn{width:26px;height:26px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:.9}
+  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding-inline:8px;direction:ltr;z-index:3;pointer-events:none}
+  .cbtn{width:26px;height:26px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:.95}
   .cbtn svg{width:13px;height:13px}
   .cbtn,.cbtn *{pointer-events:auto;cursor:pointer}
   .imagebox.single .cnav{display:none}
-  .placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#b9a98f;font-weight:700;z-index:0;text-align:center;padding:0 8px}
 
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
@@ -116,23 +124,19 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* מובייל – כרטיס מלא-רוחב, טקסט לא נחתך, חצים מוזחים מעט החוצה */
+  /* מובייל – כרטיס קצר יותר + חיצים לא נחתכים */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
-    .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
-    .imagebox{height:min(62vw,340px)}
-    .cnav{padding:0 0}
-    .cnav .prev{transform:translateX(-8px)}
-    .cnav .next{transform:translateX(8px)}
-    .title{min-height:unset}
-    .t1,.t2{display:block;max-height:none;-webkit-line-clamp:unset;overflow:visible;word-break:break-word}
-    .t1{font-size:18px}
-    .t2{font-size:14px}
+    .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:10px}
+    .imagebox{height:min(50vw,260px)}
+    .cnav{padding-inline:10px}
+    .title{min-height:unset; margin:10px 0}
+    .t1{font-size:17px}
+    .t2{font-size:13px}
     .t3{font-size:12.5px}
-    .meta-row{justify-content:center}
-    .price{margin:8px 0 10px}
-    .wa-btn{margin-top:10px}
-    .placeholder{font-size:12px}
+    .meta-row{justify-content:center; margin:8px 0}
+    .price{margin:6px 0 8px}
+    .wa-btn{margin-top:8px}
   }
 </style>
 </head>
@@ -153,23 +157,29 @@
     </section>
 
     <!-- פילטרים -->
-    <section class="filters" id="filters">
+    <section class="filters" id="filters" aria-label="סינון ומיון">
       <div class="row">
         <div class="f-field">
           <label class="f-label" for="f-q">חיפוש</label>
           <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/>
         </div>
+        <div class="f-field" style="gap:10px">
+          <span class="filters-hint">צריך גם לסנן?</span>
+          <button class="filters-toggle" id="filtersToggle" type="button" aria-expanded="false" aria-controls="filtersMore">פתחו סינון מתקדם</button>
+        </div>
+      </div>
+      <div class="filters-more" id="filtersMore" hidden>
         <div class="f-field">
           <label class="f-label" for="f-brand">מותג השראה</label>
           <select id="f-brand" class="f-select"><option value="">הכל</option></select>
         </div>
-        <div class="f-field">
+        <div class="f-field small">
           <label class="f-label" for="f-gender">מין</label>
           <select id="f-gender" class="f-select">
             <option value="">הכל</option><option>לגבר</option><option>לאישה</option><option>יוניסקס</option>
           </select>
         </div>
-        <div class="f-field">
+        <div class="f-field small">
           <label class="f-label" for="f-sort">סידור</label>
           <select id="f-sort" class="f-select">
             <option value="">ברירת מחדל</option>
@@ -202,7 +212,7 @@
   </div>
 
 <script>
-const WA_PHONE = "972508939729";
+const WA_PHONE = "972508939729"; // בלי + וספייסים
 const CSV_URL  = "data/perfumes.csv";
 
 /* ===== utils ===== */
@@ -219,7 +229,7 @@ function slugify(s){
   let out=s;
   for(let i=0;i<from.length;i++){ out=out.replaceAll(from[i],to[i]); }
   out = out.normalize?.("NFKD").replace(/[\u0300-\u036f]/g,"") || out;
-  out = out.toLowerCase().replace(/['\"`´]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/-+/g,"-").replace(/^-|-$/g,"");
+  out = out.toLowerCase().replace(/[ '\"`´׳״]/g,"").replace(/[^\p{L}\p{N}]+/gu,"-").replace(/-+/g,"-").replace(/^-|-$/g,"");
   return out;
 }
 function rawSlug(s){
@@ -257,26 +267,68 @@ async function loadCSV(url){
   return {headers,rows};
 }
 
-/* ===== parsing title ===== */
-const BRAND_ALIASES=["Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada","Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier","Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage","Kayali Fragrances","Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas","Dior","Valentino"];
-function normalizeBrand(raw){ if(!raw) return ""; let s=raw.trim().replace(/^By\s+/i,""); if(/By\s+Kilian/i.test(raw)||/^Kilian$/i.test(s)) s="Kilian"; return s; }
+/* ===== Brand normalization ===== */
+const BRAND_MAP = new Map([
+  ["By Kilian","Kilian"],
+  ["Kilian Paris","Kilian"],
+  ["Parfums De Marly","Parfums de Marly"],
+  ["Kayali Fragrances","Kayali"],
+  ["YSL","Yves Saint Laurent"],
+  ["VALENTINO","Valentino"],
+  ["Rabanne","Paco Rabanne"],
+]);
+function normalizeBrand(raw){
+  if(!raw) return "";
+  let s = raw.trim().replace(/^By\s+/i,"");
+  const mapped = BRAND_MAP.get(s) || BRAND_MAP.get(s.toLowerCase()?.replace(/\b\w/g,m=>m.toUpperCase())) || s;
+  if(/By\s+Kilian/i.test(raw) || /^Kilian$/i.test(s)) return "Kilian";
+  return mapped;
+}
 
+/* ===== parsing title ===== */
 function parseFromLongTitle(longTitle){
-  const norm=longTitle.replaceAll("בהשראת בהשראת","בהשראת");
-  const [left, rightPart=""]=norm.split("|").map(s=>s?.trim()||"");
+  const norm=(longTitle||"").replaceAll("בהשראת בהשראת","בהשראת");
+  const parts = norm.split(/\|/);
+  const left = (parts[0]||"").trim();
+  const rightPart = (parts[1]||"").trim();
+
+  // gender
+  let gender=""; const gM = rightPart.match(/בושם\s+(יוניסקס|לגבר|לאישה)/);
+  if(gM) gender=gM[1];
+
+  // split title vs inspiration
   let dupeTitle=left, inspStr="";
-  if(left.includes("בהשראת")){ const parts=left.split("בהשראת"); dupeTitle=(parts[0]||"").trim(); inspStr=(parts[1]||"").trim(); }
-  else if(left.includes("Louis Vuitton")&&left.includes("Ombre Nomade")){ inspStr="Louis Vuitton Ombre Nomade"; dupeTitle=left.replace("Louis Vuitton Ombre Nomade","").trim(); }
-  let gender=""; if(/בושם\s+יוניסקס/.test(rightPart)) gender="יוניסקס"; else if(/בושם\s+לאישה/.test(rightPart)) gender="לאישה"; else if(/בושם\s+לגבר/.test(rightPart)) gender="לגבר";
-  let inspBrand="",inspProduct="";
-  if(/^Delilah Pour Femme/i.test(dupeTitle)){ inspBrand="Delina"; inspProduct="Delina"; }
-  else{
-    let found=""; for(const b of [...BRAND_ALIASES].sort((a,b)=>b.length-a.length)){ if(inspStr.toLowerCase().includes(b.toLowerCase())){ found=b; break; } }
-    if(found){ inspBrand=normalizeBrand(found); const productRaw=inspStr.replace(new RegExp(found,"i"),"").replace(/\b[Bb]y\b/,"").trim(); inspProduct=productRaw; }
-    else inspProduct=inspStr;
+  const idx = left.indexOf("בהשראת");
+  if(idx>=0){ dupeTitle = left.slice(0,idx).trim(); inspStr = left.slice(idx+"בהשראת".length).trim(); }
+
+  // figure out brand & product inside inspiration string
+  let inspBrand="", inspProduct="";
+  const BRAND_TOKENS = [
+    "Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada",
+    "Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier",
+    "Paco Rabanne","Giorgio Armani","Yves Saint Laurent","Louis Vuitton","Amouage","Kayali Fragrances",
+    "Kayali","Stéphane Humbert Lucas 777","Stéphane Humbert Lucas","Dior","Valentino"
+  ].sort((a,b)=>b.length-a.length);
+
+  let found="";
+  for(const b of BRAND_TOKENS){ if(inspStr.toLowerCase().includes(b.toLowerCase())){ found=b; break; } }
+  if(found){
+    inspBrand = normalizeBrand(found);
+    const productRaw = inspStr.replace(new RegExp(found,"i"),"").replace(/\b[Bb]y\b/,"").trim();
+    inspProduct = productRaw;
+  } else {
+    // when no explicit brand in the inspiration string, try known one-offs
+    if(/^Delilah Pour Femme/i.test(dupeTitle) && /Delina/i.test(inspStr)){
+      inspBrand = "Parfums de Marly"; inspProduct = "Delina";
+    } else {
+      inspProduct = inspStr; // fallback
+    }
   }
+
+  // clean duplicate house tokens from dupe name
   const HOUSE_TOKENS=["Fragrance Deluxe","Fragrance Delux","Fragrance World","Maison Legend","Mayson Legend","Maison Alhambra","Lattafa","Paris Corner","by"];
   let dupeName=dupeTitle; HOUSE_TOKENS.forEach(tok=> dupeName=dupeName.replace(new RegExp(tok,"ig"),"").trim());
+
   return {dupeName,dupeTitle,inspBrand,inspProduct,inspStr,gender,genderText:rightPart,longTitle:norm};
 }
 
@@ -324,8 +376,6 @@ function buildCarousel(container,p){
   addWithCandidates("מוצר",dupeCands);
   addWithCandidates("השראה",inspCands);
 
-  const ph=document.createElement('div'); ph.className='placeholder'; ph.textContent='הוסיפו תמונות ל/images/ בשם המתאים (עם או בלי ניקוד)'; container.appendChild(ph);
-
   const nav=document.createElement('div'); nav.className='cnav';
   nav.innerHTML=`<button class="cbtn prev" aria-label="הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                  <button class="cbtn next" aria-label="הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></button>`;
@@ -335,7 +385,6 @@ function buildCarousel(container,p){
   function activate(){
     loadedSlides=holders.filter(s=>s.dataset.loaded==="1");
     if(!loadedSlides.length){ nav.style.display='none'; container.classList.add('single'); return; }
-    ph.style.display='none';
     loadedSlides.forEach((s,i)=>s.classList.toggle('active',i===0));
     container.classList.toggle('single',loadedSlides.length<=1);
 
@@ -352,8 +401,6 @@ function buildCarousel(container,p){
   }
   nav.querySelector('.prev').addEventListener('click',()=>goto(idx-1));
   nav.querySelector('.next').addEventListener('click',()=>goto(idx+1));
-
-  console.debug("IMAGE CANDIDATES:",{dupe:dupeCands,insp:inspCands});
 }
 
 /* Lightbox / Zoom */
@@ -462,7 +509,7 @@ function unique(list,get){ return Array.from(new Set(list.map(get).filter(Boolea
 function renderBrandOptions(list){
   const sel=document.getElementById('f-brand'), prev=sel.value;
   sel.innerHTML=`<option value="">הכל</option>`;
-  unique(list,p=>p.inspBrand).forEach(b=>{ const o=document.createElement('option'); o.value=b; o.textContent=b; sel.appendChild(o); });
+  unique(list,p=>p.inspBrand).sort((a,b)=>a.localeCompare(b,'he')).forEach(b=>{ const o=document.createElement('option'); o.value=b; o.textContent=b; sel.appendChild(o); });
   if([...sel.options].some(o=>o.value===prev)) sel.value=prev;
 }
 function applyFilters(all){
@@ -481,28 +528,34 @@ function applyFilters(all){
   renderProducts(list);
 }
 
-/* map row */
-function mapRow(row,idx){
-  const longTitle=(row["שם מלא כותרת"]||row["Title"]||row["name"]||"").trim();
-  const parsed=parseFromLongTitle(longTitle);
-  const base=deriveBasePrice100(slugify(parsed.dupeName||parsed.dupeTitle||("p"+idx)));
-  const price100=base, price10=derive10ml(base), price5=derive5ml(base);
-  return {id:idx+1,longTitle:parsed.longTitle,dupeTitle:parsed.dupeTitle,dupeName:parsed.dupeName,inspBrand:parsed.inspBrand,inspProduct:parsed.inspProduct,inspStr:parsed.inspStr,gender:parsed.gender,genderText:parsed.genderText,price:{"100":price100,"10":price10,"5":price5}};
-}
-
 /* init */
 function initTopWA(){ const waTop=document.getElementById('waTop'); if(waTop) waTop.href=`https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`; }
 document.addEventListener('DOMContentLoaded',async()=>{
   initTopWA();
   const {rows}=await loadCSV(CSV_URL);
   if(!rows.length){ console.warn("CSV ריק או לא נטען"); document.getElementById('empty').style.display='block'; return; }
-  const ALL=rows.map(mapRow);
+  const ALL=rows.map((row,idx)=>{ // mapRow inline
+    const longTitle=(row["שם מלא כותרת"]||row["Title"]||row["name"]||"").trim();
+    const parsed=parseFromLongTitle(longTitle);
+    const base=deriveBasePrice100(slugify(parsed.dupeName||parsed.dupeTitle||("p"+idx)));
+    const price100=base, price10=derive10ml(base), price5=derive5ml(base);
+    return {id:idx+1,longTitle:parsed.longTitle,dupeTitle:parsed.dupeTitle,dupeName:parsed.dupeName,inspBrand:parsed.inspBrand,inspProduct:parsed.inspProduct,inspStr:parsed.inspStr,gender:parsed.gender,genderText:parsed.genderText,price:{"100":price100,"10":price10,"5":price5}};
+  });
   renderBrandOptions(ALL);
   renderProducts(ALL);
   document.getElementById('f-q').addEventListener('input',()=>applyFilters(ALL));
   document.getElementById('f-brand').addEventListener('change',()=>applyFilters(ALL));
   document.getElementById('f-gender').addEventListener('change',()=>applyFilters(ALL));
   document.getElementById('f-sort').addEventListener('change',()=>applyFilters(ALL));
+
+  // Toggle advanced filters
+  const tog=document.getElementById('filtersToggle');
+  const more=document.getElementById('filtersMore');
+  tog.addEventListener('click',()=>{
+    const open = more.hasAttribute('hidden') ? false : true;
+    if(open){ more.setAttribute('hidden',''); tog.setAttribute('aria-expanded','false'); tog.textContent='פתחו סינון מתקדם'; }
+    else{ more.removeAttribute('hidden'); tog.setAttribute('aria-expanded','true'); tog.textContent='סגירת סינון מתקדם'; }
+  });
 });
 </script>
 </body>
