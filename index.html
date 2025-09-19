@@ -41,6 +41,7 @@
   .faq h2{font-weight:700;font-size:20px;margin:0 0 var(--s-1)}
   .faq details{border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0;background:#fff;box-shadow:var(--shadow)}
 
+  /* סרגל פילטרים */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px}
@@ -49,48 +50,64 @@
   .f-input{min-width:240px}
   @media (max-width:700px){.filters .row{flex-direction:column;align-items:stretch}.f-input,.f-select{width:100%;min-width:unset}.f-field{width:100%}}
 
-  .grid.masonry{column-count:4;column-gap:var(--s-4)}
-  @media (max-width:1200px){.grid.masonry{column-count:3}}
-  @media (max-width:800px){.grid.masonry{column-count:2}}
-  @media (max-width:520px){.grid.masonry{column-count:2}}
+  /* גריד אחיד */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+  @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
+  @media (max-width:520px){.grid{grid-template-columns:repeat(2,1fr);} }
 
-  .card{display:inline-block;width:100%;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;margin:0 0 var(--s-4);break-inside:avoid}
+  .card{
+    display:flex; flex-direction:column;
+    background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
+    min-height:520px; /* גובה אחיד ונעים */
+  }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
-  .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:280px}
-  .slide{position:absolute;inset:0;opacity:0;transition:opacity .2s}
+  /* קרוסלה */
+  .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:240px}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .25s;z-index:1}
   .slide.active{opacity:1}
   .slide img{width:100%;height:100%;object-fit:cover;display:block}
   .badge{position:absolute;top:10px;inset-inline-start:10px;background:#000a;color:#fff;font-size:12px;padding:4px 8px;border-radius:999px;backdrop-filter:blur(2px)}
-  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;pointer-events:none;direction:ltr}
-  .cbtn{pointer-events:auto;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .cnav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;direction:ltr;z-index:2}
+  .cbtn{width:40px;height:40px;border-radius:999px;border:1px solid var(--border);background:#fff9f0;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);cursor:pointer}
   .cbtn svg{width:18px;height:18px}
   .imagebox.single .cnav{display:none}
 
+  /* מטה/תגים */
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2)}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
-  .card h3{margin:var(--s-2) 0 var(--s-2);font-size:16px;line-height:1.35;font-weight:700;text-align:center;font-family:Assistant,Inter,Arial,sans-serif}
+  /* כותרת עם הדגשת "בהשראת" */
+  .card h3{
+    margin:var(--s-2) 0 var(--s-2);font-size:16px;line-height:1.35;font-weight:700;text-align:center;
+    font-family:Assistant,Inter,Arial,sans-serif;
+    min-height:3.6em; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .insp-sep{color:var(--muted);font-weight:600}
+  .insp-text{color:var(--accent);font-weight:800}
+  .gender-inline{color:var(--muted);font-weight:600}
 
+  /* בחירת נפח */
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
   .size-label{font-weight:700}
   .size-select{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;direction:rtl;text-align:right;appearance:none;
     background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%),linear-gradient(to left,#fff,#fff);
     background-position:16px 50%,24px 50%,0 0;background-size:8px 8px,8px 8px,2.5em 100%;background-repeat:no-repeat;padding-left:48px}
 
-  .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex}
+  /* מחיר */
+  .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex;justify-content:center}
   .price-amount{font-weight:800;font-size:20px;letter-spacing:.02em}
   .price-sep{color:#b9a98f}
   .price-size{font-weight:600;font-size:14px;color:var(--muted)}
-  @media (max-width:600px){.price{justify-content:center}}
 
+  /* הערת 10 מ"ל */
   .size-note{display:none;margin:0 0 var(--s-3);font-size:13px;color:var(--muted);font-weight:600;text-align:center;line-height:1.35}
   .size-note.show{display:block}
 
-  .wa-btn{margin-top:auto;display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
+  /* כפתור וואטסאפ – ממורכז */
+  .wa-btn{margin-top:auto;display:block;width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
   .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
   .wa-btn.disabled{opacity:.55;pointer-events:auto}
-  @media (max-width:600px){.wa-btn{display:block;width:100%}}
 
   .toast{position:fixed;z-index:9999;padding:10px 14px;border-radius:12px;background:#111;color:#fff;font-size:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s}
   .toast.show{opacity:1;transform:translateY(0)}
@@ -114,15 +131,43 @@
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
 
+    <!-- סרגל פילטרים -->
     <section class="filters" id="filters">
       <div class="row">
-        <div class="f-field"><label class="f-label" for="f-q">חיפוש</label><input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/></div>
-        <div class="f-field"><label class="f-label" for="f-brand">מותג השראה</label><select id="f-brand" class="f-select"><option value="">הכל</option></select></div>
-        <div class="f-field"><label class="f-label" for="f-sort">סידור</label><select id="f-sort" class="f-select"><option value="">ברירת מחדל</option><option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option><option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option></select></div>
+        <div class="f-field">
+          <label class="f-label" for="f-q">חיפוש</label>
+          <input id="f-q" class="f-input" type="search" placeholder="חפש/י לפי שם דיופ או השראה…"/>
+        </div>
+
+        <div class="f-field">
+          <label class="f-label" for="f-brand">מותג השראה</label>
+          <select id="f-brand" class="f-select">
+            <option value="">הכל</option>
+          </select>
+        </div>
+
+        <div class="f-field">
+          <label class="f-label" for="f-gender">מין</label>
+          <select id="f-gender" class="f-select">
+            <option value="">הכל</option>
+            <option>לגבר</option>
+            <option>לאישה</option>
+            <option>יוניסקס</option>
+          </select>
+        </div>
+
+        <div class="f-field">
+          <label class="f-label" for="f-sort">סידור</label>
+          <select id="f-sort" class="f-select">
+            <option value="">ברירת מחדל</option>
+            <option value="p_asc">מחיר 100 מ״ל — נמוך→גבוה</option>
+            <option value="p_desc">מחיר 100 מ״ל — גבוה→נמוך</option>
+          </select>
+        </div>
       </div>
     </section>
 
-    <section class="grid masonry" id="products"></section>
+    <section class="grid" id="products"></section>
     <div id="empty" class="empty" style="display:none">לא נמצאו מוצרים בהתאמה לסינון</div>
   </main>
 
@@ -132,7 +177,7 @@
 const WA_PHONE = "972508939729";
 const CSV_URL  = "data/perfumes.csv";
 
-/* -------- utils -------- */
+/* ---- utils ---- */
 function round5(x){ return Math.round(x/5)*5; }
 function hashNum(str){ let h=0; for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i)|0; return (Math.abs(h)%1000)/1000; }
 function deriveBasePrice100(slug){ return round5(170 + hashNum(slug)*70); }
@@ -158,7 +203,7 @@ function showToast(msg, nearEl){
   setTimeout(()=>{t.classList.remove('show'); setTimeout(()=>t.remove(),200);},1600);
 }
 
-/* -------- CSV reader (supports quotes) -------- */
+/* ---- CSV ---- */
 async function loadCSV(url){
   const res = await fetch(url, {cache:"no-store"});
   if(!res.ok){ console.error("CSV fetch failed", res.status); return {headers:[],rows:[]}; }
@@ -189,7 +234,7 @@ async function loadCSV(url){
   return {headers,rows};
 }
 
-/* -------- parse from long title (fallback) -------- */
+/* ---- parse long title ---- */
 const BRAND_ALIASES = [
   "Thomas Kosmala","Xerjoff","Ex Nihilo","By Kilian","Kilian","Tom Ford","Gucci","Prada",
   "Narciso Rodriguez","Parfums De Marly","Parfums de Marly","Carolina Herrera","Jean Paul Gaultier",
@@ -198,7 +243,7 @@ const BRAND_ALIASES = [
 ];
 
 function parseFromLongTitle(longTitle){
-  // format: "<DUPE> בהשראת <INSP> | בושם <מין>"
+  // "<DUPE> בהשראת <INSP> | בושם <מין>"
   const norm = longTitle.replaceAll("בהשראת בהשראת","בהשראת");
   const [left, rightPart=""] = norm.split("|").map(s=>s?.trim()||"");
   let dupeTitle = left;
@@ -206,80 +251,83 @@ function parseFromLongTitle(longTitle){
   if(left.includes("בהשראת")){
     const parts = left.split("בהשראת");
     dupeTitle = (parts[0]||"").trim();
-    inspStr = (parts[1]||"").trim();
-  } else {
-    // special case without "בהשראת"
-    if(left.includes("Louis Vuitton") && left.includes("Ombre Nomade")){
-      inspStr = "Louis Vuitton Ombre Nomade";
-      dupeTitle = left.replace("Louis Vuitton Ombre Nomade","").trim();
-    }
+    inspStr   = (parts[1]||"").trim();
+  } else if(left.includes("Louis Vuitton") && left.includes("Ombre Nomade")){
+    inspStr = "Louis Vuitton Ombre Nomade";
+    dupeTitle = left.replace("Louis Vuitton Ombre Nomade","").trim();
   }
 
-  // gender
   let gender = "";
   if(/בושם\s+יוניסקס/.test(rightPart)) gender="יוניסקס";
   else if(/בושם\s+לאישה/.test(rightPart)) gender="לאישה";
   else if(/בושם\s+לגבר/.test(rightPart)) gender="לגבר";
 
-  // special Delilah rule
+  // brand & product from inspStr
   let inspBrand="", inspProduct="";
-  if(/^Delilah Pour Femme/i.test(dupeTitle)){
-    inspBrand = "Delina"; inspProduct = "Delina";
-  } else {
-    // find brand token inside inspStr
-    let found="";
-    for(const b of [...BRAND_ALIASES].sort((a,b)=>b.length-a.length)){
+  if(/^Delilah Pour Femme/i.test(dupeTitle)){ inspBrand="Delina"; inspProduct="Delina"; }
+  else{
+    let found=""; for(const b of [...BRAND_ALIASES].sort((a,b)=>b.length-a.length)){
       if(inspStr.toLowerCase().includes(b.toLowerCase())){ found=b; break; }
     }
     if(found){
       inspBrand = (found.toLowerCase()==="kayali fragrances") ? "Kayali" : found;
       inspProduct = inspStr.replace(new RegExp(found,"i"),"").replace(/\b[Bb]y\b/,"").trim();
-    } else {
-      // brand unknown, all treated as product
-      inspBrand=""; inspProduct=inspStr;
-    }
+    }else{ inspProduct = inspStr; }
   }
 
-  // derive short dupe name for filenames (strip house tokens)
+  // dupeName for filenames – strip house tokens
   const HOUSE_TOKENS = ["Fragrance Deluxe","Fragrance Delux","Fragrance World","Maison Legend","Mayson Legend","Maison Alhambra","Lattafa","Paris Corner","by"];
-  let dupeName = dupeTitle;
-  HOUSE_TOKENS.forEach(tok=> dupeName = dupeName.replace(new RegExp(tok,"ig"),"").trim());
+  let dupeName = dupeTitle; HOUSE_TOKENS.forEach(tok=> dupeName = dupeName.replace(new RegExp(tok,"ig"),"").trim());
 
-  return {dupeName,inspBrand,inspProduct,gender,longTitle: norm};
+  return {dupeName, dupeTitle, inspBrand, inspProduct, inspStr, gender, genderText: rightPart, longTitle:norm};
 }
 
-/* -------- images + carousel -------- */
+/* ---- carousel with reliable loading ---- */
 function createSmartSlide(label, baseNoExt){
   const slide=document.createElement('div'); slide.className='slide';
   const img=document.createElement('img'); const badge=document.createElement('span'); badge.className='badge'; badge.textContent=label;
   slide.appendChild(img); slide.appendChild(badge);
   const exts=[".jpg",".jpeg",".png",".webp"]; let i=0;
   function tryNext(){ if(i>=exts.length){ slide.dataset.missing="1"; return; } img.src=`${baseNoExt}${exts[i++]}`; }
-  img.onerror=tryNext; tryNext(); return slide;
+  img.onerror=tryNext;
+  img.onload=()=>{ slide.dataset.loaded="1"; };
+  tryNext();
+  return slide;
 }
-function buildCarousel(container, dupeSrcNoExt, inspSrcNoExt){
+function buildCarousel(container, dupeNoExt, inspNoExt){
   container.innerHTML=""; const slides=[];
-  if(dupeSrcNoExt) slides.push(createSmartSlide("מוצר", dupeSrcNoExt));
-  if(inspSrcNoExt) slides.push(createSmartSlide("השראה", inspSrcNoExt));
+  if(dupeNoExt) slides.push(createSmartSlide("מוצר", dupeNoExt));
+  if(inspNoExt) slides.push(createSmartSlide("השראה", inspNoExt));
   slides.forEach(s=>container.appendChild(s));
-  if(!slides.length) return;
-  function activateFirst(){
-    const ok=slides.filter(s=>!s.dataset.missing); const t=ok[0]||slides[0];
-    slides.forEach(s=>s.classList.toggle('active', s===t)); container.classList.toggle('single', ok.length<=1);
-  }
-  setTimeout(activateFirst,0);
+  if(!slides.length){ container.classList.add('single'); return; }
+
   const nav=document.createElement('div'); nav.className='cnav';
   nav.innerHTML=`<button class="cbtn prev" aria-label="הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
                  <button class="cbtn next" aria-label="הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg></button>`;
   container.appendChild(nav);
+
   let idx=0;
-  function vis(){ return slides.filter(s=>!s.dataset.missing); }
-  function goto(n){ const v=vis(); if(!v.length) return; idx=(n+v.length)%v.length; v.forEach((s,i)=>s.classList.toggle('active', i===idx)); }
+  function visible(){ return slides.filter(s=>s.dataset.loaded==="1"); }
+  function allMissing(){ return slides.every(s=>s.dataset.missing==="1"); }
+
+  function activateFirst(){
+    const v=visible();
+    if(v.length){ v.forEach((s,i)=>s.classList.toggle('active',i===0)); container.classList.toggle('single', v.length<=1); return; }
+    if(allMissing()){ container.classList.add('single'); nav.style.display='none'; return; }
+    // עדיין ממתינים לטעינה
+    setTimeout(activateFirst, 50);
+  }
+  activateFirst();
+
+  function goto(n){
+    const v=visible(); if(!v.length) return;
+    idx=(n+v.length)%v.length; v.forEach((s,i)=>s.classList.toggle('active', i===idx));
+  }
   nav.querySelector('.prev').addEventListener('click',()=>goto(idx-1));
   nav.querySelector('.next').addEventListener('click',()=>goto(idx+1));
 }
 
-/* -------- WhatsApp -------- */
+/* ---- WhatsApp ---- */
 function buildWaHref(p, sizeLabel, price){
   const lines = [
     "היי! מעוניין/ת בבושם:",
@@ -291,7 +339,7 @@ function buildWaHref(p, sizeLabel, price){
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(lines)}`;
 }
 
-/* -------- render -------- */
+/* ---- render ---- */
 const selectedById = {};
 function renderProducts(list){
   const el=document.getElementById('products'); const empty=document.getElementById('empty');
@@ -301,14 +349,22 @@ function renderProducts(list){
     const vol100 = p.price["100"];
     const dupeSlug = slugify(p.dupeName);
     const inspSlug = slugify(`${p.inspBrand} ${p.inspProduct}`.trim());
+    const titleHTML = `
+      <span class="dupe-title">${p.dupeTitle}</span>
+      ${p.inspStr ? ` <span class="insp-sep">בהשראת</span> <span class="insp-text">${p.inspStr}</span>` : ``}
+      ${p.genderText ? ` <span class="gender-inline">| ${p.genderText}</span>` : ``}
+    `;
     return `
       <article class="card" data-id="${p.id}">
         <div class="imagebox"></div>
+
         <div class="meta-row">
           ${p.inspBrand ? `<span class="tag">מותג השראה: ${p.inspBrand}</span>` : ""}
           ${p.gender ? `<span class="tag">${p.gender}</span>` : ""}
         </div>
-        <h3>${p.longTitle}</h3>
+
+        <h3>${titleHTML}</h3>
+
         <div class="size-row">
           <span class="size-label">נפח</span>
           <select class="size-select" aria-label="בחר נפח">
@@ -318,12 +374,15 @@ function renderProducts(list){
             <option value="5"   ${selectedById[p.id]==="5"  ?'selected':''}>5 מ״ל</option>
           </select>
         </div>
+
         <div class="price" aria-live="polite">
           <span class="price-amount">₪<span class="price-val">${vol100}</span></span>
           <span class="price-sep">·</span>
           <span class="price-size">100 מ״ל</span>
         </div>
+
         <p class="size-note"></p>
+
         <a class="wa-btn ${selectedById[p.id] ? '' : 'disabled'}" href="#" target="_blank" rel="noopener">הזמנה/שאלה ב-WhatsApp</a>
       </article>`;
   }).join('');
@@ -334,9 +393,11 @@ function renderProducts(list){
     const priceVal=card.querySelector('.price-val'); const priceSize=card.querySelector('.price-size'); const priceSep=card.querySelector('.price-sep');
     const noteEl=card.querySelector('.size-note'); const waBtn=card.querySelector('.wa-btn'); const box=card.querySelector('.imagebox');
 
+    // קרוסלה (טעינה אמינה)
     const dupeSlug=slugify(p.dupeName); const inspSlug=slugify(`${p.inspBrand} ${p.inspProduct}`.trim());
     buildCarousel(box, dupeSlug?`images/${dupeSlug}`:"", inspSlug?`images/${inspSlug}`:"");
 
+    // WA
     waBtn.addEventListener('click', (e)=>{ if(waBtn.classList.contains('disabled')){ e.preventDefault(); showToast('בחר/י נפח קודם 🙂', waBtn); } });
 
     if(selectedById[pid]) applySize(selectedById[pid]); else { priceVal.textContent=p.price["100"]; priceSize.textContent="100 מ״ל"; }
@@ -352,7 +413,7 @@ function renderProducts(list){
   });
 }
 
-/* -------- filters -------- */
+/* ---- filters ---- */
 function unique(list, getter){ return Array.from(new Set(list.map(getter).filter(Boolean))); }
 function renderBrandOptions(list){
   const sel=document.getElementById('f-brand'); const prev=sel.value;
@@ -363,48 +424,45 @@ function renderBrandOptions(list){
 function applyFilters(all){
   const q=document.getElementById('f-q').value.trim().toLowerCase();
   const brand=document.getElementById('f-brand').value;
+  const genderSel=document.getElementById('f-gender').value;
   const sort=document.getElementById('f-sort').value;
+
   let list = all.filter(p=>{
     const hay=(p.dupeName+" "+p.inspBrand+" "+p.inspProduct+" "+p.longTitle).toLowerCase();
-    const okQ=!q || hay.includes(q); const okB=!brand || p.inspBrand===brand; return okQ && okB;
+    const okQ=!q || hay.includes(q);
+    const okB=!brand || p.inspBrand===brand;
+    const okG=!genderSel || p.gender===genderSel;
+    return okQ && okB && okG;
   });
+
   if(sort==='p_asc')  list=list.slice().sort((a,b)=>(a.price["100"]||0)-(b.price["100"]||0));
   if(sort==='p_desc') list=list.slice().sort((a,b)=>(b.price["100"]||0)-(a.price["100"]||0));
   renderProducts(list);
 }
 
-/* -------- map CSV row to product -------- */
+/* ---- map row ---- */
 function mapRow(row, idx){
-  // prefer separate columns if exist, otherwise parse from long title
   const longTitleRaw = (row["שם מלא כותרת"]||row["Title"]||row["name"]||"").trim();
-  let dupeName=(row["שם מוצר הדיופ"]||"").trim();
-  let inspBrand=(row["שם מותג ההשראה"]||"").trim();
-  let inspProduct=(row["שם מוצר ההשראה"]||"").trim();
-  let gender=(row["מין מומלץ לבושם"]||"").trim();
-
   const parsed = parseFromLongTitle(longTitleRaw);
-  // fill from parsed when fields missing/ריקים
-  const longTitle = parsed.longTitle || longTitleRaw;
-  if(!dupeName)     dupeName = parsed.dupeName;
-  if(!inspBrand)    inspBrand = parsed.inspBrand;
-  if(!inspProduct)  inspProduct = parsed.inspProduct;
-  if(!gender)       gender = parsed.gender;
 
-  const base = deriveBasePrice100(slugify(dupeName||longTitle||("p"+idx)));
+  const base = deriveBasePrice100(slugify(parsed.dupeName||parsed.dupeTitle||("p"+idx)));
   const price100=base, price10=derive10ml(base), price5=derive5ml(base);
 
   return {
     id: idx+1,
-    longTitle,
-    dupeName,
-    inspBrand,
-    inspProduct,
-    gender,
+    longTitle: parsed.longTitle,
+    dupeTitle: parsed.dupeTitle,
+    dupeName: parsed.dupeName,
+    inspBrand: parsed.inspBrand,
+    inspProduct: parsed.inspProduct,
+    inspStr: parsed.inspStr,
+    gender: parsed.gender,
+    genderText: parsed.genderText,
     price: {"100":price100,"10":price10,"5":price5}
   };
 }
 
-/* -------- init -------- */
+/* ---- init ---- */
 function initTopWA(){
   const waTop=document.getElementById('waTop');
   if(waTop) waTop.href=`https://wa.me/${WA_PHONE}?text=${encodeURIComponent('היי! מעוניין/ת בבשמים. אשמח לפרטים על נפחים ודוגמיות.')}`;
@@ -418,6 +476,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   renderProducts(ALL);
   document.getElementById('f-q').addEventListener('input', ()=>applyFilters(ALL));
   document.getElementById('f-brand').addEventListener('change', ()=>applyFilters(ALL));
+  document.getElementById('f-gender').addEventListener('change', ()=>applyFilters(ALL));
   document.getElementById('f-sort').addEventListener('change', ()=>applyFilters(ALL));
 });
 </script>
