@@ -14,7 +14,7 @@
 <style>
   :root{
     --logo-h:82px;          /* דסקטופ/טאבלט */
-    --logo-h-sm:64px;       /* מובייל רגיל */
+    --logo-h-sm:64px;       /* מובייל */
     --bg:#f7f3ec; --card:#fff; --fg:#1a1a1a; --muted:#6f6a5f;
     --accent:#b07a2a; --border:#eadfce; --shadow:0 6px 18px rgba(50,24,0,.06);
     --s-1:6px; --s-2:10px; --s-3:14px; --s-4:18px; --s-5:22px; --input-h:42px;
@@ -40,7 +40,7 @@
     background: linear-gradient(180deg,#ffffff 0%, #fffdf7 100%);
     border-bottom:1px solid var(--border);
     box-shadow:0 2px 10px rgba(0,0,0,.03);
-    margin-bottom:16px; /* מרווח קטן לפני ה-FAQ */
+    margin-bottom:16px;
   }
   header .inner{
     max-width:1160px; margin:0 auto; padding:14px 16px;
@@ -49,36 +49,24 @@
   .brand{display:flex; align-items:center; gap:14px; min-width:0}
   .logo{height:var(--logo-h); width:auto; max-width:180px; object-fit:contain}
   .titles{display:flex; flex-direction:column; min-width:0}
-  /* — העדכונים כאן — */
   header h1{
     font-weight:800;
-    /* גדול יותר כברירת־מחדל כדי להרגיש "חי" גם בטאבלט */
     font-size:clamp(24px,3.2vw,36px);
     line-height:1.2;
     margin:0;
-    /* לא חותכים במובייל: */
-    white-space:normal;
-    overflow:visible;
-    text-overflow:clip;
-    overflow-wrap:anywhere; /* שובר מילים ארוכות אם אין רווחים */
+    white-space:normal; overflow:visible; text-overflow:clip;
+    overflow-wrap:anywhere;
   }
-  header p{
-    margin:2px 0 0; color:var(--muted); font-weight:600; font-size:14px;
-  }
+  header p{ margin:2px 0 0; color:var(--muted); font-weight:600; font-size:14px; }
   .cta{
-    justify-self:end;
-    display:inline-block; padding:10px 16px; border:1px solid var(--accent);
+    justify-self:end; display:inline-block; padding:10px 16px; border:1px solid var(--accent);
     border-radius:12px; font-weight:700; background:#fff; transition:.18s; box-shadow:var(--shadow)
   }
   .cta:hover{transform:translateY(-1px); box-shadow:0 10px 20px rgba(176,122,42,.12)}
-
-  /* טאבלט (כולל iPad): מגדיל עוד קצת את הכותרת */
   @media (min-width:700px) and (max-width:1024px){
     header h1{ font-size:clamp(26px,3.4vw,40px); }
     .logo{ height:calc(var(--logo-h) + 2px); }
   }
-
-  /* פריסת מובייל: לוגו נשאר לצד הכותרת אבל קטן יותר, הטקסט עוטף יפה */
   @media (max-width:900px){
     header .inner{grid-template-columns:1fr auto; grid-auto-rows:auto}
     .brand{order:1}
@@ -87,19 +75,15 @@
   }
   @media (max-width:520px){
     .logo{height:var(--logo-h-sm); max-width:130px}
-    /* הכותרת גדלה מעט לעומת קודם, ועדיין עוטפת שורה/שתיים בנוחות */
     header h1{ font-size:clamp(20px,6vw,26px); line-height:1.22; }
     header p{font-size:13px}
   }
-  /* למסכים ממש צרים (קטנים מ-360px) – עוד טיפ־טיפה להקטין את הלוגו לפנות מקום לטקסט */
   @media (max-width:360px){
     .logo{height:56px; max-width:110px}
     header h1{ font-size:clamp(19px,6.5vw,24px) }
   }
 
-  /* ===== מתחת להדר – הכול נשאר כמו בקובץ הקודם ===== */
-
-  /* FAQ */
+  /* ===== FAQ ===== */
   .faq{margin:0 0 12px}
   .faq h2{font-weight:800;font-size:20px;margin:0 0 8px}
   .faq details{border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:8px 0;overflow:hidden}
@@ -107,7 +91,7 @@
   .faq summary::marker{content:""}
   .faq details > div{padding:0 14px 12px 14px;color:var(--muted);font-weight:600;border-top:1px dashed var(--border)}
 
-  /* Filters */
+  /* ===== Filters ===== */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px;min-width:280px}
@@ -131,7 +115,7 @@
     .f-select{width:100%;min-width:unset}
   }
 
-  /* Grid + Cards + Carousel + Price + Buttons */
+  /* ===== Grid + Cards + Carousel + Price + Buttons ===== */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
   @media (max-width:520px){.grid{grid-template-columns:1fr;gap:12px;justify-items:center}}
@@ -158,11 +142,47 @@
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
 
-  .title{margin:var(--s-2) 0 calc(var(--s-3) + 10px);text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:7.8em;gap:6px}
-  .t1{font-weight:800;font-size:clamp(15px,2.1vw,18px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
-  .t2{font-weight:600;font-size:clamp(13px,1.7vw,15px);line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
-  .t3{font-weight:600;font-size:13px;color:var(--muted)}
+  /* ====== כותרות מוצרים – הוגדלו רספונסיבית ====== */
+  .title{
+    margin:var(--s-2) 0 calc(var(--s-3) + 10px);
+    text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;
+    min-height:8.6em; /* מעט יותר כדי להכיל שתי שורות גדולות */
+    gap:6px
+  }
+  .t1{
+    font-weight:800;
+    /* בסיס: דסקטופ קטן ומעלה */
+    font-size:clamp(18px,2.2vw,20px);
+    line-height:1.35;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:3.1em;
+  }
+  .t2{
+    font-weight:600;
+    font-size:clamp(14px,1.9vw,16px);
+    line-height:1.35;color:var(--muted);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:3.1em;
+  }
+  .t3{ font-weight:600; font-size:14px; color:var(--muted) }
   .t2 .insp{color:var(--accent);font-weight:800}
+
+  /* טאבלט (700–1024): עוד קפיצה */
+  @media (min-width:700px) and (max-width:1024px){
+    .t1{ font-size:clamp(20px,2.6vw,24px); }
+    .t2{ font-size:clamp(15px,2.1vw,18px); }
+    .t3{ font-size:14.5px; }
+  }
+  /* דסקטופ רחב (≥1200): עדינה */
+  @media (min-width:1200px){
+    .t1{ font-size:21px; }
+    .t2{ font-size:16px; }
+  }
+  /* מובייל (≤520): קריא וברור יותר */
+  @media (max-width:520px){
+    .title{min-height:unset; margin:10px 0 8px}
+    .t1{ font-size:19px; max-height:3.2em }
+    .t2{ font-size:15.5px; max-height:3.2em }
+    .t3{ font-size:13.5px }
+  }
 
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
   .size-label{font-weight:700}
@@ -185,22 +205,6 @@
   .toast{position:fixed;z-index:9999;padding:10px 14px;border-radius:12px;background:#111;color:#fff;font-size:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s}
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
-
-  @media (max-width:520px){
-    .wrap{padding:0 12px 48px}
-    .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
-    .imagebox{height:min(60vw,340px)}
-    .cnav{padding:0 10px}
-    .title{min-height:unset;margin:10px 0 8px}
-    .t1,.t2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-height:2.9em;overflow:hidden;word-break:break-word}
-    .t1{font-size:17px}
-    .t2{font-size:14px}
-    .t3{font-size:12.5px}
-    .meta-row{justify-content:center;margin:8px 0}
-    .size-row{margin:6px 0 8px}
-    .price{margin:6px 0 8px}
-    .wa-btn{margin-top:8px}
-  }
 </style>
 </head>
 <body>
