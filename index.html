@@ -13,7 +13,8 @@
 <link rel="icon" href="images/favicon.ico" />
 <style>
   :root{
-    --logo-h:96px; /* קטן יותר, סטנדרטי */
+    --logo-h:82px;  /* גובה לוגו דסקטופ */
+    --logo-h-sm:64px; /* גובה לוגו מובייל/טאבלט */
     --bg:#f7f3ec; --card:#fff; --fg:#1a1a1a; --muted:#6f6a5f;
     --accent:#b07a2a; --border:#eadfce; --shadow:0 6px 18px rgba(50,24,0,.06);
     --s-1:6px; --s-2:10px; --s-3:14px; --s-4:18px; --s-5:22px; --input-h:42px;
@@ -34,29 +35,54 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
 
-  /* ===== HEADER – נקי וסטנדרטי ===== */
+  /* ===== HEADER חדש: לוגו לצד הכותרת, רקע עדין, גריד רספונסיבי ===== */
   header{
-    background:#fff;
+    background: linear-gradient(180deg,#ffffff 0%, #fffdf7 100%);
     border-bottom:1px solid var(--border);
     box-shadow:0 2px 10px rgba(0,0,0,.03);
+    margin-bottom:14px; /* יוצר מרווח קטן לפני ה-FAQ */
   }
   header .inner{
-    max-width:1160px; margin:0 auto; padding:20px 16px 18px;
-    display:flex; flex-direction:column; align-items:center; text-align:center;
+    max-width:1160px; margin:0 auto; padding:14px 16px;
+    display:grid; grid-template-columns:auto 1fr auto; gap:16px; align-items:center;
+  }
+  /* אשכול לוגו+כותרות */
+  .brand{
+    display:flex; align-items:center; gap:14px; min-width:0;
   }
   .logo{
-    display:block; height:var(--logo-h); max-width:260px; width:auto; object-fit:contain;
-    margin:0 auto 8px;
+    height:var(--logo-h); width:auto; max-width:180px; object-fit:contain;
   }
-  header h1{font-weight:800;font-size:clamp(26px,3.2vw,36px);margin:6px 0 4px}
-  header p{margin:0 0 10px;color:var(--muted);font-weight:600}
+  .titles{display:flex; flex-direction:column; min-width:0}
+  header h1{
+    font-weight:800; font-size:clamp(22px,2.6vw,30px); line-height:1.15; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  header p{
+    margin:2px 0 0; color:var(--muted); font-weight:600; font-size:14px;
+  }
   .cta{
+    justify-self:end;
     display:inline-block; padding:10px 16px; border:1px solid var(--accent);
     border-radius:12px; font-weight:700; background:#fff; transition:.18s; box-shadow:var(--shadow)
   }
   .cta:hover{transform:translateY(-1px); box-shadow:0 10px 20px rgba(176,122,42,.12)}
+  /* טאבלט/מובייל: עדיין לוגו לצד הכותרת, קטן יותר; הכפתור עובר לשורה מתחת אם אין מקום */
+  @media (max-width:900px){
+    header .inner{grid-template-columns:1fr auto; grid-auto-rows:auto}
+    .brand{order:1}
+    .cta{order:2; justify-self:start; margin-top:6px}
+    .logo{height:var(--logo-h-sm); max-width:150px}
+  }
+  @media (max-width:520px){
+    .logo{height:var(--logo-h-sm); max-width:130px}
+    header h1{font-size:20px}
+    header p{font-size:13px}
+    .cta{width:auto}
+  }
 
-  /* ===== FAQ (למטה – הכל נשאר זהה לגרסה הקודמת) ===== */
+  /* ===== להלן כל מה שמתחת נשאר כמו קודם ===== */
+
+  /* FAQ */
   .faq{margin:0 0 12px}
   .faq h2{font-weight:800;font-size:20px;margin:0 0 8px}
   .faq details{border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:8px 0;overflow:hidden}
@@ -64,7 +90,7 @@
   .faq summary::marker{content:""}
   .faq details > div{padding:0 14px 12px 14px;color:var(--muted);font-weight:600;border-top:1px dashed var(--border)}
 
-  /* ===== Filters area (כמו בגרסה הקודמת) ===== */
+  /* Filters */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px;min-width:280px}
@@ -88,12 +114,18 @@
     .f-select{width:100%;min-width:unset}
   }
 
-  /* ===== Grid + Cards + Carousel + Price + Buttons (ללא שינוי) ===== */
+  /* Grid + Cards + Carousel + Price + Buttons */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
   @media (max-width:520px){.grid{grid-template-columns:1fr;gap:12px;justify-items:center}}
-  .card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;min-height:620px;}
+
+  .card{
+    display:flex;flex-direction:column;background:var(--card);
+    border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
+    min-height:620px;
+  }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
+
   .imagebox{position:relative;border-radius:12px;overflow:hidden;background:#f1f1f1;height:240px}
   .slide{position:absolute;inset:0;opacity:0;transition:opacity .25s;z-index:1;pointer-events:none}
   .slide.active{opacity:1;pointer-events:auto}
@@ -105,32 +137,39 @@
   .cbtn,.cbtn *{pointer-events:auto;cursor:pointer}
   .imagebox.single .cnav{display:none}
   .placeholder{position:absolute;inset:0}
+
   .meta-row{display:flex;gap:8px;align-items:center;justify-content:center;margin:var(--s-2) 0 var(--s-2);flex-wrap:wrap}
   .tag{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border:1px dashed var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:#fff}
+
   .title{margin:var(--s-2) 0 calc(var(--s-3) + 10px);text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:7.8em;gap:6px}
   .t1{font-weight:800;font-size:clamp(15px,2.1vw,18px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t2{font-weight:600;font-size:clamp(13px,1.7vw,15px);line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.8em}
   .t3{font-weight:600;font-size:13px;color:var(--muted)}
   .t2 .insp{color:var(--accent);font-weight:800}
+
   .size-row{display:flex;gap:8px;align-items:center;margin:0 0 var(--s-3)}
   .size-label{font-weight:700}
   .size-select{flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-weight:600;direction:rtl;text-align:right;appearance:none;
     background-image:linear-gradient(45deg,transparent 50%,var(--accent) 50%),linear-gradient(135deg,var(--accent) 50%,transparent 50%),linear-gradient(to left,#fff,#fff);
     background-position:16px 50%,24px 50%,0 0;background-size:8px 8px,8px 8px,2.5em 100%;background-repeat:no-repeat;padding-left:48px}
+
   .price{margin:0 0 var(--s-2);align-items:baseline;gap:10px;color:var(--fg);display:flex;justify-content:center}
   .price-amount{font-weight:800;font-size:20px;letter-spacing:.02em}
   .price-sep{color:#b9a98f}
   .price-size{font-weight:600;font-size:14px;color:var(--muted)}
+
   .size-note{display:none;margin:0 0 var(--s-3);font-size:13px;color:var(--muted);font-weight:600;text-align:center;line-height:1.35}
   .size-note.show{display:block}
+
   .wa-btn{margin-top:auto;display:block;width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--accent);background:#fff;font-weight:700;transition:.2s;text-align:center}
   .wa-btn:hover{background:#fff3e0;transform:translateY(-1px)}
   .wa-btn.disabled{opacity:.55;pointer-events:auto}
+
   .toast{position:fixed;z-index:9999;padding:10px 14px;border-radius:12px;background:#111;color:#fff;font-size:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s}
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* מובייל – כמו בגרסה הקודמת */
+  /* מובייל */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
@@ -150,18 +189,22 @@
 </head>
 <body>
 
-  <!-- ===== HEADER – נקי ===== -->
+  <!-- ===== HEADER חדש ===== -->
   <header>
     <div class="inner">
-      <img src="images/logo.png" alt="לוגו המותג" class="logo" onerror="this.style.display='none'">
-      <h1>קטלוג בשמי דלוקס סנס</h1>
-      <p>ייצור פרטי בכמויות קטנות. בחירה, שאלות והזמנה דרך WhatsApp.</p>
+      <div class="brand">
+        <img src="images/logo.png" alt="לוגו המותג" class="logo" onerror="this.style.display='none'">
+        <div class="titles">
+          <h1>קטלוג בשמי דלוקס סנס</h1>
+          <p>ייצור פרטי בכמויות קטנות. בחירה, שאלות והזמנה דרך WhatsApp.</p>
+        </div>
+      </div>
       <a class="cta" id="waTop" target="_blank" rel="noopener">דברו איתי ב-WhatsApp</a>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- FAQ (ללא שינוי בתוכן, רק העיצוב נשאר מהגרסה הקודמת) -->
+    <!-- FAQ (ללא שינוי בתוכן) -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp וההודעה תתמלא אוטומטית.</div></details>
@@ -169,7 +212,7 @@
       <details><summary>משלוחים וזמני הכנה</summary><div>נשלח בד״כ תוך 1–3 ימי עסקים מרגע האישור. איסוף מתואם אפשרי.</div></details>
     </section>
 
-    <!-- ===== Filters (ללא שינוי פונקציונלי) ===== -->
+    <!-- Filters -->
     <section class="filters" id="filters">
       <div class="top">
         <div class="f-field grow">
@@ -211,7 +254,7 @@
 
   <footer class="wrap"><div>© 2025 שם המותג • הזמנה דרך WhatsApp בלבד • פרטי קשר: example@mail.com • 050-0000000</div></footer>
 
-  <!-- ===== Lightbox / Zoom (ללא שינוי) ===== -->
+  <!-- Lightbox / Zoom -->
   <div id="lightbox" style="position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;">
     <div style="position:relative;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;gap:10px;align-items:center;">
       <img id="lb-img" alt="" style="max-width:95vw;max-height:80vh;object-fit:contain;transform-origin:center center;"/>
