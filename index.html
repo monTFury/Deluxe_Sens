@@ -13,8 +13,8 @@
 <link rel="icon" href="images/favicon.ico" />
 <style>
   :root{
-    --logo-h:82px;  /* גובה לוגו דסקטופ */
-    --logo-h-sm:64px; /* גובה לוגו מובייל/טאבלט */
+    --logo-h:82px;          /* דסקטופ/טאבלט */
+    --logo-h-sm:64px;       /* מובייל רגיל */
     --bg:#f7f3ec; --card:#fff; --fg:#1a1a1a; --muted:#6f6a5f;
     --accent:#b07a2a; --border:#eadfce; --shadow:0 6px 18px rgba(50,24,0,.06);
     --s-1:6px; --s-2:10px; --s-3:14px; --s-4:18px; --s-5:22px; --input-h:42px;
@@ -35,27 +35,32 @@
   a{color:inherit;text-decoration:none}
   .wrap{max-width:1160px;margin:0 auto;padding:0 16px 56px}
 
-  /* ===== HEADER חדש: לוגו לצד הכותרת, רקע עדין, גריד רספונסיבי ===== */
+  /* ===== HEADER ===== */
   header{
     background: linear-gradient(180deg,#ffffff 0%, #fffdf7 100%);
     border-bottom:1px solid var(--border);
     box-shadow:0 2px 10px rgba(0,0,0,.03);
-    margin-bottom:14px; /* יוצר מרווח קטן לפני ה-FAQ */
+    margin-bottom:16px; /* מרווח קטן לפני ה-FAQ */
   }
   header .inner{
     max-width:1160px; margin:0 auto; padding:14px 16px;
     display:grid; grid-template-columns:auto 1fr auto; gap:16px; align-items:center;
   }
-  /* אשכול לוגו+כותרות */
-  .brand{
-    display:flex; align-items:center; gap:14px; min-width:0;
-  }
-  .logo{
-    height:var(--logo-h); width:auto; max-width:180px; object-fit:contain;
-  }
+  .brand{display:flex; align-items:center; gap:14px; min-width:0}
+  .logo{height:var(--logo-h); width:auto; max-width:180px; object-fit:contain}
   .titles{display:flex; flex-direction:column; min-width:0}
+  /* — העדכונים כאן — */
   header h1{
-    font-weight:800; font-size:clamp(22px,2.6vw,30px); line-height:1.15; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    font-weight:800;
+    /* גדול יותר כברירת־מחדל כדי להרגיש "חי" גם בטאבלט */
+    font-size:clamp(24px,3.2vw,36px);
+    line-height:1.2;
+    margin:0;
+    /* לא חותכים במובייל: */
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    overflow-wrap:anywhere; /* שובר מילים ארוכות אם אין רווחים */
   }
   header p{
     margin:2px 0 0; color:var(--muted); font-weight:600; font-size:14px;
@@ -66,7 +71,14 @@
     border-radius:12px; font-weight:700; background:#fff; transition:.18s; box-shadow:var(--shadow)
   }
   .cta:hover{transform:translateY(-1px); box-shadow:0 10px 20px rgba(176,122,42,.12)}
-  /* טאבלט/מובייל: עדיין לוגו לצד הכותרת, קטן יותר; הכפתור עובר לשורה מתחת אם אין מקום */
+
+  /* טאבלט (כולל iPad): מגדיל עוד קצת את הכותרת */
+  @media (min-width:700px) and (max-width:1024px){
+    header h1{ font-size:clamp(26px,3.4vw,40px); }
+    .logo{ height:calc(var(--logo-h) + 2px); }
+  }
+
+  /* פריסת מובייל: לוגו נשאר לצד הכותרת אבל קטן יותר, הטקסט עוטף יפה */
   @media (max-width:900px){
     header .inner{grid-template-columns:1fr auto; grid-auto-rows:auto}
     .brand{order:1}
@@ -75,12 +87,17 @@
   }
   @media (max-width:520px){
     .logo{height:var(--logo-h-sm); max-width:130px}
-    header h1{font-size:20px}
+    /* הכותרת גדלה מעט לעומת קודם, ועדיין עוטפת שורה/שתיים בנוחות */
+    header h1{ font-size:clamp(20px,6vw,26px); line-height:1.22; }
     header p{font-size:13px}
-    .cta{width:auto}
+  }
+  /* למסכים ממש צרים (קטנים מ-360px) – עוד טיפ־טיפה להקטין את הלוגו לפנות מקום לטקסט */
+  @media (max-width:360px){
+    .logo{height:56px; max-width:110px}
+    header h1{ font-size:clamp(19px,6.5vw,24px) }
   }
 
-  /* ===== להלן כל מה שמתחת נשאר כמו קודם ===== */
+  /* ===== מתחת להדר – הכול נשאר כמו בקובץ הקודם ===== */
 
   /* FAQ */
   .faq{margin:0 0 12px}
@@ -169,7 +186,6 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* מובייל */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
@@ -189,7 +205,7 @@
 </head>
 <body>
 
-  <!-- ===== HEADER חדש ===== -->
+  <!-- ===== HEADER ===== -->
   <header>
     <div class="inner">
       <div class="brand">
@@ -204,7 +220,7 @@
   </header>
 
   <main class="wrap">
-    <!-- FAQ (ללא שינוי בתוכן) -->
+    <!-- FAQ -->
     <section class="faq">
       <h2>שאלות נפוצות</h2>
       <details><summary>איך מבצעים הזמנה?</summary><div>בוחרים נפח (100 מ״ל / 10 מ״ל / 5 מ״ל), המחיר יוצג, לוחצים על כפתור ה-WhatsApp וההודעה תתמלא אוטומטית.</div></details>
