@@ -13,7 +13,6 @@
 <link rel="icon" href="images/favicon.ico" />
 <style>
   :root{
-    /* לוגו מוגדל ~10% */
     --logo-h:90px;          /* דסקטופ/טאבלט */
     --logo-h-sm:70px;       /* מובייל */
     --bg:#f7f3ec; --card:#fff; --fg:#1a1a1a; --muted:#6f6a5f;
@@ -73,10 +72,11 @@
   @media (max-width:900px){
     .logo{height:var(--logo-h-sm); max-width:170px}
   }
-  /* מובייל צר – הכפתור יורד שורה מתחת לכותרת */
+  /* מובייל צר – הכפתור יורד שורה; והכיתוב הקטן ממורכז */
   @media (max-width:600px){
     header .inner{grid-template-columns:1fr; grid-auto-flow:row; gap:10px; align-items:start;}
     .cta{justify-self:stretch; width:100%; text-align:center; margin-top:4px}
+    header p{ text-align:center; } /* ← זה השינוי שביקשת */
   }
   @media (max-width:520px){
     .logo{height:var(--logo-h-sm); max-width:150px}
@@ -84,7 +84,7 @@
     header p{font-size:13px}
   }
 
-  /* ===== FAQ ===== */
+  /* ===== FAQ (שאר הקוד נשאר זהה) ===== */
   .faq{margin:0 0 12px}
   .faq h2{font-weight:800;font-size:20px;margin:0 0 8px}
   .faq details{border:1px solid var(--border);border-radius:12px;background:#fff;box-shadow:var(--shadow);margin:8px 0;overflow:hidden}
@@ -92,7 +92,6 @@
   .faq summary::marker{content:""}
   .faq details > div{padding:0 14px 12px 14px;color:var(--muted);font-weight:600;border-top:1px dashed var(--border)}
 
-  /* ===== Filters ===== */
   .filters{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:12px;margin:0 0 22px}
   .filters .top{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .f-field{display:flex;align-items:center;gap:8px;min-width:280px}
@@ -116,7 +115,6 @@
     .f-select{width:100%;min-width:unset}
   }
 
-  /* ===== Grid + Cards + Carousel + Price + Buttons ===== */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
   @media (max-width:1200px){.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}}
   @media (max-width:520px){.grid{grid-template-columns:1fr;gap:12px;justify-items:center}}
@@ -124,7 +122,7 @@
   .card{
     display:flex;flex-direction:column;background:var(--card);
     border:1px solid var(--border);border-radius:16px;padding:12px;box-shadow:var(--shadow);transition:.2s;
-    min-height:560px; /* נשמר אחרי תיקון הרווחים */
+    min-height:560px;
   }
   .card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(32,18,0,.08)}
 
@@ -185,7 +183,6 @@
   .toast.show{opacity:1;transform:translateY(0)}
   .empty{text-align:center;color:var(--muted);padding:20px 0;font-weight:700}
 
-  /* מובייל – התאמות גובה וריווח בכרטיסים */
   @media (max-width:520px){
     .wrap{padding:0 12px 48px}
     .card{min-height:unset;max-width:440px;width:100%;margin:0 auto;padding:12px}
@@ -204,7 +201,6 @@
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
   <header>
     <div class="inner">
       <div class="brand">
@@ -291,9 +287,9 @@ const CSV_URL  = "data/perfumes.csv";
 /* ===== utils ===== */
 function round5(x){ return Math.round(x/5)*5; }
 function hashNum(str){ let h=0; for(let i=0;i<str.length;i++) h=((h<<5)-h)+str.charCodeAt(i)|0; return (Math.abs(h)%1000)/1000; }
-function deriveBasePrice100(slug){ return round5(170 + hashNum(slug)*70); }
-function derive10ml(p100){ return Math.max(35, round5(p100*0.32)); }
-function derive5ml(p100){ return Math.max(20, round5(p100*0.18)); }
+function deriveBasePrice100(slug){ return Math.round((170 + hashNum(slug)*70)/5)*5; }
+function derive10ml(p100){ return Math.max(35, Math.round(p100*0.32/5)*5); }
+function derive5ml(p100){ return Math.max(20, Math.round(p100*0.18/5)*5); }
 
 function slugify(s){
   if(!s) return "";
@@ -435,8 +431,6 @@ function buildCarousel(container,p){
   }
   nav.querySelector('.prev').addEventListener('click',()=>goto(idx-1));
   nav.querySelector('.next').addEventListener('click',()=>goto(idx+1));
-
-  console.debug("IMAGE CANDIDATES:",{dupe:dupeCands,insp:inspCands});
 }
 
 /* Lightbox / Zoom */
@@ -459,12 +453,6 @@ lbClose.addEventListener('click',closeLB);
 lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
 lbPrev.addEventListener('click',()=>{ if(!lbList.length) return; lbIndex=(lbIndex-1+lbList.length)%lbList.length; showCurrent(); });
 lbNext.addEventListener('click',()=>{ if(!lbList.length) return; lbIndex=(lbIndex+1)%lbList.length; showCurrent(); });
-window.addEventListener('keydown',e=>{
-  if(lb.style.display!=='flex') return;
-  if(e.key==='ArrowLeft') lbPrev.click();
-  if(e.key==='ArrowRight') lbNext.click();
-  if(e.key==='Escape') lbClose.click();
-});
 
 /* WhatsApp */
 function buildWaHref(p,sizeLabel,price){
